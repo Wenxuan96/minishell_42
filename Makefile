@@ -1,14 +1,23 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
 SRC = $(wildcard src/*c)
+
 OBJ_DIR = obj
+LIBFT_DIR = libft
+
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+LIBFT = $(LIBFT_DIR)/libft.a
+
+CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR)
+
 NAME = minishell
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -18,10 +27,12 @@ $(OBJ_DIR):
 
 clean:
 	rm -f $(OBJ_DIR)/*.o
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	
 re: fclean all
 

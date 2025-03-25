@@ -1,3 +1,5 @@
+NAME = minishell
+
 CC = cc
 SRC = $(wildcard src/*c)
 
@@ -9,7 +11,6 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR)
 
-NAME = minishell
 
 all: $(NAME)
 

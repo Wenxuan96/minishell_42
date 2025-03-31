@@ -12,4 +12,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_token
+{
+    int	len;
+	char	*start;
+	char	type; //(or int type)
+}	t_token; //array of tokens when we read the input line;
+
 #endif

@@ -13,12 +13,13 @@
 #include <readline/history.h>
 #include "libft.h"
 
-typedef struct minishell
+typedef struct s_minishell
 {
+	char			*input_str;
 	t_token			*token_list;
 	t_process		*process_list;
 	t_environment	*env_list;
-};
+}	t_minishell;
 
 /*
 Lexer: takes in an input line
@@ -29,17 +30,15 @@ typedef	enum	e_token_type
 	WORD,
 	REDIRECTION,
 	PIPELINE,
-}	t_token_type;
+}	t_token_type; // check where & goes - background flag?
 
 typedef struct s_token
 {
     int				len;
 	char			*start;
-	t_token_type	*type;
+	t_token_type	type;
 	struct s_token	*next_token;
 }	t_token;
-
-
 
 /*
 Parser: takes in an array of tokens
@@ -67,7 +66,7 @@ typedef	enum	e_redir_type
 
 typedef struct s_redirection
 {
-	t_redir_type			*type;
+	t_redir_type			type;
 	char					*file;
 	struct s_redirection	*next_redir;
 }	t_redirection;
@@ -82,5 +81,6 @@ typedef struct	s_environment
 
 t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
+
 
 #endif

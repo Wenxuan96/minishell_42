@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "libft.h"
 
 /*
 Lexer: takes in an input line
@@ -49,6 +50,7 @@ typedef struct	s_environment
 	struct	s_environment	*next_env_var;
 }	t_environment;
 
-
+t_environment	*ft_new_var_lst(char *variable, char *value);
+void	ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
 #endif

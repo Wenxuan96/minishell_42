@@ -34,10 +34,13 @@ output: linked list of structs
 	also checking the syntaxis
 */
 
-typedef struct s_command
+typedef struct s_process
 {
-	char	*cmd_arguments;
-} t_command;
+	char	**command_arguments;
+	char	*out_file;
+	char	*in_file;
+	struct s_process	*next_process;
+} t_process;
 
 typedef struct	s_environment
 {

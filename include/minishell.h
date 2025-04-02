@@ -13,14 +13,6 @@
 #include <readline/history.h>
 #include "libft.h"
 
-typedef struct s_minishell
-{
-	char			*input_str;
-	t_token			*token_list;
-	t_process		*process_list;
-	t_environment	*env_list;
-}	t_minishell;
-
 /*
 Lexer: takes in an input line
 output: array of tokens
@@ -49,13 +41,6 @@ output: linked list of structs
 	also checking the syntaxis
 */
 
-typedef struct s_process
-{
-	char				**command_arguments;
-	t_redirection		*redirections;
-	struct s_process	*next_process;
-} t_process;
-
 typedef	enum	e_redir_type
 {
 	OUTPUT, // >
@@ -71,6 +56,14 @@ typedef struct s_redirection
 	struct s_redirection	*next_redir;
 }	t_redirection;
 
+typedef struct s_process
+{
+	char				**command_arguments;
+	t_redirection		*redirections;
+	struct s_process	*next_process;
+} t_process;
+
+
 
 typedef struct	s_environment
 {
@@ -79,8 +72,18 @@ typedef struct	s_environment
 	struct	s_environment	*next_env_var;
 }	t_environment;
 
+typedef struct s_minishell
+{
+	char			*input_str;
+	t_token			*token_list;
+	t_process		*process_list;
+	struct s_environment	*env_list;
+}	t_minishell;
+
 t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
+
+int   create_env_lst(char **envp, t_environment **env_list);
 
 
 #endif

@@ -77,7 +77,8 @@ typedef struct s_minishell
 	char			*input_str;
 	t_token			*token_list;
 	t_process		*process_list;
-	struct s_environment	*env_list;
+	int				num_processes;
+	t_environment	*env_list;
 }	t_minishell;
 
 t_environment	*ft_new_var_lst(char *variable, char *value);
@@ -85,5 +86,9 @@ void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
 int   create_env_lst(char **envp, t_environment **env_list);
 
+
+//test
+int create_pipes();
+t_process	*new_process_lst(char **commands);
 
 #endif

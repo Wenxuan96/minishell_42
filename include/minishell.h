@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdbool.h>
 #include "libft.h"
 
 /*
@@ -24,11 +25,27 @@ typedef	enum	e_token_type
 	PIPELINE,
 }	t_token_type; // check where & goes - background flag?
 
+typedef	enum	e_redir_type
+{
+	OUTPUT, // >
+	INPUT, // <
+	HEREDOC, // <<
+	OUTPUT_APPEND, // >>
+}	t_redir_type;
+
+typedef	enum e_exit_status
+{
+	MS_EXIT_FAILURE = 1,
+	MS_EXIT_SUCCESS = 0,
+	MS_COMMAND_NOT_FOUND = 127,
+}	t_exit_status;
+
 typedef struct s_token
 {
     int				len;
 	char			*start;
 	t_token_type	type;
+	bool in_quotes;  // Indicates if the token was enclosed in quotes (if not in_quotes, give an error)
 	struct s_token	*next_token;
 }	t_token;
 
@@ -41,16 +58,9 @@ output: linked list of structs
 	also checking the syntaxis
 */
 
-typedef	enum	e_redir_type
-{
-	OUTPUT, // >
-	INPUT, // <
-	HEREDOC, // <<
-	OUTPUT_APPEND, // >>
-}	t_redir_type;
-
 typedef struct s_redirection
 {
+	int						fd;
 	t_redir_type			type;
 	char					*file;
 	struct s_redirection	*next_redir;
@@ -60,10 +70,10 @@ typedef struct s_process
 {
 	char				**command_arguments;
 	t_redirection		*redirections;
+	int input_fd;  // File descriptor for input redirection
+    int output_fd; // File descriptor for output redirection
 	struct s_process	*next_process;
 } t_process;
-
-
 
 typedef struct	s_environment
 {

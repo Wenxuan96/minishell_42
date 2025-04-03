@@ -73,6 +73,7 @@ typedef struct s_process
 	int input_fd;  // File descriptor for input redirection
     int output_fd; // File descriptor for output redirection
 	struct s_process	*next_process;
+	pid_t				pid;
 } t_process;
 
 typedef struct	s_environment
@@ -98,7 +99,8 @@ int   create_env_lst(char **envp, t_environment **env_list);
 
 
 //test
-int create_pipes();
+int			create_pipes(t_minishell *shell);
 t_process	*new_process_lst(char **commands);
+int			create_processes(t_minishell *shell);
 
 #endif

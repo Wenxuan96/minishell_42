@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/02 16:27:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:47:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int create_pipes(t_minishell *shell)
 
 	p_num = 0;
 	process_lst = NULL;
+	shell->process_list = process_lst;
 	process_lst_add_back(new_process_lst(p1_cmd), &process_lst);
 	process_lst_add_back(new_process_lst(p2_cmd), &process_lst);
 	process_lst_add_back(new_process_lst(p3_cmd), &process_lst);
@@ -75,15 +76,37 @@ int create_pipes(t_minishell *shell)
 	// write(STDOUT_FILENO, buffer, 5);
 	p_num = 0;
 
-	write(pipes[0][1], "hello\n", 6);
+	// write(pipes[0][1], "hello\n", 6);
+	int	fd = open("test_file.txt", O_RDONLY);
+	read(fd, buffer, 6);
+	write(pipes[0][1], buffer, 6);
 	
 	read(pipes[0][0], buffer, 6);
 	write(pipes[1][1], buffer, 6);
 	
 	read(pipes[1][0], buffer, 6);
 	write(STDOUT_FILENO, buffer, 6);
+	close(fd);
 	return (1);
 	//create a dummy linked list with args
 	//create n-1 pipes
 	
+}
+
+int	create_processes(t_minishell *shell)
+{
+	pid_t	pid;
+	t_process   *current;
+
+	current = shell->process_list;
+
+	while (current != NULL)
+	{
+		pid = fork();
+		if (pid < 0)
+			perror("Forking failed");
+			return (0);
+		else
+		
+	}
 }

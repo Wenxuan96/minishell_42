@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/03 15:36:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:09:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ int create_pipes(t_minishell *shell)
 
 int	create_processes(t_minishell *shell)
 {
-	pid_t	pid;
-	t_process   *current;
+	pid_t		pid;
+	t_process	*current;
 
 	current = shell->process_list;
 	// printf("current node: %s\n", current->command_arguments[0]);

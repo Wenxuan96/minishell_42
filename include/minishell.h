@@ -70,8 +70,8 @@ typedef struct s_process
 {
 	char				**command_arguments;
 	t_redirection		*redirections;
-	int input_fd;  // File descriptor for input redirection
-    int output_fd; // File descriptor for output redirection
+	int					input_fd;  // File descriptor for input redirection
+    int					output_fd; // File descriptor for output redirection
 	struct s_process	*next_process;
 	pid_t				pid;
 } t_process;
@@ -95,7 +95,7 @@ typedef struct s_minishell
 t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
-int   create_env_lst(char **envp, t_environment **env_list);
+int   create_env_lst(t_environment **env_list, char **envp);
 
 
 //test

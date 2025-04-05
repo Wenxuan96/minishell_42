@@ -45,7 +45,7 @@ typedef struct s_token
     int				len;
 	char			*start;
 	t_token_type	type;
-	bool in_quotes;  // Indicates if the token was enclosed in quotes (if not in_quotes, give an error)
+	bool			in_quotes;  // Indicates if the token was enclosed in quotes (if not in_quotes, give an error)
 	bool            is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
 	struct s_token	*next_token;
 }	t_token;
@@ -64,7 +64,7 @@ typedef struct s_redirection
 	int						fd;
 	t_redir_type			type;
 	char					*file;
-	bool            is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
+	bool					is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
 	struct s_redirection	*next_redir;
 }	t_redirection;
 
@@ -106,7 +106,7 @@ t_process	*new_process_lst(char **commands);
 int			create_processes(t_minishell *shell);
 int	read_input(int argc, char **argv, t_minishell *shell);
 //cleanup
-void	ft_lstclear_token(t_token **token_list);
+void	ft_lstclear_token(t_token **token_list, t_minishell *shell);
 void	ft_lstclear_env(t_environment **env_list);
 void	ft_lstclear_redir(t_redirection **redir_list);
 void	ft_lstclear_process(t_process **process_list);

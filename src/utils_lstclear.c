@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lstclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: a12708 <a12708@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/03 18:58:25 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/05 20:57:18 by a12708           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstclear_token(t_token **token_list)
+void	ft_lstclear_token(t_token **token_list,t_minishell *shell)
 {
 	t_token	*current;
 	t_token	*next;
@@ -23,7 +23,7 @@ void	ft_lstclear_token(t_token **token_list)
 	while (current)
 	{
 		next = current->next_token;
-		if (current->start)
+		if (current->start && current->is_dynamic)
 			free(current->start);
 		free (current);
 		current = next;
@@ -63,7 +63,7 @@ void	ft_lstclear_redir(t_redirection **redir_list)
 	while (current)
 	{
 		next = current->next_redir;
-		if (current->file)
+		if (current->file && current->is_dynamic)
 			free(current->file);
 		free (current);
 		current = next;
@@ -85,11 +85,11 @@ void	ft_lstclear_process(t_process **process_list)
 	{
 		next = current->next_process;
 		ft_lstclear_redir(&(current->redirections));
-		while (current->command_arguments[i])
+		if (current->command_arguments)
 		{
-			if (current->command_arguments[i])
-				free(current->command_arguments[i]);
-			i++;
+			while (current->command_arguments[i])
+				free (current->command_arguments[i++]);
+			free (current->command_arguments);
 		}
 		free (current);
 		current = next;

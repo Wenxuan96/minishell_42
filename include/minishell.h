@@ -46,6 +46,7 @@ typedef struct s_token
 	char			*start;
 	t_token_type	type;
 	bool in_quotes;  // Indicates if the token was enclosed in quotes (if not in_quotes, give an error)
+	bool            is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
 	struct s_token	*next_token;
 }	t_token;
 
@@ -63,6 +64,7 @@ typedef struct s_redirection
 	int						fd;
 	t_redir_type			type;
 	char					*file;
+	bool            is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
 	struct s_redirection	*next_redir;
 }	t_redirection;
 

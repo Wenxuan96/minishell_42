@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/03 17:25:35 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/06 11:38:19 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell		shell;
 	t_environment	*env_list;
 
+	(void)argc;
+	(void)argv;
 	init_shell(&shell);	
 	create_env_lst(&env_list, envp);
-	read_input(argc, argv, &shell);
+	// read_input(argc, argv, &shell);
 	create_pipes(&shell);
 	create_processes(&shell);
-	pause();
+	// pause();
 }

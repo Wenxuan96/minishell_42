@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lstclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a12708 <a12708@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/05 20:57:18 by a12708           ###   ########.fr       */
+/*   Updated: 2025/04/06 11:37:01 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lstclear_token(t_token **token_list,t_minishell *shell)
+void	ft_lstclear_token(t_token **token_list)
 {
 	t_token	*current;
 	t_token	*next;

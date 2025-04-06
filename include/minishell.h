@@ -106,7 +106,7 @@ t_process	*new_process_lst(char **commands);
 int			create_processes(t_minishell *shell);
 int	read_input(int argc, char **argv, t_minishell *shell);
 //cleanup
-void	ft_lstclear_token(t_token **token_list, t_minishell *shell);
+void	ft_lstclear_token(t_token **token_list);
 void	ft_lstclear_env(t_environment **env_list);
 void	ft_lstclear_redir(t_redirection **redir_list);
 void	ft_lstclear_process(t_process **process_list);

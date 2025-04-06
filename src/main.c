@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/06 11:38:19 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:03:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_shell(t_minishell *shell)
 	shell->process_list = NULL;
 	shell->num_processes = 0;
 	shell->env_list = NULL;
+	shell->pipes= NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -32,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	create_env_lst(&env_list, envp);
 	// read_input(argc, argv, &shell);
 	create_pipes(&shell);
+	// assign_fd(&shell);
 	create_processes(&shell);
 	// pause();
 }

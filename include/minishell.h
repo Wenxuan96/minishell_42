@@ -13,6 +13,7 @@
 #include <readline/history.h>
 #include <stdbool.h>
 #include "libft.h"
+#include <sys/wait.h>
 
 /*
 Lexer: takes in an input line
@@ -27,10 +28,10 @@ typedef	enum	e_token_type
 
 typedef	enum	e_redir_type
 {
-	OUTPUT, // >
-	INPUT, // <
-	HEREDOC, // <<
-	OUTPUT_APPEND, // >>
+	OUTPUT,                 /*  >   */
+	INPUT,                  /*  <   */
+	HEREDOC,                /*  <<   */
+	OUTPUT_APPEND,          /*  >>   */
 }	t_redir_type;
 
 typedef	enum e_exit_status
@@ -45,8 +46,8 @@ typedef struct s_token
     int				len;
 	char			*start;
 	t_token_type	type;
-	bool			in_quotes;  // Indicates if the token was enclosed in quotes (if not in_quotes, give an error)
-	bool            is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
+	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
+	bool            is_dynamic; /* checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
 	struct s_token	*next_token;
 }	t_token;
 
@@ -64,7 +65,7 @@ typedef struct s_redirection
 	int						fd;
 	t_redir_type			type;
 	char					*file;
-	bool					is_dynamic; //checks if token uses substr to malloc or if it just points to within input_str in shell struct
+	bool					is_dynamic; /*checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
 	struct s_redirection	*next_redir;
 }	t_redirection;
 
@@ -72,8 +73,8 @@ typedef struct s_process
 {
 	char				**command_arguments;
 	t_redirection		*redirections;
-	int					input_fd;  // File descriptor for input redirection
-    int					output_fd; // File descriptor for output redirection
+	int					input_fd;
+    int					output_fd;
 	struct s_process	*next_process;
 	pid_t				pid;
 } t_process;
@@ -90,6 +91,7 @@ typedef struct s_minishell
 	char			*input_str;
 	t_token			*token_list;
 	t_process		*process_list;
+	int				**pipes;
 	int				num_processes;
 	t_environment	*env_list;
 }	t_minishell;
@@ -97,18 +99,30 @@ typedef struct s_minishell
 t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
-int   create_env_lst(t_environment **env_list, char **envp);
+int   			create_env_lst(t_environment **env_list, char **envp);
 
 
-//test
-int			create_pipes(t_minishell *shell);
-t_process	*new_process_lst(char **commands);
-int			create_processes(t_minishell *shell);
-int	read_input(int argc, char **argv, t_minishell *shell);
-//cleanup
-void	ft_lstclear_token(t_token **token_list);
-void	ft_lstclear_env(t_environment **env_list);
-void	ft_lstclear_redir(t_redirection **redir_list);
-void	ft_lstclear_process(t_process **process_list);
-void	ft_exit(t_minishell *shell, char *error_msg);
+/*test*/
+int				create_pipes(t_minishell *shell);
+int				assign_fd(t_minishell *shell);
+t_process		*new_process_lst(char **commands);
+int				create_processes(t_minishell *shell);
+int				read_input(int argc, char **argv, t_minishell *shell);
+/*cleanup*/
+void			ft_lstclear_token(t_token **token_list);
+void			ft_lstclear_env(t_environment **env_list);
+void			ft_lstclear_redir(t_redirection **redir_list);
+void			ft_lstclear_process(t_process **process_list);
+void			ft_exit(t_minishell *shell, char *error_msg);
+
+/*utils_malloc*/
+char			**allocate_array(char **commands);
+int				**allocate_pipes(int p_num);
+
+/*utils_pipes*/
+t_process		*new_process_lst(char **commands);
+void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
+void    		waitpid_children(t_minishell *shell);
+
+
 #endif

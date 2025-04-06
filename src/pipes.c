@@ -3,64 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/03 17:09:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/06 17:01:26 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //ls | grep txt | wc -l
-char	**allocate_array(char **commands)
-{
-	char	**malloced_array;
-	int	num_cmd;
-	int	i;
 
-	num_cmd = 0;
-	i = 0;
-	while (commands[num_cmd])
-		num_cmd++;
-	
-	malloced_array = (char **)malloc(num_cmd * sizeof(char *));
-	while (i < num_cmd)
-	{
-		malloced_array[i] = (char *)malloc(ft_strlen(commands[i]));
-		ft_strlcpy(malloced_array[i], commands[i], ft_strlen(commands[i]) + 1);
-		i++;
-	}
-	malloced_array[i] = NULL;
-	return (malloced_array);
-	
-}
-
-t_process	*new_process_lst(char **commands)
-{
-	t_process	*new_process;
-	
-	new_process = malloc(sizeof(t_process));
-	new_process->command_arguments = allocate_array(commands);
-	new_process->redirections= NULL;
-	new_process->next_process= NULL;
-	return (new_process);
-
-}
-
-void	process_lst_add_back(t_process   *new_process, t_process   **process_lst)
-{
-	t_process	*current;
-	if (*process_lst == NULL)
-	{
-		*process_lst = new_process;
-		return ;
-	}
-	current = *process_lst;
-	while (current->next_process != NULL)
-		current = current->next_process;
-	current->next_process = new_process;
-}
 
 int create_pipes(t_minishell *shell)
 {
@@ -93,6 +46,7 @@ int create_pipes(t_minishell *shell)
 		pipe(pipes[p_num]);
 		p_num++;
 	}
+	shell->pipes = allocate_pipes(p_num);
 	// pipe(p);
 	// write(p[1], "hello\n", 5);
 	// read(p[0], buffer, 5);
@@ -116,6 +70,29 @@ int create_pipes(t_minishell *shell)
 	
 }
 
+int	assign_fd(t_minishell *shell)
+{
+	t_process	*current;
+	int			i;
+
+	current = shell->process_list;
+	i = 0;
+	while (current != NULL)
+	{
+		if (i == 0)
+			current->input_fd = STDIN_FILENO;
+		else
+			current->input_fd = shell->pipes[i - 1][0];
+		if (i == shell->num_processes)
+			current->output_fd = STDOUT_FILENO;
+		else
+			current->output_fd = shell->pipes[i - 1][1];
+		i++;
+		current = current->next_process;
+	}
+	return (1);
+}
+
 int	create_processes(t_minishell *shell)
 {
 	pid_t		pid;
@@ -133,7 +110,8 @@ int	create_processes(t_minishell *shell)
 		}
 		else if(pid == 0)
 		{
-			// printf("I am a child!\n");
+			printf("I am child PID: %d\n", getpid());
+			// sleep(1000);
 			exit(0);
 		}
 		else
@@ -143,7 +121,10 @@ int	create_processes(t_minishell *shell)
 			printf("current node: %s\n", current->command_arguments[0]);
 			current = current->next_process;
 		}
-		
 	}
+	waitpid_children(shell);
+	// sleep(1000);
 	return (1);
 }
+
+

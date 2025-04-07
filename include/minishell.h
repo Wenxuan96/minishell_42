@@ -124,5 +124,8 @@ t_process		*new_process_lst(char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
 
+/*testing*/
+void	print_fds(t_minishell *shell);
+
 
 #endif

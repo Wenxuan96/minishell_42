@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/06 16:27:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:55:05 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	**allocate_pipes(int p_num)
 	while (i < p_num)
 	{
 		malloced_pipes[i] = (int *)malloc(2 * sizeof(int));
+		pipe(malloced_pipes[i]);
 		i++;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/06 17:01:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:09:44 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int create_pipes(t_minishell *shell)
 	int	p_num;
 	char	*buffer[30];
 
-	p_num = 0;
+	// p_num = 0;
 	process_lst = NULL;
 	process_lst_add_back(new_process_lst(p1_cmd), &process_lst);
 	process_lst_add_back(new_process_lst(p2_cmd), &process_lst);
@@ -38,15 +38,15 @@ int create_pipes(t_minishell *shell)
 		current = current->next_process;
 		shell->num_processes++;
 	}
-	int pipes[shell->num_processes - 1][2];
+	// int pipes[shell->num_processes - 1][2];
 	// printf("num_processes: %num_cmd\n", shell->num_processes);
 	
-	while (p_num < shell->num_processes - 1)
-	{
-		pipe(pipes[p_num]);
-		p_num++;
-	}
-	shell->pipes = allocate_pipes(p_num);
+	// while (p_num < shell->num_processes - 1)
+	// {
+	// 	pipe(pipes[p_num]);
+	// 	p_num++;
+	// }
+	shell->pipes = allocate_pipes(shell->num_processes - 1);
 	// pipe(p);
 	// write(p[1], "hello\n", 5);
 	// read(p[0], buffer, 5);
@@ -56,12 +56,12 @@ int create_pipes(t_minishell *shell)
 	// write(pipes[0][1], "hello\n", 6);
 	int	fd = open("test_file.txt", O_RDONLY);
 	read(fd, buffer, 6);
-	write(pipes[0][1], buffer, 6);
+	write(shell->pipes[0][1], buffer, 6);
 	
-	read(pipes[0][0], buffer, 6);
-	write(pipes[1][1], buffer, 6);
+	read(shell->pipes[0][0], buffer, 6);
+	write(shell->pipes[1][1], buffer, 6);
 	
-	read(pipes[1][0], buffer, 6);
+	read(shell->pipes[1][0], buffer, 6);
 	// write(STDOUT_FILENO, buffer, 6);
 	close(fd);
 	return (1);
@@ -83,14 +83,44 @@ int	assign_fd(t_minishell *shell)
 			current->input_fd = STDIN_FILENO;
 		else
 			current->input_fd = shell->pipes[i - 1][0];
-		if (i == shell->num_processes)
+		if (i == shell->num_processes - 1)
 			current->output_fd = STDOUT_FILENO;
 		else
-			current->output_fd = shell->pipes[i - 1][1];
+			current->output_fd = shell->pipes[i][1];
 		i++;
 		current = current->next_process;
 	}
 	return (1);
+}
+
+void	print_fds(t_minishell *shell)
+{
+	t_process	*current;
+
+	current = shell->process_list;
+	while (current != NULL)
+	{
+		printf("\n\nProcess: %i\n", current->pid);
+		printf("read end: %i\n", current->input_fd);
+		printf("write end: %i\n\n", current->output_fd);
+		current = current->next_process;
+	}
+}
+
+void	close_pipe_ends(t_minishell *shell, t_process	*current)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->num_processes - 1)
+	{
+		if (shell->pipes[i][0] != current->input_fd)
+			close(shell->pipes[i][0]);
+		if (shell->pipes[i][1] != current->output_fd)
+			close(shell->pipes[i][1]);
+		i++;
+	}
+
 }
 
 int	create_processes(t_minishell *shell)
@@ -111,6 +141,9 @@ int	create_processes(t_minishell *shell)
 		else if(pid == 0)
 		{
 			printf("I am child PID: %d\n", getpid());
+			dup2(current->input_fd, STDIN_FILENO);
+			dup2(current->output_fd, STDOUT_FILENO);
+			close_pipe_ends(shell, current);
 			// sleep(1000);
 			exit(0);
 		}

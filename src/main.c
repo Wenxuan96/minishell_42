@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/06 17:03:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:42:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 	create_env_lst(&env_list, envp);
 	// read_input(argc, argv, &shell);
 	create_pipes(&shell);
-	// assign_fd(&shell);
+	assign_fd(&shell);
 	create_processes(&shell);
+	print_fds(&shell);
 	// pause();
 }

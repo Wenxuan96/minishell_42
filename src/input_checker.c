@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/06 11:33:40 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:57:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		ft_printf("Error: %s.\n", error_msg);
 	else
 	{
-		ft_lstclear_token(&shell->token_list, shell);
+		ft_lstclear_token(&shell->token_list);
 		ft_lstclear_env(&shell->env_list);
 		ft_lstclear_process(&shell->process_list);
 		if (shell->input_str)

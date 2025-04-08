@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/08 16:34:32 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/08 17:48:08 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 			free (shell->input_archive[i++]);
 		free (shell);
 	}
-	exit(EXIT_SUCCESS);
+	exit(MS_EXIT_SUCCESS);
 }

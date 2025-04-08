@@ -1,40 +1,43 @@
 NAME = minishell
-
 CC = cc
-SRC = $(wildcard src/*.c src/buildins/*.c)
+
+SRC_ROOT = $(wildcard src/*.c)
+SRC_BUILTINS = $(wildcard src/builtins/*.c)
+SRC = $(SRC_ROOT) $(SRC_BUILTINS)
 
 OBJ_DIR = obj
 LIBFT_DIR = libft
-
-OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 LIBFT = $(LIBFT_DIR)/libft.a
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR)
+OBJ_ROOT = $(SRC_ROOT:src/%.c=$(OBJ_DIR)/%.o)
+OBJ_BUILTINS = $(SRC_BUILTINS:src/builtins/%.c=$(OBJ_DIR)/builtins/%.o)
+OBJ = $(OBJ_ROOT) $(OBJ_BUILTINS)
+
+CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR) 
+LDFLAGS = -lreadline
 
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
 clean:
-	rm -f $(OBJ_DIR)/*.o
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	
+
 re: fclean all
 
 .PHONY: all clean fclean re

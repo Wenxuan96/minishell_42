@@ -93,11 +93,11 @@ typedef struct s_minishell
 {
 	char			*input_str;
 	char			**input_archive;
+	int				input_status;
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;
 	int				num_processes;
-	int				input_status;
 	t_environment	*env_list;
 }	t_minishell;
 

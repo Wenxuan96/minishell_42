@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-SRC = $(wildcard src/*c)
+SRC = $(wildcard src/*.c src/buildins/*.c)
 
 OBJ_DIR = obj
 LIBFT_DIR = libft

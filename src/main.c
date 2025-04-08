@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/08 17:47:36 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/08 19:01:08 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_status = read_input(argc, argv, &shell);
-		if (!shell.input_status) /*When ctrl+D is pressed*/
+		if (shell.input_status == MS_EXIT_FAILURE) /*When ctrl+D is pressed*/
 			break;/* Break the loop, clean memory and exit */
 		if (shell.input_status == 2) /* When receiving empty str as input */
 			continue; /* skip all functions below, rerun while loop and awaits for new input */

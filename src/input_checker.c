@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/08 18:55:13 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/08 19:01:26 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	read_input(int argc, char **argv, t_minishell *shell)
 		init = 1;
 	shell->input_str = readline("minishell$ ");
 	if (!shell->input_str) /*When ctrl+D is pressed, break the loop, clean memory and exit */
-		return (0);
+		return (MS_EXIT_FAILURE);
 	if (shell->input_str[0] == '\0')
 		return (2);
 	if (archive_input(shell->input_str, shell) == MS_EXIT_FAILURE)
@@ -72,5 +72,5 @@ int	read_input(int argc, char **argv, t_minishell *shell)
 		ft_printf("%d: %s\n", i, shell->input_archive[i]);
 		i++;
 	}
-	return(1);
+	return(MS_EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/08 15:51:24 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/08 18:41:52 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ t_environment	*ft_new_var_lst(char *variable, char *value)
 }
 
 //This test function prints all env_var
-void	prt_env_lst(t_environment **env_list)
-{
-	t_environment	**current;
+// void	prt_env_lst(t_environment **env_list)
+// {
+// 	t_environment	**current;
 
-	current = env_list;
-	while ((*current) != NULL)
-	{
-		printf("var : %s\n", (*current)->env_var);
-		printf("val : %s\n", (*current)->value);
-		current = &(*current)->next_env_var;
-	}
-	printf("end of env list\n");
-}
+// 	current = env_list;
+// 	while ((*current) != NULL)
+// 	{
+// 		printf("var : %s\n", (*current)->env_var);
+// 		printf("val : %s\n", (*current)->value);
+// 		current = &(*current)->next_env_var;
+// 	}
+// 	printf("end of env list\n");
+// }
 
 //This function creates a linked list of available environment variables
 int	create_env_lst(t_environment **env_list, char **envp)
@@ -74,7 +74,7 @@ int	create_env_lst(t_environment **env_list, char **envp)
 		new_env = ft_new_var_lst(env_split[0], env_split[1]);
 		ft_var_lstadd_back(env_list, new_env);
 	}
-	prt_env_lst(env_list);
+	// prt_env_lst(env_list);
     return (1);
 }
 

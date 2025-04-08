@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_lstclear.c                                   :+:      :+:    :+:   */
+/*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/06 11:37:01 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:34:32 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,25 @@ void	ft_lstclear_process(t_process **process_list)
 		current = next;
 	}
 	*process_list = NULL;
+}
+
+void	ft_exit(t_minishell *shell, char *error_msg)
+{
+	int	i;
+
+	i = 0;
+	if (!shell)
+		ft_printf("Error: %s.\n", error_msg);
+	else
+	{
+		ft_lstclear_token(&shell->token_list);
+		ft_lstclear_env(&shell->env_list);
+		ft_lstclear_process(&shell->process_list);
+		if (shell->input_str)
+			free (shell->input_str);
+		while (shell->input_archive && shell->input_archive[i])
+			free (shell->input_archive[i++]);
+		free (shell);
+	}
+	exit(EXIT_SUCCESS);
 }

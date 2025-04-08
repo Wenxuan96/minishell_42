@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/07 10:55:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:57:55 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ char	**allocate_array(char **commands)
 
 int	**allocate_pipes(int p_num)
 {
-	int	**malloced_pipes;
+	int	**pipes;
 	int	i;
 
 	i = 0;
-	malloced_pipes = (int **)malloc(p_num * sizeof(int *));
+	pipes = (int **)malloc(p_num * sizeof(int *));
 	while (i < p_num)
 	{
-		malloced_pipes[i] = (int *)malloc(2 * sizeof(int));
-		pipe(malloced_pipes[i]);
+		pipes[i] = (int *)malloc(2 * sizeof(int));
+		pipe(pipes[i]);
 		i++;
 	}
 
-	return (malloced_pipes);
+	return (pipes);
 }

@@ -24,7 +24,7 @@ typedef	enum	e_token_type
 	WORD,
 	REDIRECTION,
 	PIPELINE,
-}	t_token_type; // check where & goes - background flag?
+}	t_token_type;
 
 typedef	enum	e_redir_type
 {
@@ -71,12 +71,15 @@ typedef struct s_redirection
 
 typedef struct s_process
 {
+	pid_t				pid;
 	char				**command_arguments;
 	t_redirection		*redirections;
 	int					input_fd;
     int					output_fd;
+	int					is_builtin;
+	int					completed;
+	int					stopped;
 	struct s_process	*next_process;
-	pid_t				pid;
 } t_process;
 
 typedef struct	s_environment

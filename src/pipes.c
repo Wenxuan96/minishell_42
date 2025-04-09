@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/09 19:02:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:40:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	close_pipe_ends(t_minishell *shell, t_process	*current)
 int	create_processes(t_minishell *shell)
 {
 	pid_t		pid;
-	int			fildes[2];
 	t_process	*current;
 
 	current = shell->process_list;

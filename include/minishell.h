@@ -111,12 +111,16 @@ int   			create_env_lst(t_environment **env_list, char **envp);
 /*init*/
 void			init_shell(t_minishell *shell);
 
-/*test*/
+/*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);
 int				assign_fd(t_minishell *shell);
 t_process		*new_process_lst(char **commands);
 int				create_processes(t_minishell *shell);
 int				read_input(int argc, char **argv, t_minishell *shell);
+
+/*executor - redirections*/
+int 			redirections(t_process *process_lst);
+
 /*cleanup*/
 void			ft_lstclear_token(t_token **token_list);
 void			ft_lstclear_env(t_environment **env_list);

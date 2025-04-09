@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/07 14:47:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:44:39 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_process	*new_process_lst(char **commands)
 	new_process = malloc(sizeof(t_process));
 	new_process->command_arguments = allocate_array(commands);
 	new_process->redirections= NULL;
+	new_process->input_fd = -1;
+	new_process->output_fd = -1;
 	new_process->next_process= NULL;
 	new_process->is_builtin = 0;
 	new_process->stopped = 0;

@@ -97,6 +97,7 @@ typedef struct s_minishell
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
 	const char		**system_commands;
+	const char		**system_seperators;
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;

@@ -47,7 +47,7 @@ typedef struct s_token
 	char			*start;
 	t_token_type	type;
 	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
-	bool            is_dynamic; /* checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
+	bool			is_dynamic; /* checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
 	struct s_token	*next_token;
 }	t_token;
 
@@ -92,8 +92,10 @@ typedef struct	s_environment
 typedef struct s_minishell
 {
 	char			*input_str;
-	char			**input_archive;
 	int				input_status;
+	char			**heredoc_archive; //handle after lexer
+	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
+	const char		**system_commands;
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;

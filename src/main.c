@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/08 19:01:08 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/09 16:03:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	init_shell(t_minishell *shell)
-{
-	shell->input_str = "\0";
-	shell->input_archive = NULL;
-	shell->token_list = NULL;
-	shell->process_list = NULL;
-	shell->num_processes = 0;
-	shell->input_status = -1;
-	shell->env_list = NULL;
-	shell->pipes= NULL;
-}
 
 int	main(int argc, char **argv, char **envp)
 {

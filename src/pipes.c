@@ -6,13 +6,13 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/08 14:24:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:40:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//ls | grep txt | wc -l
+//ls > temp.txt | grep txt < temp.txt | wc -l >> count.log
 
 
 int create_pipes(t_minishell *shell)
@@ -120,7 +120,6 @@ void	close_pipe_ends(t_minishell *shell, t_process	*current)
 			close(shell->pipes[i][1]);
 		i++;
 	}
-
 }
 
 int	create_processes(t_minishell *shell)

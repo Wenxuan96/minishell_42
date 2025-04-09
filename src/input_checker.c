@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/09 18:47:06 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/09 19:51:57 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ Signal is needed to continue reading user input
 if signal is received, read and malloc stdin
 */
 
-void init_token(t_minishell *shell)
-{
+// void init_token(t_minishell *shell)
+// {
 	
-}
+// }
 
 int	read_input(int argc, char **argv, t_minishell *shell)
 {

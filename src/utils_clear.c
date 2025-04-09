@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/08 17:48:08 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/09 20:08:32 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		ft_lstclear_process(&shell->process_list);
 		if (shell->input_str)
 			free (shell->input_str);
-		while (shell->input_archive && shell->input_archive[i])
-			free (shell->input_archive[i++]);
 		free (shell);
 	}
 	exit(MS_EXIT_SUCCESS);

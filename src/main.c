@@ -6,24 +6,11 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/09 19:47:09 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/09 19:51:18 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	init_shell(t_minishell *shell)
-{
-	shell->system_commands = (char *[]){"cd", "echo", "exit",
-		"pwd", "env", "setenv", "unsetenv", "export", NULL};
-	shell->input_str = "\0";
-	shell->token_list = NULL;
-	shell->process_list = NULL;
-	shell->num_processes = 0;
-	shell->input_status = -1;
-	shell->env_list = NULL;
-	shell->pipes= NULL;
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -40,11 +27,12 @@ int	main(int argc, char **argv, char **envp)
 			break;/* Break the loop, clean memory and exit */
 		if (shell.input_status == 2) /* When receiving empty str as input */
 			continue; /* skip all functions below, rerun while loop and awaits for new input */
-		create_env_lst(&env_list, envp);
-		create_pipes(&shell);
-		assign_fd(&shell);
-		create_processes(&shell);
-		print_fds(&shell);
+	create_env_lst(&env_list, envp);
+	create_pipes(&shell);
+	redirections(shell.process_list);
+	assign_fd(&shell);
+	create_processes(&shell);
+	print_fds(&shell);
 	}
 	ft_exit(&shell, NULL);
 	return (0);

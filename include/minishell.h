@@ -32,6 +32,7 @@ typedef	enum	e_redir_type
 	INPUT,                  /*  <   */
 	HEREDOC,                /*  <<   */
 	OUTPUT_APPEND,          /*  >>   */
+	NONE,
 }	t_redir_type;
 
 typedef	enum e_exit_status
@@ -103,18 +104,25 @@ typedef struct s_minishell
 	t_environment	*env_list;
 }	t_minishell;
 
+
 t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
 int   			create_env_lst(t_environment **env_list, char **envp);
 
+/*init*/
+void			init_shell(t_minishell *shell);
 
-/*test*/
+/*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);
 int				assign_fd(t_minishell *shell);
 t_process		*new_process_lst(char **commands);
 int				create_processes(t_minishell *shell);
 int				read_input(int argc, char **argv, t_minishell *shell);
+
+/*executor - redirections*/
+int 			redirections(t_process *process_lst);
+
 /*cleanup*/
 void			ft_lstclear_token(t_token **token_list);
 void			ft_lstclear_env(t_environment **env_list);
@@ -130,6 +138,10 @@ int				**allocate_pipes(int p_num);
 t_process		*new_process_lst(char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
+
+/*utils_redir*/
+t_redirection    *new_redir_lst(int fd, t_redir_type type, char *file);
+void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst);
 
 /*testing*/
 void	print_fds(t_minishell *shell);

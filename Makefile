@@ -13,7 +13,7 @@ OBJ_ROOT = $(SRC_ROOT:src/%.c=$(OBJ_DIR)/%.o)
 OBJ_BUILTINS = $(SRC_BUILTINS:src/builtins/%.c=$(OBJ_DIR)/builtins/%.o)
 OBJ = $(OBJ_ROOT) $(OBJ_BUILTINS)
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -I$(LIBFT_DIR) 
+CFLAGS = -Wall -Wextra -Werror -g -Iinclude -I$(LIBFT_DIR) 
 LDFLAGS = -lreadline
 
 

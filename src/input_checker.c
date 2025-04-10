@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/09 20:47:43 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/10 18:15:33 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,46 +18,18 @@ Signal is needed to continue reading user input
 if signal is received, read and malloc stdin
 */
 
-int		sys_sep_checker(t_minishell *shell, char c)
-{
-	int	i;
+// static void prt_input(char **input_arr)
+// {
+// 	int	i;
 	
-	i = 0;
-	while (shell->system_separators[i])
-	{
-		if (c == shell->system_separators[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (input_arr[i])
+// 		ft_printf("current splitted input is: %s\n", input_arr[i++]);
+// }
 
-char	*split_input_str(t_minishell *shell)
-{
-	char	**separator_arr;
-	int		i;
-
-	i = 0;
-	separator_arr = NULL;
-	while (shell->input_str[i])
-	{
-		if (sys_sep_checker(shell->input_str[i], shell))
-		{
-			
-		}
-	}
-}
-
-t_token	*init_token(t_minishell *shell)
-{
-	t_token new_token;
-
-}
-
-int	read_input(int argc, char **argv, t_minishell *shell)
+int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
-	(void)argv;
 	int	i;
 
 	i = 0;
@@ -67,10 +39,17 @@ int	read_input(int argc, char **argv, t_minishell *shell)
 	else
 		init = 1;
 	shell->input_str = readline("minishell$ ");
-	if (!shell->input_str) /*When ctrl+D is pressed, break the loop, clean memory and exit */
+	if (!shell->input_str) /*When ctrl+D is pressed, break the loop, clean memory and exit*/
 		return (MS_EXIT_FAILURE);
 	if (shell->input_str[0] == '\0')
 		return (2);
 	add_history(shell->input_str);
+	shell->input_arr = ft_split(shell->input_str, ' ');
+	// prt_input(shell->input_arr); /*To test what inputs are there*/
 	return(MS_EXIT_SUCCESS);
+}
+
+void command_checker(t_minishell *shell)
+{
+	(void)shell;
 }

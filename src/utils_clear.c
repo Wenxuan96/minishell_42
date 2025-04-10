@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/09 20:08:32 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/10 16:56:05 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_lstclear_process(t_process **process_list)
 	t_process	*next;
 	int			i;
 
-	i = 0;
 	if (!process_list || !*process_list)
 		return ;
 	current = *process_list;
@@ -87,6 +86,7 @@ void	ft_lstclear_process(t_process **process_list)
 		ft_lstclear_redir(&(current->redirections));
 		if (current->command_arguments)
 		{
+			i = 0;
 			while (current->command_arguments[i])
 				free (current->command_arguments[i++]);
 			free (current->command_arguments);
@@ -102,8 +102,12 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 	int	i;
 
 	i = 0;
-	if (!shell)
+	if (shell->input_status == MS_EXIT_FAILURE && error_msg)
+		ft_printf("%s\n", error_msg);
+	else if (error_msg)
 		ft_printf("Error: %s.\n", error_msg);
+	else if (!shell && !error_msg)
+		exit(MS_EXIT_SUCCESS);
 	else
 	{
 		ft_lstclear_token(&shell->token_list);
@@ -111,7 +115,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		ft_lstclear_process(&shell->process_list);
 		if (shell->input_str)
 			free (shell->input_str);
-		free (shell);
+		shell = NULL;
 	}
 	exit(MS_EXIT_SUCCESS);
 }

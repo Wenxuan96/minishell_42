@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 16:28:53 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 11:39:30 by tignatov         ###   ########.fr       */
+/*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
+/*   Updated: 2025/04/10 13:08:06 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 // char *p2_cmd[] = {"grep", "test", NULL};
 // char *p3_cmd[] = {"wc", "-w", NULL};
 
+// echo "this is a test" | grep test | wc -w
+
+
 t_builtin   *new_builtin(t_builtin_type type, builtin_func *function)
 {
     t_builtin *new_builtin;
@@ -28,12 +31,16 @@ t_builtin   *new_builtin(t_builtin_type type, builtin_func *function)
     return (new_builtin);
 }
 
-int echo_builtin(t_minishell *shell) //-n do not output the trailing new line
+int echo_builtin(t_process *process) //-n -> not handled yet! how args after echo are parsed??
 {
-    printf("the echo command: %s\n", shell->process_list->command_arguments[0]);
-    printf("builtin: %i\n", shell->process_list->builtin->type);
+    t_process   *current;
+
+    current = process;
+    printf("the echo command: %s\n", current->command_arguments[0]);
+    printf("builtin: %i\n", current->builtin->type);
+    write(current->output_fd, current->command_arguments[1], ft_strlen(current->command_arguments[1]));
+    write(current->output_fd, "\n", 1);
     return (1);
-    
 }
 
 void    assign_builtin(t_process *process)

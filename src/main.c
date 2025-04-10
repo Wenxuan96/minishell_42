@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 11:39:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:57:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	assign_builtin(shell.process_list);
 	current = shell.process_list;
 	if (current->is_builtin == 1)
-		shell.process_list->builtin->function(&shell);
+		shell.process_list->builtin->function(current);
 	// print_fds(&shell);
 	// }
 	// ft_exit(&shell, NULL); //   <--- segfaulting

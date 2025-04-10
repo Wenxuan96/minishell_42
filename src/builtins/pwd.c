@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 16:28:53 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/09 15:32:30 by tignatov         ###   ########.fr       */
+/*   Created: 2025/04/10 13:07:55 by tignatov          #+#    #+#             */
+/*   Updated: 2025/04/10 13:08:32 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-// int cd_builtin(t_minishell *shell)
+// int pwd_builtin(t_process *process)
 // {
     
 // }

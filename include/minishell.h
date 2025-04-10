@@ -15,6 +15,9 @@
 #include "libft.h"
 #include <sys/wait.h>
 
+struct s_builtin;
+typedef struct s_builtin t_builtin;
+
 /*
 Lexer: takes in an input line
 output: array of tokens
@@ -34,6 +37,17 @@ typedef	enum	e_redir_type
 	OUTPUT_APPEND,          /*  >>   */
 	NONE,
 }	t_redir_type;
+
+typedef enum	e_builtin_type
+{
+	CD,
+	PWD,
+	EXPORT,
+	ENV,
+	EXIT,
+	UNSET,
+	ECHO,
+}	t_builtin_type;
 
 typedef	enum e_exit_status
 {
@@ -78,6 +92,7 @@ typedef struct s_process
 	int					input_fd;
     int					output_fd;
 	int					is_builtin;
+	t_builtin			*builtin;
 	int					completed;
 	int					stopped;
 	struct s_process	*next_process;

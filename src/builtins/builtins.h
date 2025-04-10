@@ -5,9 +5,9 @@
 
 typedef int builtin_func(t_minishell *shell);
 
-typedef struct s_buildin
+typedef struct s_builtin
 {
-    char            *name;
+    t_builtin_type   type;
     builtin_func    *function;
 }   t_builtin;
 
@@ -20,6 +20,8 @@ int unset_builtin(t_minishell *shell);
 int echo_builtin(t_minishell *shell);
 
 
+t_builtin   *new_builtin(t_builtin_type type, builtin_func *function);
+void    assign_builtin(t_process *process);
 
 
 #endif

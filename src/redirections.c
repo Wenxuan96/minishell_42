@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/09 20:10:14 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/10 09:01:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ int redirections(t_process *process_lst)
     redir3 = new_redir_lst(STDIN_FILENO, OUTPUT, ft_strdup("count.log"));
     current->redirections = redir3;
 
-    
+    current = process_lst;
+    while (current != NULL)
+    {
+        printf("redir file: %s\n", current->redirections->file);
+        current = current->next_process;
+    }
     
     return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 13:08:06 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:19:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void    assign_builtin(t_process *process)
 {
     t_process   *current;
     current = process;
-    current->builtin = new_builtin(ECHO, echo_builtin);
+    current->builtin = new_builtin(PWD, pwd_builtin);
     current->is_builtin = 1;
 }

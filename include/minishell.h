@@ -164,3 +164,15 @@ void	print_fds(t_minishell *shell);
 
 
 #endif
+
+
+/// stdout = fd1
+// ls | cat | grep
+/// readin cat = fd7
+//  dup so that stdout = fd7
+// exec ls -> ls output fd7 
+
+
+// fork
+// child -> stdout = fd7
+// parent -> stdout = fd7

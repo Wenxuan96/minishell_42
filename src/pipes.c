@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 13:09:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:36:24 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int create_pipes(t_minishell *shell)
 
 	// p_num = 0;
 	process_lst = NULL;
-	process_lst_add_back(new_process_lst(p1_cmd), &process_lst);
-	process_lst_add_back(new_process_lst(p2_cmd), &process_lst);
-	process_lst_add_back(new_process_lst(p3_cmd), &process_lst);
+	process_lst_add_back(new_process_lst(shell, p1_cmd), &process_lst);
+	process_lst_add_back(new_process_lst(shell, p2_cmd), &process_lst);
+	process_lst_add_back(new_process_lst(shell, p3_cmd), &process_lst);
 	shell->process_list = process_lst;
 	current = process_lst;
 	while (current != NULL)
@@ -166,6 +166,10 @@ int	create_processes(t_minishell *shell)
 		else
 		{
 			current->pid = pid;
+			current->env_vars = copy_env_list(shell, current);
+			printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
+			printf("process env var: %s\n\n", current->env_vars->value);
+			// prt_env_lst(current->env_vars);
 			// printf("Child PID: %d\n", current->pid);
 			// printf("current node: %s\n", current->command_arguments[0]);
 			current = current->next_process;

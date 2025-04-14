@@ -117,6 +117,7 @@ t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
 int   			create_env_lst(t_environment **env_list, char **envp);
+t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 
 /*init*/
 void			init_shell(t_minishell *shell);
@@ -124,7 +125,6 @@ void			init_shell(t_minishell *shell);
 /*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);
 int				assign_fd(t_minishell *shell);
-t_process		*new_process_lst(char **commands);
 int				create_processes(t_minishell *shell);
 int				read_input(int argc, t_minishell *shell);
 
@@ -143,7 +143,7 @@ char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
 
 /*utils_pipes*/
-t_process		*new_process_lst(char **commands);
+t_process		*new_process_lst(t_minishell *shell, char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
 
@@ -153,6 +153,7 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 
 /*testing*/
 void	print_fds(t_minishell *shell);
+void	prt_env_lst(t_environment *env_list);
 
 
 #endif

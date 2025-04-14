@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 14:23:44 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:05:15 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int	cd_builtin(t_process *process)
 
     path = process->command_arguments[1];
     chdir(path); //feed th efunciton env vars// update the vars
+    return (1);
 }

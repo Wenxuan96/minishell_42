@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 10:24:01 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:11:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell		shell;
-	t_environment	*env_list;
+	// t_environment	*env_list;
 	t_process		*current;
 
 	(void)argc;
@@ -46,12 +46,18 @@ int	main(int argc, char **argv, char **envp)
 	// 	}
 	// 	// print_fds(&shell);
 	// }
-	create_env_lst(&env_list, envp);
+	create_env_lst(&shell.env_list, envp);
 	///redirectios here<
 	create_pipes(&shell);
 	// redirections(shell.process_list);
 	assign_fd(&shell);
 	create_processes(&shell);
+	// current = shell.process_list;
+	// while (current != NULL)
+	// {
+	// 	copy_env_list(&shell, current);
+	// 	current = current->next_process;
+	// }
 	assign_builtin(shell.process_list);
 	current = shell.process_list;
 	printf("builtin : %i\n", current->is_builtin);

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 11:46:28 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:09:55 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,20 @@ int create_pipes(t_minishell *shell)
 	process_lst_add_back(new_process_lst(p3_cmd), &process_lst);
 	shell->process_list = process_lst;
 	current = process_lst;
-	while(current != NULL)
+	while (current != NULL)
 	{
 		printf("%s\n", current->command_arguments[0]);
 		current = current->next_process;
 		shell->num_processes++;
+	}
+	current = process_lst;
+	if (shell->num_processes > 1)
+	{
+		while (current != NULL)
+		{
+			current->is_pipeline = 1;
+			current = current->next_process;
+		}
 	}
 	// int pipes[shell->num_processes - 1][2];
 	// printf("num_processes: %num_cmd\n", shell->num_processes);

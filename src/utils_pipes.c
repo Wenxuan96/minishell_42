@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 11:20:28 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:07:46 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_process	*new_process_lst(char **commands)
 	new_process->output_fd = -1;
 	new_process->next_process= NULL;
 	new_process->is_builtin = 0;
+	new_process->is_pipeline = -1;
 	new_process->builtin = NULL;
 	new_process->stopped = 0;
 	new_process->completed = 0;

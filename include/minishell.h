@@ -17,6 +17,7 @@
 
 struct s_builtin;
 typedef struct s_builtin t_builtin;
+typedef struct	s_environment	t_environment;
 
 /*
 Lexer: takes in an input line
@@ -78,21 +79,23 @@ typedef struct s_process
 	pid_t				pid;
 	char				**command_arguments;
 	t_redirection		*redirections;
+	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
 	int					is_builtin;
+	int					is_pipeline;
 	t_builtin			*builtin;
 	int					completed;
 	int					stopped;
 	struct s_process	*next_process;
 } t_process;
 
-typedef struct	s_environment
+struct	s_environment
 {
 	char					*env_var;
 	char					*value;
 	struct	s_environment	*next_env_var;
-}	t_environment;
+};
 
 typedef struct s_minishell
 {

@@ -6,12 +6,11 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 16:16:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:10:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 //ls > temp.txt | grep txt < temp.txt | wc -l >> count.log
 
 
@@ -149,7 +148,7 @@ int	create_processes(t_minishell *shell)
 		}
 		else if(pid == 0)
 		{
-			printf("I am child PID: %d\n", getpid());
+			// printf("I am child PID: %d\n", getpid());
 			dup2(current->input_fd, STDIN_FILENO);
 			dup2(current->output_fd, STDOUT_FILENO);
 			close_pipe_ends(shell, current);
@@ -159,8 +158,8 @@ int	create_processes(t_minishell *shell)
 		else
 		{
 			current->pid = pid;
-			printf("Child PID: %d\n", current->pid);
-			printf("current node: %s\n", current->command_arguments[0]);
+			// printf("Child PID: %d\n", current->pid);
+			// printf("current node: %s\n", current->command_arguments[0]);
 			current = current->next_process;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 15:19:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 10:10:09 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@
 // echo "this is a test" | grep test | wc -w
 
 
-t_builtin   *new_builtin(t_builtin_type type, builtin_func *function)
-{
-    t_builtin *new_builtin;
-
-    new_builtin = malloc(sizeof(t_builtin));
-    new_builtin->type = type;
-    new_builtin->function = function;
-    return (new_builtin);
-}
-
 int echo_builtin(t_process *process) //-n -> not handled yet! how args after echo are parsed??
 {
     t_process   *current;
@@ -41,12 +31,4 @@ int echo_builtin(t_process *process) //-n -> not handled yet! how args after ech
     write(current->output_fd, current->command_arguments[1], ft_strlen(current->command_arguments[1]));
     write(current->output_fd, "\n", 1);
     return (1);
-}
-
-void    assign_builtin(t_process *process)
-{
-    t_process   *current;
-    current = process;
-    current->builtin = new_builtin(PWD, pwd_builtin);
-    current->is_builtin = 1;
 }

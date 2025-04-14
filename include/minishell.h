@@ -38,17 +38,6 @@ typedef	enum	e_redir_type
 	NONE,
 }	t_redir_type;
 
-typedef enum	e_builtin_type
-{
-	CD,
-	PWD,
-	EXPORT,
-	ENV,
-	EXIT,
-	UNSET,
-	ECHO,
-}	t_builtin_type;
-
 typedef	enum e_exit_status
 {
 	MS_EXIT_FAILURE = 1,

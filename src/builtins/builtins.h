@@ -5,6 +5,17 @@
 
 typedef int builtin_func(t_process *process);
 
+typedef enum	e_builtin_type
+{
+	CD,
+	PWD,
+	EXPORT,
+	ENV,
+	EXIT,
+	UNSET,
+	ECHO,
+}	t_builtin_type;
+
 typedef struct s_builtin
 {
     t_builtin_type   type;
@@ -20,8 +31,8 @@ int unset_builtin(t_process *process);
 int echo_builtin(t_process *process);
 
 
-t_builtin   *new_builtin(t_builtin_type type, builtin_func *function);
-void    assign_builtin(t_process *process);
+t_builtin	*new_builtin(t_builtin_type type, builtin_func *function);
+void		assign_builtin(t_process *process);
 
 
 #endif

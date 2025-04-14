@@ -24,6 +24,7 @@ output: array of tokens
 */
 typedef	enum	e_token_type
 {
+	COMMAND,
 	WORD,
 	REDIRECTION,
 	PIPELINE,
@@ -81,6 +82,7 @@ typedef struct s_process
 	int					input_fd;
     int					output_fd;
 	int					is_builtin;
+	int					is_pipeline;
 	t_builtin			*builtin;
 	int					completed;
 	int					stopped;
@@ -117,11 +119,11 @@ int   			create_env_lst(t_environment **env_list, char **envp);
 
 /*init*/
 void			init_shell(t_minishell *shell);
+t_process		*new_process_lst(char **commands);
 
 /*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);
 int				assign_fd(t_minishell *shell);
-t_process		*new_process_lst(char **commands);
 int				create_processes(t_minishell *shell);
 int				read_input(int argc, t_minishell *shell);
 

@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/10 11:20:28 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:49:14 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_process	*new_process_lst(char **commands)
-{
-	t_process	*new_process;
-	
-	new_process = malloc(sizeof(t_process));
-	new_process->command_arguments = allocate_array(commands);
-	new_process->redirections= NULL;
-	new_process->input_fd = -1;
-	new_process->output_fd = -1;
-	new_process->next_process= NULL;
-	new_process->is_builtin = 0;
-	new_process->builtin = NULL;
-	new_process->stopped = 0;
-	new_process->completed = 0;
-	return (new_process);
-}
 
 void	process_lst_add_back(t_process   *new_process, t_process   **process_lst)
 {

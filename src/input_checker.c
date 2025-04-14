@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/10 18:15:33 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/14 12:17:24 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
 	int	i;
+	t_process ms_process;
 
 	i = 0;
 	init = 0;
@@ -43,13 +44,26 @@ int	read_input(int argc, t_minishell *shell)
 		return (MS_EXIT_FAILURE);
 	if (shell->input_str[0] == '\0')
 		return (2);
+	init_process(&ms_process);
 	add_history(shell->input_str);
 	shell->input_arr = ft_split(shell->input_str, ' ');
 	// prt_input(shell->input_arr); /*To test what inputs are there*/
 	return(MS_EXIT_SUCCESS);
 }
 
-void command_checker(t_minishell *shell)
+int command_checker(t_minishell *shell, char *command)
 {
-	(void)shell;
+	int i;
+
+	i = 0;
+	while (shell->system_commands[i])
+	{
+		if (ft_strncmp(shell->system_commands[i], command, ft_strlen(command)))
+			ft_printf("%s: command not found", command);
+		i++;
+		read_input(1, shell);
+		return (0);
+	}
+	command = COMMAND;
+	return (0);
 }

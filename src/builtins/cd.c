@@ -6,14 +6,14 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 11:25:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:02:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-// int	cd_builtin(t_process *process)
-// {
+int	cd_builtin(t_process *process)
+{
 	
-// }
+}

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 10:10:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:46:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ int create_pipes(t_minishell *shell)
 	// char *p2_cmd[] = {"grep", "test", NULL};
 	// char *p3_cmd[] = {"wc", "-w", NULL};
 
-	char *p1_cmd[] = {"pwd", NULL};
+	char *p1_cmd[] = {"cd", "testdir", NULL};
 	char *p2_cmd[] = {"grep", "test", NULL};
 	char *p3_cmd[] = {"wc", "-w", NULL};
 
-	
 	int	p_num;
 	char	*buffer[30];
 

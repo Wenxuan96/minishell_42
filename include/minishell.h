@@ -108,11 +108,11 @@ typedef struct	s_environment
 typedef struct s_minishell
 {
 	char			*input_str;
+	char			**input_arr;
 	int				input_status;
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
 	const char		**system_commands;
-	const char		**system_separators;
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;
@@ -134,7 +134,7 @@ int				create_pipes(t_minishell *shell);
 int				assign_fd(t_minishell *shell);
 t_process		*new_process_lst(char **commands);
 int				create_processes(t_minishell *shell);
-int				read_input(int argc, char **argv, t_minishell *shell);
+int				read_input(int argc, t_minishell *shell);
 
 /*executor - redirections*/
 int 			redirections(t_process *process_lst);

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 12:32:29 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/14 17:22:48 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,28 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_minishell		shell;
-// 	t_environment	*env_list;
-// 	t_process		*current;
+int	main(int argc, char **argv, char **envp)
+{
+	t_minishell		shell;
+	t_environment	*env_list;
+	t_process		*current;
 
-// 	(void)argc;
-// 	(void)argv;
-// 	init_shell(&shell);
-// 	create_env_lst(&env_list, envp);
-// 	///redirectios here<
-// 	create_pipes(&shell);
-// 	// redirections(shell.process_list);
-// 	assign_fd(&shell);
-// 	create_processes(&shell);
-// 	assign_builtin(shell.process_list);
-// 	current = shell.process_list;
-// 	printf("builtin : %i\n", current->is_builtin);
-// 	if (current->is_builtin == 1)
-// 	{
-// 		printf("builtin type : %i\n", current->builtin->type);
-// 		shell.process_list->builtin->function(current);
-// 	}
-// 	return (0);
-// }
+	(void)argc;
+	(void)argv;
+	init_shell(&shell);
+	create_env_lst(&env_list, envp);
+	///redirectios here<
+	create_pipes(&shell);
+	// redirections(shell.process_list);
+	assign_fd(&shell);
+	create_processes(&shell);
+	assign_builtin(shell.process_list);
+	current = shell.process_list;
+	printf("builtin : %i\n", current->is_builtin);
+	if (current->is_builtin == 1)
+	{
+		printf("builtin type : %i\n", current->builtin->type);
+		shell.process_list->builtin->function(current);
+	}
+	return (0);
+}

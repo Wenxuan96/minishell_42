@@ -17,6 +17,7 @@
 
 struct s_builtin;
 typedef struct s_builtin t_builtin;
+typedef struct	s_environment	t_environment;
 
 /*
 Lexer: takes in an input line
@@ -79,6 +80,7 @@ typedef struct s_process
 	pid_t				pid;
 	char				**command_arguments;
 	t_redirection		*redirections;
+	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
 	int					is_builtin;
@@ -89,12 +91,12 @@ typedef struct s_process
 	struct s_process	*next_process;
 } t_process;
 
-typedef struct	s_environment
+struct	s_environment
 {
 	char					*env_var;
 	char					*value;
 	struct	s_environment	*next_env_var;
-}	t_environment;
+};
 
 typedef struct s_minishell
 {
@@ -116,6 +118,7 @@ t_environment	*ft_new_var_lst(char *variable, char *value);
 void			ft_var_lstadd_back(t_environment **lst, t_environment *new);
 
 int   			create_env_lst(t_environment **env_list, char **envp);
+t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 
 /*init*/
 void			init_shell(t_minishell *shell);
@@ -142,7 +145,7 @@ char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
 
 /*utils_pipes*/
-t_process		*new_process_lst(char **commands);
+t_process		*new_process_lst(t_minishell *shell, char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
 
@@ -152,6 +155,7 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 
 /*testing*/
 void	print_fds(t_minishell *shell);
+void	prt_env_lst(t_environment *env_list);
 
 
 #endif

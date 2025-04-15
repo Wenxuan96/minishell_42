@@ -122,7 +122,7 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 
 /*init*/
 void			init_shell(t_minishell *shell);
-t_process		*new_process_lst(char **commands);
+t_process		*new_process_lst(t_minishell *shell, char **commands);
 
 /*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);
@@ -137,6 +137,7 @@ int 			redirections(t_process *process_lst);
 void			ft_lstclear_token(t_token **token_list);
 void			ft_lstclear_env(t_environment **env_list);
 void			ft_lstclear_redir(t_redirection **redir_list);
+void			ft_lstclear_process_envvars(t_process **process);
 void			ft_lstclear_process(t_process **process_list);
 void			ft_exit(t_minishell *shell, char *error_msg);
 
@@ -145,7 +146,6 @@ char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
 
 /*utils_pipes*/
-t_process		*new_process_lst(t_minishell *shell, char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
 

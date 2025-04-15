@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/10 16:56:05 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/15 14:48:24 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_lstclear_redir(t_redirection **redir_list)
 	*redir_list = NULL;
 }
 
-void	ft_lstclear_process(t_process **process_list)
+void	ft_lstclear_process(t_process **process_list) //   + clean env_vars
 {
 	t_process	*current;
 	t_process	*next;
@@ -84,6 +84,7 @@ void	ft_lstclear_process(t_process **process_list)
 	{
 		next = current->next_process;
 		ft_lstclear_redir(&(current->redirections));
+		ft_lstclear_process_envvars(&current);
 		if (current->command_arguments)
 		{
 			i = 0;

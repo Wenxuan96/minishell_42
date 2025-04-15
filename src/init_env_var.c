@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/14 16:18:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:46:55 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,32 @@ int	create_env_lst(t_environment **env_list, char **envp)
 	}
 	// prt_env_lst(env_list);
     return (1);
+}
+
+void	ft_lstclear_envvars(t_environment *envvar_list)
+{
+	t_process	*temp;
+	
+	while (envvar_list != NULL)
+	{
+		temp = envvar_list->next_env_var;
+		free(envvar_list->env_var);
+		free(envvar_list->value);
+		free(envvar_list);
+		envvar_list = temp;
+	}
+}
+
+void	ft_lstclear_process_envvars(t_process **process)
+{
+	t_process	*current;
+	t_process	*next;
+	
+	current = *process;
+	while (current != NULL)
+	{
+		ft_lstclear_envvars(current->env_vars);
+		current->env_vars = NULL;
+		current = current->next_process;
+	}
 }

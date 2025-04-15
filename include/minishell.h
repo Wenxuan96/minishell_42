@@ -1,6 +1,5 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 #include <ctype.h>
 #include <errno.h>
 #include <pthread.h>
@@ -25,10 +24,12 @@ output: array of tokens
 */
 typedef	enum	e_token_type
 {
-	COMMAND,
+	SYSTEM_COMMAND,
+	BUILDIN_COMMAND,
 	WORD,
 	REDIRECTION,
 	PIPELINE,
+	NONE,
 }	t_token_type;
 
 typedef	enum	e_redir_type
@@ -49,7 +50,7 @@ typedef	enum e_exit_status
 
 typedef struct s_token
 {
-    int				len;
+	int				len;
 	char			*start;
 	t_token_type	type;
 	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
@@ -83,8 +84,8 @@ typedef struct s_process
 	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
-	int					is_builtin;
-	int					is_pipeline;
+	bool				is_builtin;//is this necessary?
+	bool				is_pipeline;
 	t_builtin			*builtin;
 	int					completed;
 	int					stopped;
@@ -105,7 +106,9 @@ typedef struct s_minishell
 	int				input_status;
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
+	const char		**std_commands;
 	const char		**system_commands;
+	const char		**buildin_commands;
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;
@@ -145,7 +148,7 @@ char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
 
 /*utils_pipes*/
-t_process		*new_process_lst(t_minishell *shell, char **commands);
+t_process		*new_process_lst(char **commands);
 void			process_lst_add_back(t_process   *new_process, t_process   **process_lst);
 void    		waitpid_children(t_minishell *shell);
 

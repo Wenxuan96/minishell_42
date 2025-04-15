@@ -6,11 +6,12 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/15 15:23:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/15 22:28:37 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "./builtins/builtins.h"
 
 void	ft_lstclear_token(t_token **token_list)
 {

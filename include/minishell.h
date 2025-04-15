@@ -29,7 +29,7 @@ typedef	enum	e_token_type
 	WORD,
 	REDIRECTION,
 	PIPELINE,
-	NONE,
+	INIT,
 }	t_token_type;
 
 typedef	enum	e_redir_type
@@ -45,7 +45,7 @@ typedef	enum e_exit_status
 {
 	MS_EXIT_FAILURE = 1,
 	MS_EXIT_SUCCESS = 0,
-	MS_COMMAND_NOT_FOUND = 127,
+	MS_TARGET_NOT_FOUND = 127,
 }	t_exit_status;
 
 typedef struct s_token
@@ -126,6 +126,7 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 /*init*/
 void			init_shell(t_minishell *shell);
 t_process		*new_process_lst(t_minishell *shell, char **commands);
+t_token			*new_token_lst(char *token);
 
 /*executor - processes/pipes*/
 int				create_pipes(t_minishell *shell);

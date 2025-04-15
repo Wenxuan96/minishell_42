@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/15 14:46:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:18:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	create_env_lst(t_environment **env_list, char **envp)
 
 void	ft_lstclear_envvars(t_environment *envvar_list)
 {
-	t_process	*temp;
+	t_environment	*temp;
 	
 	while (envvar_list != NULL)
 	{
@@ -94,7 +94,6 @@ void	ft_lstclear_envvars(t_environment *envvar_list)
 void	ft_lstclear_process_envvars(t_process **process)
 {
 	t_process	*current;
-	t_process	*next;
 	
 	current = *process;
 	while (current != NULL)

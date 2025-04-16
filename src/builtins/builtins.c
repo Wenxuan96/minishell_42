@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:09:16 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 13:36:32 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:02:23 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_builtin   *new_builtin(t_builtin_type type, builtin_func *function)
     return (new_builtin);
 }
 
-void    assign_builtin(t_process *process)
+void    assign_builtin(t_process *process, t_builtin_type type, builtin_func *function)
 {
     t_process   *current;
     current = process;
-    current->builtin = new_builtin(EXPORT, export_builtin);
+    current->builtin = new_builtin(type, function);
     current->is_builtin = 1;
 }

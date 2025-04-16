@@ -32,7 +32,7 @@ int echo_builtin(t_process *process);
 
 
 t_builtin	*new_builtin(t_builtin_type type, builtin_func *function);
-void		assign_builtin(t_process *process);
+void		assign_builtin(t_process *process, t_builtin_type type, builtin_func *function);
 void		ft_clean_exit(t_minishell *shell);
 void		free_pipes(t_minishell *shell);
 

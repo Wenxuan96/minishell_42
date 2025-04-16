@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 13:15:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:12:43 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int create_pipes(t_minishell *shell)
 	// char *p3_cmd[] = {"wc", "-w", NULL};
 
 	char *p1_cmd[] = {"export", "NEWVAR=hello", NULL};
-	char *p2_cmd[] = {"grep", "test", NULL};
+	char *p2_cmd[] = {"unset", "LC_TIME", NULL};
 	char *p3_cmd[] = {"wc", "-w", NULL};
 
 	int	p_num;
@@ -148,6 +148,7 @@ int	create_processes(t_minishell *shell)
 	// printf("current node: %s\n", current->command_arguments[0]);
 	while (current != NULL)
 	{
+		current->env_vars = copy_env_list(shell, current);
 		pid = fork();
 		if (pid < 0)
 		{
@@ -167,7 +168,6 @@ int	create_processes(t_minishell *shell)
 		else
 		{
 			current->pid = pid;
-			current->env_vars = copy_env_list(shell, current);
 			// printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
 			// printf("process env var: %s\n\n", current->env_vars->value);
 			// prt_env_lst(current->env_vars);

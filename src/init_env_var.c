@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/15 22:18:28 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/16 11:55:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	prt_env_lst(t_environment **env_list)
-// {
-// 	t_environment	**current;
+void	prt_env_lst(t_environment **env_list)
+{
+	t_environment	**current;
 
-// 	current = env_list;
-// 	while ((*current) != NULL)
-// 	{
-// 		printf("var : %s\n", (*current)->env_var);
-// 		printf("val : %s\n", (*current)->value);
-// 		current = &(*current)->next_env_var;
-// 	}
-// 	printf("end of env list\n");
-// }
+	current = env_list;
+	while ((*current) != NULL)
+	{
+		printf("var : %s\n", (*current)->env_var);
+		printf("val : %s\n", (*current)->value);
+		current = &(*current)->next_env_var;
+	}
+	printf("end of env list\n");
+}
 
 void	ft_var_lstadd_back(t_environment **lst, t_environment *new)
 {
@@ -56,7 +56,6 @@ t_environment	*ft_new_var_lst(char *variable, char *value)
 	return (new_node);
 }
 
-//This function creates a linked list of available environment variables
 int	create_env_lst(t_environment **env_list, char **envp)
 {
 	t_environment	*new_env;

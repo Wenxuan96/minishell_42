@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 16:36:24 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:01:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ int	create_processes(t_minishell *shell)
 		}
 		else if(pid == 0)
 		{
-			// printf("I am child PID: %d\n", getpid());
+			// printf("input_fd: %i\n", current->input_fd);
+			// printf("output_fd: %i\n", current->output_fd);
 			dup2(current->input_fd, STDIN_FILENO);
 			dup2(current->output_fd, STDOUT_FILENO);
 			close_pipe_ends(shell, current);
@@ -167,8 +168,8 @@ int	create_processes(t_minishell *shell)
 		{
 			current->pid = pid;
 			current->env_vars = copy_env_list(shell, current);
-			printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
-			printf("process env var: %s\n\n", current->env_vars->value);
+			// printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
+			// printf("process env var: %s\n\n", current->env_vars->value);
 			// prt_env_lst(current->env_vars);
 			// printf("Child PID: %d\n", current->pid);
 			// printf("current node: %s\n", current->command_arguments[0]);

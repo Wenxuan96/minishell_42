@@ -159,7 +159,7 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 
 /*testing*/
 void	print_fds(t_minishell *shell);
-void	prt_env_lst(t_environment *env_list);
+void	prt_env_lst(t_environment **env_list);
 
 
 #endif

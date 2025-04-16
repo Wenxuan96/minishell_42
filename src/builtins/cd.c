@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 13:01:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:07:38 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cd_builtin(t_process *process)
     int     len;
 
     path = process->command_arguments[1];
-    chdir(path); //feed th efunciton env vars// update the vars
+    chdir(path);
     new_path_buffer = getcwd(NULL, 0);
     while (process->env_vars != NULL)
     {

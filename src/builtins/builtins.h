@@ -26,7 +26,7 @@ int cd_builtin(t_process *process);
 int pwd_builtin(t_process *process);
 int export_builtin(t_process *process);
 int env_builtin(t_process *process);
-int exit_builtin(t_process *process);
+int	exit_builtin(t_minishell *shell);
 int unset_builtin(t_process *process);
 int echo_builtin(t_process *process);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 16:27:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:03:55 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int export_builtin(t_process *process)
     current = process->env_vars;
     if (process->command_arguments[1] == NULL)
     {
-        prt_env_lst(&process->env_vars);
+        prt_env_lst(process->env_vars);
         return (1);
     }
     split_vars = ft_split(process->command_arguments[1], '=');

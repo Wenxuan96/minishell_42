@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/15 22:28:37 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/17 15:28:26 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 	int	i;
 
 	i = 0;
-	if (shell->input_status == MS_EXIT_FAILURE && error_msg)
+	if (!shell->input_status && error_msg)
 		ft_printf("%s\n", error_msg);
 	else if (error_msg)
 		ft_printf("Error: %s.\n", error_msg);

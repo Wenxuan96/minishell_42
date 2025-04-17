@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/15 22:26:56 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/17 18:37:27 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,64 @@ Signal is needed to continue reading user input
 if signal is received, read and malloc stdin
 */
 
-// static void prt_input(char **input_arr)
-// {
-// 	int	i;
+static void prt_input(char **input_arr)
+{
+	int	i;
 	
-// 	i = 0;
-// 	while (input_arr[i])
-// 		ft_printf("current splitted input is: %s\n", input_arr[i++]);
-// }
+	i = 0;
+	while (input_arr[i])
+		ft_printf("current splitted input is: %s\n", input_arr[i++]);
+}
+
+void rearrange_input_arr(char **input_arr, int i)
+{
+	int	j;
+
+	j = i + 1;
+	while (input_arr[j])
+	{
+		input_arr[j] = input_arr[j + 1];
+		j++;
+	}
+}
+
+int	find_unclosed_quote(char *input_str1, char *input_str2)
+{
+	(void)input_str1;
+	(void)input_str2;
+	return (0);
+}
+
+int	find_closed_quote(char	*input_str1, char *input_str2)
+{
+	(void)input_str1;
+	(void)input_str2;
+	return (0);
+}
+
+int	quote_manager(t_minishell *shell)
+{
+	int		i;
+	char	*new_str;
+
+	i = 0;
+	while (shell->input_arr[i] && shell->input_arr[i + 1])
+	{
+		if (find_closed_quote(shell->input_arr[i], shell->input_arr[i + 1]) == 1)
+		{
+				new_str = ft_strjoin(shell->input_arr[i], shell->input_arr[i + 1]);
+				free (shell->input_arr[i]);
+				free (shell->input_arr[i + 1]);
+				shell->input_arr[i] = new_str;
+				rearrange_input_arr(shell->input_arr, i);
+				return (EXIT_SUCCESS);
+		}
+		else if (find_unclosed_quote(shell->input_arr[i], shell->input_arr[i + 1]) == 1)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	read_input(int argc, t_minishell *shell)
 {
@@ -48,7 +98,8 @@ int	read_input(int argc, t_minishell *shell)
 		return (2);
 	add_history(shell->input_str);
 	shell->input_arr = ft_split(shell->input_str, ' ');
-	// prt_input(shell->input_arr); /*To test what inputs are there*/
+	prt_input(shell->input_arr); /*To test what inputs are there*/
+	// quote_manager(shell);
 	return(MS_EXIT_SUCCESS);
 }
 

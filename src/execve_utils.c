@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 16:18:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:24:21 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char    **concat_path(char **dir_paths, char  *command)
     return (new_dir_path);
 }
 
-char    **get_pathname(t_process *process)
+char    **get_pathdirs(t_process *process)
 {
     // char            *pathname;
     t_environment   *current;
@@ -91,6 +91,26 @@ char    **get_pathname(t_process *process)
     new_dir_paths = concat_path(dir_paths, process->command_arguments[0]);
     // printf_twod_array(new_dir_paths);
     return (new_dir_paths);
+}
+
+char    *get_path(t_process *process)
+{
+    char    **path_dirs = NULL;
+    char    *path = NULL;;
+    int i;
+
+    i = 0;
+    path_dirs = get_pathdirs(process);
+    while (path_dirs[i] != NULL)
+    {
+        if (access(path_dirs[i], X_OK) == 0)
+        {
+            path = ft_strdup(path_dirs[i]);
+            break ;
+        }
+        i++;
+    }
+    return (path);
 }
 
 

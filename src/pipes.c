@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 16:18:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:24:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int	create_processes(t_minishell *shell)
 {
 	pid_t		pid;
 	t_process	*current;
+	char		*path;
 
 	current = shell->process_list;
 	// printf("current node: %s\n", current->command_arguments[0]);
@@ -163,14 +164,15 @@ int	create_processes(t_minishell *shell)
 			dup2(current->input_fd, STDIN_FILENO);
 			dup2(current->output_fd, STDOUT_FILENO);
 			close_pipe_ends(shell, current);
-			get_pathname(current);
+			// get_pathname(current);
 			// sleep(1000);
 			exit(0); 
 		}
 		else
 		{
 			current->pid = pid;
-			get_pathname(current);
+			path = get_path(current);
+			// printf("Path: %s\n", path);
 			// printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
 			// printf("process env var: %s\n\n", current->env_vars->value);
 			// prt_env_lst(current->env_vars);

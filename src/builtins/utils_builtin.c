@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:26:37 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/15 14:56:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:54:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ void	free_pipes(t_minishell *shell)
 		i++;
 	}
 	free(shell->pipes);
+}
+
+void	prt_env_lst(t_environment *env_list)
+{
+	t_environment	*current;
+
+	current = env_list;
+	while (current != NULL)
+	{
+		if (current->value != NULL)
+		{
+			printf("%s=", current->env_var);
+			printf("%s\n", current->value);
+		}
+		current = current->next_env_var;
+	}
 }

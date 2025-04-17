@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 16:12:43 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:54:05 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int create_pipes(t_minishell *shell)
 	// char *p2_cmd[] = {"grep", "test", NULL};
 	// char *p3_cmd[] = {"wc", "-w", NULL};
 
-	char *p1_cmd[] = {"export", "NEWVAR=hello", NULL};
+	char *p1_cmd[] = {"env", NULL};
+	// char *p1_cmd[] = {"export", "NEWVAR=hello", NULL};
 	char *p2_cmd[] = {"unset", "LC_TIME", NULL};
 	char *p3_cmd[] = {"wc", "-w", NULL};
 

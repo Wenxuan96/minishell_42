@@ -157,10 +157,11 @@ void    		waitpid_children(t_minishell *shell);
 t_redirection    *new_redir_lst(int fd, t_redir_type type, char *file);
 void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst);
 
+/*utils_builtins*/
+void			prt_env_lst(t_environment *env_list);
+
 /*testing*/
 void	print_fds(t_minishell *shell);
-void	prt_env_lst(t_environment **env_list);
-
 
 #endif
 

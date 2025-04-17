@@ -6,26 +6,11 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/16 16:27:08 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:50:07 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	prt_env_lst(t_environment **env_list)
-{
-	t_environment	**current;
-
-	current = env_list;
-	while ((*current) != NULL)
-	{
-		printf("var : %s\n", (*current)->env_var);
-		printf("val : %s\n", (*current)->value);
-		current = &(*current)->next_env_var;
-	}
-	printf("end of env list\n");
-
-}
 
 void	ft_var_lstadd_back(t_environment **lst, t_environment *new)
 {

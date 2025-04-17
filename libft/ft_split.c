@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:43:01 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/16 13:36:01 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:12:27 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,14 @@ char	**ft_split(char const *s, char c)
 // 	while (s[*i] != c && s[*i] != '\0')
 // 		(*i)++;
 // 	word = (char *)malloc((*i - start + 1) * sizeof(char));
-// 	if (!word)"=")
+// 	if (!word)
+// 		return (NULL);
+// 	ft_strncpy(word, &s[start], (size_t)(*i - start));
+// 	word[*i - start] = '\0';
+// 	return (word);
+// }
+
+// char	**ft_split(char const *s, char c)
 // {
 // 	char	**arr;
 // 	int		i;

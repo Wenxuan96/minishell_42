@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 09:54:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:18:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int create_pipes(t_minishell *shell)
 {
 	t_process   *process_lst;
 	t_process   *current;
-	// char *p1_cmd[] = {"ls", NULL};
-	// char *p2_cmd[] = {"grep", "txt", NULL};
-	// char *p3_cmd[] = {"wc", "-l", NULL};
+	char *p1_cmd[] = {"ls", NULL};
+	char *p2_cmd[] = {"grep", "txt", NULL};
+	char *p3_cmd[] = {"wc", "-l", NULL};
 
 	// char *p1_cmd[] = {"echo", "this is a test", NULL};
 	// char *p2_cmd[] = {"grep", "test", NULL};
 	// char *p3_cmd[] = {"wc", "-w", NULL};
 
-	char *p1_cmd[] = {"env", NULL};
-	// char *p1_cmd[] = {"export", "NEWVAR=hello", NULL};
-	char *p2_cmd[] = {"unset", "LC_TIME", NULL};
-	char *p3_cmd[] = {"wc", "-w", NULL};
+	// char *p1_cmd[] = {"env", NULL};
+	// // char *p1_cmd[] = {"export", "NEWVAR=hello", NULL};
+	// char *p2_cmd[] = {"unset", "LC_TIME", NULL};
+	// char *p3_cmd[] = {"wc", "-w", NULL};
 
 	int	p_num;
 	char	*buffer[30];
@@ -163,12 +163,14 @@ int	create_processes(t_minishell *shell)
 			dup2(current->input_fd, STDIN_FILENO);
 			dup2(current->output_fd, STDOUT_FILENO);
 			close_pipe_ends(shell, current);
+			get_pathname(current);
 			// sleep(1000);
 			exit(0); 
 		}
 		else
 		{
 			current->pid = pid;
+			get_pathname(current);
 			// printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
 			// printf("process env var: %s\n\n", current->env_vars->value);
 			// prt_env_lst(current->env_vars);

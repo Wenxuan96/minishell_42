@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 09:54:17 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:47:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	main(int argc, char **argv, char **envp)
 	assign_fd(&shell);
 	create_processes(&shell);
 	// head = shell.process_list;
-	assign_builtin(shell.process_list, ENV, env_builtin);
-	shell.process_list->builtin->function(shell.process_list);
+	// assign_builtin(shell.process_list, ENV, env_builtin);
+	// shell.process_list->builtin->function(shell.process_list);
 
 	// assign_builtin(shell.process_list->next_process, UNSET, unset_builtin);
 	// shell.process_list->next_process->builtin->function(shell.process_list->next_process);

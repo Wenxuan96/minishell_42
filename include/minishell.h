@@ -140,6 +140,7 @@ int 			redirections(t_process *process_lst);
 /*executor - execve*/
 char			**get_pathdirs(t_process *process);
 char    		*get_path(t_process *process);
+char    		**execve_get_envvars(t_process *process);
 
 /*cleanup*/
 void			ft_lstclear_token(t_token **token_list);
@@ -165,7 +166,8 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 void			prt_env_lst(t_environment *env_list);
 
 /*testing*/
-void	print_fds(t_minishell *shell);
+void			print_fds(t_minishell *shell);
+void    		printf_twod(char **arr);
 
 #endif
 

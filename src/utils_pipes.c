@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 12:05:46 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:33:20 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process)
 		current = current->next_env_var;
 	}
 	process->env_vars = new_env_lst;
-	printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
+	// printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
 	return (process->env_vars);
 }
 

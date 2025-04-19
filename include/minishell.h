@@ -103,6 +103,7 @@ typedef struct s_minishell
 {
 	char			*input_str;
 	char			**input_arr;
+	char			*token_val;
 	int				input_status;
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
@@ -166,6 +167,9 @@ void			prt_env_lst(t_environment *env_list);
 
 /*testing*/
 void	print_fds(t_minishell *shell);
+
+/*parsing*/
+int	quote_manager(t_minishell *shell);
 
 #endif
 

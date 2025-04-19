@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/17 18:37:27 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/19 20:48:09 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,64 +18,14 @@ Signal is needed to continue reading user input
 if signal is received, read and malloc stdin
 */
 
-static void prt_input(char **input_arr)
-{
-	int	i;
+// static void prt_input(char **input_arr)
+// {
+// 	int	i;
 	
-	i = 0;
-	while (input_arr[i])
-		ft_printf("current splitted input is: %s\n", input_arr[i++]);
-}
-
-void rearrange_input_arr(char **input_arr, int i)
-{
-	int	j;
-
-	j = i + 1;
-	while (input_arr[j])
-	{
-		input_arr[j] = input_arr[j + 1];
-		j++;
-	}
-}
-
-int	find_unclosed_quote(char *input_str1, char *input_str2)
-{
-	(void)input_str1;
-	(void)input_str2;
-	return (0);
-}
-
-int	find_closed_quote(char	*input_str1, char *input_str2)
-{
-	(void)input_str1;
-	(void)input_str2;
-	return (0);
-}
-
-int	quote_manager(t_minishell *shell)
-{
-	int		i;
-	char	*new_str;
-
-	i = 0;
-	while (shell->input_arr[i] && shell->input_arr[i + 1])
-	{
-		if (find_closed_quote(shell->input_arr[i], shell->input_arr[i + 1]) == 1)
-		{
-				new_str = ft_strjoin(shell->input_arr[i], shell->input_arr[i + 1]);
-				free (shell->input_arr[i]);
-				free (shell->input_arr[i + 1]);
-				shell->input_arr[i] = new_str;
-				rearrange_input_arr(shell->input_arr, i);
-				return (EXIT_SUCCESS);
-		}
-		else if (find_unclosed_quote(shell->input_arr[i], shell->input_arr[i + 1]) == 1)
-			return (EXIT_FAILURE);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
+// 	i = 0;
+// 	while (input_arr[i])
+// 		ft_printf("current splitted input is: %s\n", input_arr[i++]);
+// }
 
 int	read_input(int argc, t_minishell *shell)
 {
@@ -97,13 +47,26 @@ int	read_input(int argc, t_minishell *shell)
 	if (shell->input_str[0] == '\0')
 		return (2);
 	add_history(shell->input_str);
-	shell->input_arr = ft_split(shell->input_str, ' ');
-	prt_input(shell->input_arr); /*To test what inputs are there*/
-	// quote_manager(shell);
+	// shell->input_arr = ft_split(shell->input_str, ' ');
+	// prt_input(shell->input_arr); /*To test what inputs are there*/
+	quote_manager(shell);
 	return(MS_EXIT_SUCCESS);
 }
 
-int command_checker(t_minishell *shell, char *command)
+int redir_checker(char *command)
+{
+	if (ft_strncmp(">>", command, 2) == 0)
+		return (OUTPUT_APPEND);
+	else if (ft_strncmp(">", command, 1) == 0)
+		return (OUTPUT);
+	else if (ft_strncmp("<<", command, 2) == 0)
+		return (HEREDOC);
+	else if (ft_strncmp("<", command, 1) == 0)
+		return (INPUT);
+	return (MS_TARGET_NOT_FOUND);
+}
+
+int token_checker(t_minishell *shell, char *command)
 {
 	int i;
 
@@ -126,50 +89,87 @@ int command_checker(t_minishell *shell, char *command)
 		if (ft_strncmp(shell->buildin_commands[i++], command, ft_strlen(command)) == 0)
 			return (BUILDIN_COMMAND);
 	}
+	if (redir_checker(command) != MS_TARGET_NOT_FOUND)
+		return (REDIRECTION);
 	return (MS_EXIT_SUCCESS);
 }
 
-int redir_checker(char *command)
-{
-	if (ft_strncmp(">>", command, 2) == 0)
-		return (OUTPUT_APPEND);
-	else if (ft_strncmp(">", command, 1) == 0)
-		return (OUTPUT);
-	else if (ft_strncmp("<<", command, 2) == 0)
-		return (HEREDOC);
-	else if (ft_strncmp("<", command, 1) == 0)
-		return (INPUT);
-	return (MS_TARGET_NOT_FOUND);
-}
-
-void	def_token(char *token_val, t_token_type token_type)
+t_token	*def_token(t_minishell *shell, int t_len)
 {
 	t_token	*new_token;
 	
-	new_token = new_token_lst(token_val);
+	new_token = new_token_lst(shell->token_val);
 	new_token->in_quotes = 127; //write check quote()
 	new_token->is_dynamic = 127; //write check dynamic()
-	new_token->len = ft_strlen(token_val);
-	new_token->start = token_val;
-	new_token->type = token_type;
+	new_token->len = t_len;
+	new_token->start = shell->token_val;
+	new_token->type = token_checker(shell, shell->token_val);
+	new_token->next_token = NULL;
+	return (new_token);
 }
 
-void	tokenize_input(t_minishell *shell, char	**input_arr)
+void tokenize_input(t_minishell *shell)
 {
-	int				i;
-	t_token_type 	token_type;
-	
-	i = 0;
-	while (input_arr[i])
+	int i = 0;
+	int start = 0;
+	int in_quote = 0;
+	char quote_char = 0;
+	int	len;
+	t_token *new_token;
+
+	while (shell->input_str[i])
 	{
-		//need a redir edge case checker function/logic here, read bash manual
-		if (ft_strncmp("|", input_arr[i], 1) == 0)//pay attention if | is in double quote
-			def_token(input_arr[i], PIPELINE);
-		else if (redir_checker(input_arr[i]) != MS_TARGET_NOT_FOUND)
-			def_token(input_arr[i], REDIRECTION);
-		else if ((token_type = command_checker(shell, input_arr[i])) != MS_TARGET_NOT_FOUND)
-			def_token(input_arr[i], token_type);
+		if (!in_quote && (shell->input_str[i] == '\'' || shell->input_str[i] == '\"'))
+		{
+			// Entering quote
+			in_quote = 1;
+			quote_char = shell->input_str[i];
+			i++;
+		}
+		else if (in_quote && shell->input_str[i] == quote_char)
+		{
+			// Exiting quote
+			in_quote = 0;
+			i++;
+		}
+		else if (!in_quote && (shell->input_str[i] == ' ' || shell->input_str[i + 1] == '\0'))
+		{
+			// Found end of a token (space or end of string)
+			len = i - start;
+			if (shell->input_str[i + 1] == '\0')
+				len++; // Include last char
+
+			new_token = def_token(shell, len);
+			new_token->start = start;
+			add_token_to_list(shell, new_token); // <--- your function to add to linked list
+
+			// Skip spaces
+			while (shell->input_str[i] == ' ')
+				i++;
+			start = i;
+		}
 		else
-			def_token(input_arr[i], WORD);
+			i++;
 	}
 }
+
+// void	tokenize_input(t_minishell *shell, char	**input_arr)
+// {
+// 	int				i;
+// 	t_token_type 	token_type;
+	
+// 	i = 0;
+// 	while (input_arr[i])
+// 	{
+// 		//need a redir edge case checker function/logic here, read bash manual
+// 		if (ft_strncmp("|", input_arr[i], 1) == 0)//pay attention if | is in double quote
+// 			def_token(input_arr[i], PIPELINE);
+// 		else if (redir_checker(input_arr[i]) != MS_TARGET_NOT_FOUND)
+// 			def_token(input_arr[i], REDIRECTION);
+// 		else if ((token_type = command_checker(shell, input_arr[i])) != MS_TARGET_NOT_FOUND)
+// 			def_token(input_arr[i], token_type);
+// 		else
+// 			def_token(input_arr[i], WORD);
+// 	}
+// }
+

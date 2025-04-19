@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 17:24:03 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:53:38 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ int create_pipes(t_minishell *shell)
 {
 	t_process   *process_lst;
 	t_process   *current;
+	// char *p1_cmd[] = {"ls", NULL};
+	// char *p2_cmd[] = {"grep", "test", NULL};
+	// char *p3_cmd[] = {"wc", "-l", NULL};
+
 	char *p1_cmd[] = {"ls", NULL};
-	char *p2_cmd[] = {"grep", "txt", NULL};
-	char *p3_cmd[] = {"wc", "-l", NULL};
+	char *p2_cmd[] = {"sort", NULL};
+	char *p3_cmd[] = {"head", "-n", "2", NULL};
+
 
 	// char *p1_cmd[] = {"echo", "this is a test", NULL};
 	// char *p2_cmd[] = {"grep", "test", NULL};
@@ -43,7 +48,7 @@ int create_pipes(t_minishell *shell)
 	current = process_lst;
 	while (current != NULL)
 	{
-		printf("%s\n", current->command_arguments[0]);
+		// printf("%s\n", current->command_arguments[0]);
 		current = current->next_process;
 		shell->num_processes++;
 	}
@@ -140,11 +145,25 @@ void	close_pipe_ends(t_minishell *shell, t_process	*current)
 	}
 }
 
+void	close_pipe_ends_parent(t_minishell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (i < shell->num_processes - 1)
+	{
+		close(shell->pipes[i][0]);
+		close(shell->pipes[i][1]);
+		i++;
+	}
+}
+
 int	create_processes(t_minishell *shell)
 {
 	pid_t		pid;
 	t_process	*current;
 	char		*path;
+	char		**env_vars;
 
 	current = shell->process_list;
 	// printf("current node: %s\n", current->command_arguments[0]);
@@ -164,14 +183,17 @@ int	create_processes(t_minishell *shell)
 			dup2(current->input_fd, STDIN_FILENO);
 			dup2(current->output_fd, STDOUT_FILENO);
 			close_pipe_ends(shell, current);
+			path = get_path(current);
+			env_vars = execve_get_envvars(current);
+			// printf_twod(env_vars);
+			execve(path, current->command_arguments, env_vars);
 			// get_pathname(current);
 			// sleep(1000);
-			exit(0); 
+			exit(0);
 		}
 		else
 		{
 			current->pid = pid;
-			path = get_path(current);
 			// printf("Path: %s\n", path);
 			// printf("\n\nprocess env var: %s\n", current->env_vars->env_var);
 			// printf("process env var: %s\n\n", current->env_vars->value);
@@ -181,6 +203,7 @@ int	create_processes(t_minishell *shell)
 			current = current->next_process;
 		}
 	}
+	close_pipe_ends_parent(shell);
 	waitpid_children(shell);
 	// sleep(1000);
 	return (1);

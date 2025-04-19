@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/19 20:48:09 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/19 20:51:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ t_token	*def_token(t_minishell *shell, int t_len)
 	return (new_token);
 }
 
+void add_token_to_list(t_minishell *shell, t_token *new_token)
+{
+	(void)shell;
+	(void)new_token;
+}
 void tokenize_input(t_minishell *shell)
 {
 	int i = 0;
@@ -140,7 +145,6 @@ void tokenize_input(t_minishell *shell)
 				len++; // Include last char
 
 			new_token = def_token(shell, len);
-			new_token->start = start;
 			add_token_to_list(shell, new_token); // <--- your function to add to linked list
 
 			// Skip spaces

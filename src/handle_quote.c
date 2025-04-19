@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/19 19:58:39 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/19 20:49:18 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	handle_slash(char *input_str)
 int	quote_manager(t_minishell *shell)
 {
 	int		i;
-	char	*new_str;
+	// char	*new_str;
 
 	i = 0;
 	handle_slash(shell->input_str);

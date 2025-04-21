@@ -1,0 +1,13 @@
+count2.log
+include
+libft
+Makefile
+minishell
+obj
+README.md
+src
+temp2.txt
+test.c
+testdir
+test_file.txt
+utils_lists.c

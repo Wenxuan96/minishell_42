@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/19 13:57:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:36:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	create_env_lst(&shell.env_list, envp);
 	///redirectios here<
 	create_pipes(&shell);
-	// redirections(shell.process_list);
+	redirections(shell.process_list);
 	assign_fd(&shell);
 	create_processes(&shell);
 	// head = shell.process_list;

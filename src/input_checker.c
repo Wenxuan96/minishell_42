@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/19 20:51:28 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/21 15:02:58 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void add_token_to_list(t_minishell *shell, t_token *new_token)
 	(void)shell;
 	(void)new_token;
 }
+
 void tokenize_input(t_minishell *shell)
 {
 	int i = 0;

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/17 15:28:26 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/21 17:02:54 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	ft_lstclear_token(t_token **token_list)
 	while (current)
 	{
 		next = current->next_token;
-		if (current->start && current->is_dynamic)
-			free(current->start);
 		free (current);
 		current = next;
 	}
@@ -64,7 +62,7 @@ void	ft_lstclear_redir(t_redirection **redir_list)
 	while (current)
 	{
 		next = current->next_redir;
-		if (current->file && current->is_dynamic)
+		if (current->file)
 			free(current->file);
 		free (current);
 		current = next;

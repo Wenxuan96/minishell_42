@@ -10,6 +10,5 @@ src
 temp2.txt
 temp.txt
 test.c
-testdir
 test_file.txt
 utils_lists.c

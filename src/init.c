@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 10:45:40 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:34:25 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	init_shell(t_minishell *shell)
 {
-	shell->system_commands = (const char *[]){"ls", "cat", "grep",
-		"wc", "head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill", NULL};
-	shell->buildin_commands = (const char *[]){"cd", "echo", "exit",
-		"pwd", "env", "unset", "alias", "export", "type", "set", "history", NULL};
-	shell->std_commands = (const char *[]){"cd", "echo", "exit", "pwd",
+	static const char *const std_commands[] = {"cd", "echo", "exit", "pwd",
 		"env", "unset", "alias", "export", "type", "set", "history",
 		"ls", "cat", "grep", "wc", "head", "tail", "chmod", "mv", "cp",
 		"rm", "mkdir", "ps", "kill",NULL};
+	static const char *const system_commands[] = {"ls", "cat", "grep",
+		"wc", "head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill", NULL};
+	static const char *const buildin_commands[] = {"cd", "echo", "exit",
+		"pwd", "env", "unset", "alias", "export", "type", "set", "history", NULL};
+	shell->system_commands = (const char **)system_commands;
+	shell->buildin_commands = (const char **)buildin_commands;
+	shell->std_commands = (const char **)std_commands;
 	shell->input_str = "\0";
 	shell->input_arr = NULL;
 	shell->token_list = NULL;
@@ -55,11 +58,7 @@ t_token	*new_token_lst(char *token)
 	
 	(void)token;
 	new_token = malloc(sizeof(t_token));
-	new_token->in_quotes = false;
-	new_token->is_dynamic = false;
-	new_token->len = -1;
-	new_token->type = INIT;
-	new_token->start = NULL;
+	new_token->token_val = token;
 	new_token->next_token = NULL;
 	return (new_token);
 }

@@ -24,8 +24,6 @@ output: array of tokens
 */
 typedef	enum	e_token_type
 {
-	SYSTEM_COMMAND,
-	BUILDIN_COMMAND,
 	WORD,
 	REDIRECTION,
 	PIPELINE,
@@ -51,10 +49,10 @@ typedef	enum e_exit_status
 typedef struct s_token
 {
 	int				len;
-	char			*start;
+	int				start;
 	t_token_type	type;
+	char			*token_val;
 	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
-	bool			is_dynamic; /* checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
 	struct s_token	*next_token;
 }	t_token;
 
@@ -102,7 +100,6 @@ typedef struct s_minishell
 {
 	char			*input_str;
 	char			**input_arr;
-	char			*token_val;
 	int				input_status;
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
@@ -175,7 +172,7 @@ void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
 
 /*parsing*/
-int				quote_manager(t_minishell *shell);
+void			tokenize_input(t_minishell *shell);
 
 
 #endif

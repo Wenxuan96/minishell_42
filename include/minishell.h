@@ -72,7 +72,6 @@ typedef struct s_redirection
 	int						fd;
 	t_redir_type			type;
 	char					*file;
-	bool					is_dynamic; /*checks if token uses substr to malloc or if it just points to within input_str in shell struct*/
 	struct s_redirection	*next_redir;
 }	t_redirection;
 
@@ -84,7 +83,7 @@ typedef struct s_process
 	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
-	bool				is_builtin;//is this necessary?
+	bool				is_builtin;
 	bool				is_pipeline;
 	t_builtin			*builtin;
 	int					completed;
@@ -137,6 +136,7 @@ int				read_input(int argc, t_minishell *shell);
 
 /*executor - redirections*/
 int 			redirections(t_process *process_lst);
+int 			handle_redirection(t_process *process);
 
 /*executor - execve*/
 char			**get_pathdirs(t_process *process);
@@ -155,9 +155,13 @@ void			ft_exit(t_minishell *shell, char *error_msg);
 char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
 
-/*utils_pipes*/
+/*utils_processes*/
 void			process_lst_add_back(t_process *new_process, t_process **process_lst);
 void    		waitpid_children(t_minishell *shell);
+
+/*utils_pipes*/
+void			close_pipe_ends(t_minishell *shell, t_process	*current);
+void			close_pipe_ends_parent(t_minishell *shell);
 
 /*utils_redir*/
 t_redirection    *new_redir_lst(int fd, t_redir_type type, char *file);
@@ -171,7 +175,8 @@ void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
 
 /*parsing*/
-int	quote_manager(t_minishell *shell);
+int				quote_manager(t_minishell *shell);
+
 
 #endif
 

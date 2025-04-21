@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:13:36 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/19 15:07:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/21 10:22:31 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,3 @@ char    **execve_get_envvars(t_process *process)
     return (envvars);
 }
 
-void    printf_twod(char **arr)
-{
-    int i;
-
-    i = 0;
-    while (arr[i])
-    {
-        printf("%s\n", arr[i]);
-        i++;
-    }
-}

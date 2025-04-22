@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/14 10:10:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:29:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 // echo "this is a test" | grep test | wc -w
 
 
-int echo_builtin(t_process *process) //-n -> not handled yet! how args after echo are parsed??
+int echo_builtin(t_process *process, t_minishell *shell) //-n -> not handled yet! how args after echo are parsed??
 {
     t_process   *current;
 
+    (void)shell;
     current = process;
     printf("the echo command: %s\n", current->command_arguments[0]);
     printf("builtin: %i\n", current->builtin->type);

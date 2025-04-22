@@ -6,19 +6,20 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 13:07:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:28:59 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-int	cd_builtin(t_process *process)
+int	cd_builtin(t_process *process, t_minishell *shell)
 {
 	char    *path;
     char    *new_path_buffer;
     int     len;
 
+    (void)shell;
     path = process->command_arguments[1];
     chdir(path);
     new_path_buffer = getcwd(NULL, 0);

@@ -6,20 +6,21 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:10:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/16 16:15:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:30:17 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-int unset_builtin(t_process *process)
+int unset_builtin(t_process *process, t_minishell *shell)
 {
     t_environment   *current;
     t_environment   *prev;
     // t_environment   *to_del;
     
     prev = NULL;
+    (void)shell;
     current = process->env_vars;
     while (current != NULL)
     {

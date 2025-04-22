@@ -1,4 +1,3 @@
-count2.log
 count.log
 include
 libft
@@ -7,7 +6,6 @@ minishell
 obj
 README.md
 src
-temp2.txt
 temp.txt
 test.c
 test_file.txt

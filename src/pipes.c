@@ -6,11 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/21 14:29:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:32:47 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "builtins.h"
 //ls > temp.txt | grep txt < temp.txt | wc -l >> count.log
 
 
@@ -109,16 +110,28 @@ int	create_processes(t_minishell *shell)
 		}
 		else if(pid == 0)
 		{
+			if (current->is_builtin == 1)
+			{
+				handle_redirection(current);
+				dup2(current->input_fd, STDIN_FILENO);
+				dup2(current->output_fd, STDOUT_FILENO);
+				assign_builtin(current, ENV, env_builtin);//replace
+				current->builtin->function(current);
+			}
 			// printf("input_fd: %i\n", current->input_fd);
 			// printf("output_fd: %i\n", current->output_fd);
-			handle_redirection(current);
-			dup2(current->input_fd, STDIN_FILENO);
-			dup2(current->output_fd, STDOUT_FILENO);
+			else
+			{
+				handle_redirection(current);
+				dup2(current->input_fd, STDIN_FILENO);
+				dup2(current->output_fd, STDOUT_FILENO);
+				close_pipe_ends(shell, current);
+				path = get_path(current);
+				env_vars = execve_get_envvars(current);
+				// printf_twod(env_vars);
+				execve(path, current->command_arguments, env_vars);
+			}
 			close_pipe_ends(shell, current);
-			path = get_path(current);
-			env_vars = execve_get_envvars(current);
-			// printf_twod(env_vars);
-			execve(path, current->command_arguments, env_vars);
 			exit(0);
 		}
 		else
@@ -131,5 +144,3 @@ int	create_processes(t_minishell *shell)
 	waitpid_children(shell);
 	return (1);
 }
-
-

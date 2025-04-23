@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/21 17:34:25 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/22 12:07:34 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 void	init_shell(t_minishell *shell)
 {
-	static const char *const std_commands[] = {"cd", "echo", "exit", "pwd",
-		"env", "unset", "alias", "export", "type", "set", "history",
-		"ls", "cat", "grep", "wc", "head", "tail", "chmod", "mv", "cp",
-		"rm", "mkdir", "ps", "kill",NULL};
 	static const char *const system_commands[] = {"ls", "cat", "grep",
 		"wc", "head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill", NULL};
 	static const char *const buildin_commands[] = {"cd", "echo", "exit",
 		"pwd", "env", "unset", "alias", "export", "type", "set", "history", NULL};
 	shell->system_commands = (const char **)system_commands;
 	shell->buildin_commands = (const char **)buildin_commands;
-	shell->std_commands = (const char **)std_commands;
 	shell->input_str = "\0";
-	shell->input_arr = NULL;
 	shell->token_list = NULL;
 	shell->process_list = NULL;
 	shell->num_processes = 0;

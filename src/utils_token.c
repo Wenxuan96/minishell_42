@@ -6,21 +6,37 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/21 18:26:12 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/22 12:39:02 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void prt_tokenlst(t_minishell *shell)
+{
+	t_token *current;
+
+	current = shell->token_list;
+	if (!current)
+		return ;
+	ft_printf("current tokens are:");
+	while (current != NULL)
+	{
+		ft_printf(" [%s]", current->token_val);
+		current = current->next_token;
+	}
+	ft_printf(".\n");
+}
+
 int redir_checker(char *command)
 {
-	if (ft_strncmp(">>", command, 2) == 0)
+	if (ft_strncmp(">>", command, 2) == 0 && command[2] == '\0')
 		return (OUTPUT_APPEND);
-	else if (ft_strncmp(">", command, 1) == 0)
+	else if (ft_strncmp(">", command, 1) == 0 && command[1] == '\0')
 		return (OUTPUT);
-	else if (ft_strncmp("<<", command, 2) == 0)
+	else if (ft_strncmp("<<", command, 2) == 0 && command[2] == '\0')
 		return (HEREDOC);
-	else if (ft_strncmp("<", command, 1) == 0)
+	else if (ft_strncmp("<", command, 1) == 0 && command[1] == '\0')
 		return (INPUT);
 	return (MS_TARGET_NOT_FOUND);
 }
@@ -34,7 +50,7 @@ int token_checker(char *command)
 	return (WORD);
 }
 
-void	ms_lst_add_back(t_token **token_lst, t_token *new_token)
+void	ms_token_add_back(t_token **token_lst, t_token *new_token)
 {
 	t_token *current;
 
@@ -69,7 +85,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 	new_token->start = t_start;
 	new_token->type = token_checker(new_token->token_val);
 	new_token->next_token = NULL;
-	ms_lst_add_back(&shell->token_list, new_token);
+	ms_token_add_back(&shell->token_list, new_token);
 }
 
 void	def_special_token(t_minishell *shell, int *i)
@@ -91,34 +107,3 @@ void	def_special_token(t_minishell *shell, int *i)
 	}
 }
 
-bool	is_token_end(char c)
-{
-	return ft_strchr(" \t|<>", c) != NULL;
-}
-
-void tokenize_input(t_minishell *shell)
-{
-	int		i = 0;
-	int		start = 0;
-	char	quote_char = '\0';
-
-	while (shell->input_str[i])
-	{
-		if ((quote_char == '\0') && (shell->input_str[i] == '\''
-			|| shell->input_str[i] == '\"'))
-			quote_char = shell->input_str[i];
-		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
-			quote_char = '\0';
-		else if (quote_char == '\0' && is_token_end(shell->input_str[i]))
-		{
-			if (i != start)
-				def_token(shell, i - start, start);
-			while (is_token_end(shell->input_str[i]))
-				def_special_token(shell, &i);
-			start = i;
-		}
-		i++;
-	}
-	if (i != start)
-		def_token(shell, i - start, start);
-}

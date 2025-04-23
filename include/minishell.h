@@ -16,7 +16,7 @@
 
 struct s_builtin;
 typedef struct s_builtin t_builtin;
-typedef struct	s_environment	t_environment;
+// typedef struct	s_environment	t_environment;
 
 /*
 Lexer: takes in an input line
@@ -45,6 +45,13 @@ typedef	enum e_exit_status
 	MS_EXIT_SUCCESS = 0,
 	MS_TARGET_NOT_FOUND = 127,
 }	t_exit_status;
+
+typedef struct	s_environment
+{
+	char					*env_var;
+	char					*value;
+	struct	s_environment	*next_env_var;
+} t_environment;
 
 typedef struct s_token
 {
@@ -81,6 +88,7 @@ typedef struct s_process
 	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
+	int					exit_status;
 	bool				is_builtin;
 	bool				is_pipeline;
 	t_builtin			*builtin;
@@ -89,21 +97,12 @@ typedef struct s_process
 	struct s_process	*next_process;
 } t_process;
 
-struct	s_environment
-{
-	char					*env_var;
-	char					*value;
-	struct	s_environment	*next_env_var;
-};
-
 typedef struct s_minishell
 {
 	char			*input_str;
-	char			**input_arr;
 	int				input_status;
 	char			**heredoc_archive; //handle after lexer
 	int				heredoc_count; //helps to cleanup and keep track of the amount of heredoc
-	const char		**std_commands;
 	const char		**system_commands;
 	const char		**buildin_commands;
 	t_token			*token_list;
@@ -170,9 +169,15 @@ void			prt_env_lst(t_environment *env_list);
 /*testing*/
 void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
+void			prt_tokenlst(t_minishell *shell);
 
 /*parsing*/
 void			tokenize_input(t_minishell *shell);
+int				redir_checker(char *command);
+int				token_checker(char *command);
+void			free_tokenlst(t_minishell *shell);
+void			def_token(t_minishell *shell, int t_len, int t_start);
+void			def_special_token(t_minishell *shell, int *i);
 
 
 #endif

@@ -6,38 +6,11 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/21 18:25:01 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/22 12:07:59 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-/*Step 1: read from stdinput and save the input
-Signal is needed to continue reading user input
-if signal is received, read and malloc stdin
-*/
-
-// static void prt_input(char **input_arr)
-// {
-// 	int	i;
-	
-// 	i = 0;
-// 	while (input_arr[i])
-// 		ft_printf("current splitted input is: %s\n", input_arr[i++]);
-// }
-
-void prt_tokenlst(t_minishell *shell)
-{
-	t_token *current;
-
-	current = shell->token_list;
-	while (current != NULL)
-	{
-		ft_printf("current token is: %s, it is a %i token type\n", current->token_val, current->type);
-		current = current->next_token;
-	}
-}
 
 void free_tokenlst(t_minishell *shell)
 {
@@ -53,6 +26,33 @@ void free_tokenlst(t_minishell *shell)
 		shell->token_list = current;
 	}
 	shell->token_list = NULL;
+}
+
+void tokenize_input(t_minishell *shell)
+{
+	int		i = 0;
+	int		start = 0;
+	char	quote_char = '\0';
+
+	while (shell->input_str[i])
+	{
+		if ((quote_char == '\0') && (shell->input_str[i] == '\''
+			|| shell->input_str[i] == '\"'))
+			quote_char = shell->input_str[i];
+		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
+			quote_char = '\0';
+		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
+		{
+			if (i != start)
+				def_token(shell, i - start, start);
+			while (ft_strchr(" \t|<>", shell->input_str[i]) != NULL)
+				def_special_token(shell, &i);
+			start = i;
+		}
+		i++;
+	}
+	if (i != start)
+		def_token(shell, i - start, start);
 }
 
 int	read_input(int argc, t_minishell *shell)

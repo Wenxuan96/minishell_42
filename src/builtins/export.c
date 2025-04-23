@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 15:03:55 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/22 13:30:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-int export_builtin(t_process *process)
+int export_builtin(t_process *process, t_minishell *shell)
 {
     char   **split_vars;
     int     found;
     t_environment *current;
 
     found = 0;
+    (void)shell;
     current = process->env_vars;
     if (process->command_arguments[1] == NULL)
     {

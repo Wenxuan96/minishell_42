@@ -130,6 +130,9 @@ int				assign_fd(t_minishell *shell);
 int				create_processes(t_minishell *shell);
 int				read_input(int argc, t_minishell *shell);
 
+/*executor*/
+void    execute_builtin(t_process *process, t_minishell *shell);
+
 /*executor - redirections*/
 int 			redirections(t_process *process_lst);
 int 			handle_redirection(t_process *process);
@@ -165,6 +168,7 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 
 /*utils_builtins*/
 void			prt_env_lst(t_environment *env_list);
+int    			parse_builtin(t_minishell *shell);
 
 /*testing*/
 void			print_fds(t_minishell *shell);

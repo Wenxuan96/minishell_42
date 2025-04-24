@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:29:53 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:18:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int echo_builtin(t_process *process, t_minishell *shell) //-n -> not handled yet
 
     (void)shell;
     current = process;
-    printf("the echo command: %s\n", current->command_arguments[0]);
-    printf("builtin: %i\n", current->builtin->type);
+    // printf("the echo command: %s\n", current->command_arguments[0]);
+    // printf("builtin: %i\n", current->builtin->type);
     write(current->output_fd, current->command_arguments[1], ft_strlen(current->command_arguments[1]));
     write(current->output_fd, "\n", 1);
     return (1);

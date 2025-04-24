@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/24 12:31:12 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/24 17:20:54 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,19 @@ int	main(int argc, char **argv, char **envp)
 // 	// t_process		*current;
 // 	// t_process	*head;
 
-// 	(void)argc;
-// 	(void)argv;
-// 	init_shell(&shell);
-// 	create_env_lst(&shell.env_list, envp);
-// 	///redirectios here<
-// 	create_pipes(&shell);
-// 	redirections(shell.process_list);
-// 	assign_fd(&shell);
-// 	parse_builtin(&shell);
-// 	create_processes(&shell);
-// 	// head = shell.process_list;
-// 	// assign_builtin(shell.process_list, ENV, env_builtin);
-// 	// shell.process_list->builtin->function(shell.process_list);
+	// (void)argc;
+	// (void)argv;
+	// init_shell(&shell);
+	// setup_signals();
+	// create_env_lst(&shell.env_list, envp);
+	// create_pipes(&shell);
+	// redirections(shell.process_list);
+	// assign_fd(&shell);
+	// parse_builtin(&shell);
+	// create_processes(&shell);
+	// head = shell.process_list;
+	// assign_builtin(shell.process_list, ENV, env_builtin);
+	// shell.process_list->builtin->function(shell.process_list);
 
 // 	// assign_builtin(shell.process_list->next_process, UNSET, unset_builtin);
 // 	// shell.process_list->next_process->builtin->function(shell.process_list->next_process);

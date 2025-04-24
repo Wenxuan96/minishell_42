@@ -1,13 +1,1 @@
-count.log
-include
-libft
-Makefile
-minishell
-obj
-README.md
-src
-temp.txt
-test.c
-testdir
-test_file.txt
-utils_lists.c
+hello

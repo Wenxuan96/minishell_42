@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/21 13:35:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/23 10:40:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int redirections(t_process *process_lst)
     current->redirections = redir3;
 
     current = process_lst;
-    while (current != NULL)
-    {
-        printf("redir file: %s\n", current->redirections->file);
-        current = current->next_process;
-    }
+    // while (current != NULL)
+    // {
+    //     printf("redir file: %s\n", current->redirections->file);
+    //     current = current->next_process;
+    // }
     
     return (1);
 }

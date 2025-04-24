@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/21 10:24:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:33:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	new_process->is_builtin = 0;
 	new_process->is_pipeline = -1;
 	new_process->builtin = NULL;
-	new_process->stopped = 0;
 	new_process->completed = 0;
 	return (new_process);
 }
@@ -77,7 +76,7 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process)
 	current = shell->env_list;
 	while (current != NULL)
 	{
-		variable = ft_strdup(current->env_var);
+		variable = ft_strdup(current->env_var); ///check the segfault
 		if (current->value)
 			value = ft_strdup(current->value);
 		else

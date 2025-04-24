@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.c                                     :+:      :+:    :+:   */
+/*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/22 12:39:02 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/24 13:15:40 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void prt_tokenlst(t_minishell *shell)
-{
-	t_token *current;
-
-	current = shell->token_list;
-	if (!current)
-		return ;
-	ft_printf("current tokens are:");
-	while (current != NULL)
-	{
-		ft_printf(" [%s]", current->token_val);
-		current = current->next_token;
-	}
-	ft_printf(".\n");
-}
 
 int redir_checker(char *command)
 {
@@ -48,6 +32,21 @@ int token_checker(char *command)
 	if (redir_checker(command) != MS_TARGET_NOT_FOUND)
 		return (REDIRECTION);
 	return (WORD);
+}
+
+// Helper to remove surrounding quotes if they match
+char *remove_outer_quotes(char *str)
+{
+	size_t	len = ft_strlen(str);
+
+	if ((str[0] == '\"' && str[len - 1] == '\"') ||
+		(str[0] == '\'' && str[len - 1] == '\''))
+	{
+		char *trimmed = ft_substr(str, 1, len - 2);
+		free(str);
+		return trimmed;
+	}
+	return str;
 }
 
 void	ms_token_add_back(t_token **token_lst, t_token *new_token)
@@ -80,7 +79,14 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 		return ;
 	}
 	new_token = new_token_lst(sub);
-	new_token->in_quotes = false; //write check quote()
+	if ((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"') ||
+		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\''))
+	{
+		new_token->in_quotes = true;
+		new_token->token_val = remove_outer_quotes(sub);
+	}
+	else
+		new_token->in_quotes = false;
 	new_token->len = t_len;
 	new_token->start = t_start;
 	new_token->type = token_checker(new_token->token_val);

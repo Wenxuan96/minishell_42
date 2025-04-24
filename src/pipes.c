@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:31:30 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:30:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ int create_pipes(t_minishell *shell)
 {
 	t_process   *process_lst;
 	t_process   *current;
-	char *p1_cmd[] = {"ls", NULL};
-	char *p2_cmd[] = {"grep", "test", NULL};
-	char *p3_cmd[] = {"wc", "-l", NULL};
+	// char *p1_cmd[] = {"ls", NULL};
+	// char *p2_cmd[] = {"grep", "test", NULL};
+	// char *p3_cmd[] = {"wc", "-l", NULL};
+
+	char *p1_cmd[] = {"echo", "hello", NULL};
+	char *p2_cmd[] = {"cat", NULL};
+	char *p3_cmd[] = {"wc", "-c", NULL};
+
 
 	// char *p1_cmd[] = {"ls", NULL};
 	// char *p2_cmd[] = {"sort", NULL};
@@ -110,6 +115,8 @@ int	create_processes(t_minishell *shell)
 		}
 		else if(pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (current->is_builtin == 1)
 			{
 				execute_builtin(current, shell);

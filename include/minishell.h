@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -93,7 +94,6 @@ typedef struct s_process
 	bool				is_pipeline;
 	t_builtin			*builtin;
 	int					completed;
-	int					stopped;
 	struct s_process	*next_process;
 } t_process;
 
@@ -169,6 +169,9 @@ void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst
 /*utils_builtins*/
 void			prt_env_lst(t_environment *env_list);
 int    			parse_builtin(t_minishell *shell);
+
+/*signals*/
+int				setup_signals();
 
 /*testing*/
 void			print_fds(t_minishell *shell);

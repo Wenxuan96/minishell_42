@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:09:16 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:40:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:22:01 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int is_builtin(t_minishell *shell, t_process *process)
     const char **builtins;
     int     i;
 
+    printf("command: %s\n", process->command_arguments[0]);
     command = process->command_arguments[0];
     builtins = shell->buildin_commands;
     i = 0;

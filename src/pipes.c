@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/23 14:30:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:34:26 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	create_processes(t_minishell *shell)
 	char		**env_vars;
 
 	current = shell->process_list;
+	shell->num_processes = 3;
 	// printf("current node: %s\n", current->command_arguments[0]);
 	while (current != NULL)
 	{
@@ -117,7 +118,7 @@ int	create_processes(t_minishell *shell)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			if (current->is_builtin == 1)
+			if (current->is_builtin == 1 && shell->num_processes > 1)
 			{
 				execute_builtin(current, shell);
 			}
@@ -139,6 +140,8 @@ int	create_processes(t_minishell *shell)
 		}
 		else
 		{
+			if (current->is_builtin == 1 && shell->num_processes == 1)
+				execute_builtin(current, shell);	
 			current->pid = pid;
 			current = current->next_process;
 		}

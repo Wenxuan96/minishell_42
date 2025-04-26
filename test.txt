@@ -1,0 +1,44 @@
+//Simple commands
+echo hello
+ls -l
+pwd
+
+//Pipes
+ls -l | grep txt
+cat file.txt | sort | uniq
+
+//Redirections
+cat < input.txt
+echo hello > output.txt
+grep "hello" < in.txt > out.txt
+
+//Quotes
+echo "hello world"
+echo 'this is one token'
+echo "this $USER is logged in"
+
+//Mixed quotes and spaces
+echo '  lots of spaces   '
+echo "file name with spaces.txt"
+
+//Redirections with spaces
+cat    <    input.txt
+echo hi     >     output.txt
+
+//Special cases
+echo hello > file1 > file2
+ls || echo fail
+grep something && echo success
+
+//Unclosed quotes (error testing)
+echo "this is not closed
+echo 'oops
+
+//Semicolons and backslashes (Forbidden)
+echo hello; ls
+echo hi\ there
+
+//Here Document (Heredoc)
+cat << EOF
+some text
+EOF

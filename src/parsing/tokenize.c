@@ -1,76 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_token.c                                      :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/24 13:15:40 by wxi              ###   ########.fr       */
+/*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
+/*   Updated: 2025/04/26 20:58:34 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int redir_checker(char *command)
+static void	skip_whitespace(const char *str, int *i)
 {
-	if (ft_strncmp(">>", command, 2) == 0 && command[2] == '\0')
-		return (OUTPUT_APPEND);
-	else if (ft_strncmp(">", command, 1) == 0 && command[1] == '\0')
-		return (OUTPUT);
-	else if (ft_strncmp("<<", command, 2) == 0 && command[2] == '\0')
-		return (HEREDOC);
-	else if (ft_strncmp("<", command, 1) == 0 && command[1] == '\0')
-		return (INPUT);
-	return (MS_TARGET_NOT_FOUND);
+	while (str[*i] == ' ' || str[*i] == '\t')
+		(*i)++;
 }
 
-int token_checker(char *command)
-{
-	if (ft_strlen(command) == 1 && command[0] == '|')
-		return(PIPELINE);
-	if (redir_checker(command) != MS_TARGET_NOT_FOUND)
-		return (REDIRECTION);
-	return (WORD);
-}
-
-// Helper to remove surrounding quotes if they match
-char *remove_outer_quotes(char *str)
-{
-	size_t	len = ft_strlen(str);
-
-	if ((str[0] == '\"' && str[len - 1] == '\"') ||
-		(str[0] == '\'' && str[len - 1] == '\''))
-	{
-		char *trimmed = ft_substr(str, 1, len - 2);
-		free(str);
-		return trimmed;
-	}
-	return str;
-}
-
-void	ms_token_add_back(t_token **token_lst, t_token *new_token)
-{
-	t_token *current;
-
-	if (new_token == NULL)
-		return ;
-	if (*token_lst == NULL)
-	{
-		*token_lst = new_token;
-		return ;
-	}
-	current = *token_lst;
-	while (current->next_token != NULL)
-		current = current->next_token;
-	current->next_token = new_token;
-}
-
-// for normal tokens
 void	def_token(t_minishell *shell, int t_len, int t_start)
 {
 	t_token	*new_token;
-	char *sub;
+	char	*sub;
 
 	sub = ft_substr(shell->input_str, t_start, t_len);
 	if (!sub || sub[0] == '\0') // <- 🔥 important check
@@ -113,3 +64,47 @@ void	def_special_token(t_minishell *shell, int *i)
 	}
 }
 
+void	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
+{
+	i = 0;
+	while (shell->input_str[i])
+	{
+		if ((quote_char == '\0') && (shell->input_str[i] == '\''
+			|| shell->input_str[i] == '\"'))//check if it is in-quote
+			quote_char = shell->input_str[i];
+		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
+			quote_char = '\0';//check if a quote is closed
+		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
+		{
+			if (i != start)
+				def_token(shell, i - start, start);
+			while (ft_strchr(" \t|<>", shell->input_str[i]) != NULL)
+			{
+				def_special_token(shell, &i);
+				skip_whitespace(shell->input_str, &i);
+			}
+			start = i;
+			continue;
+		}
+		i++;
+	}
+	if (i != start)
+		def_token(shell, i - start, start);
+}
+
+void tokenize_input(t_minishell *shell)
+{
+	int		i;
+	int		start;
+	char	quote_char;
+
+	i = 0;
+	start = 0;
+	quote_char = '\0';
+	if (!validate_quotes(shell->input_str))
+	{
+		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
+		return;
+	}
+	iter_input_str(shell, i, start, quote_char);
+}

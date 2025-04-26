@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/21 17:02:54 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/26 21:12:54 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 	int	i;
 
 	i = 0;
-	if (!shell->input_status && error_msg)
+	if (!shell->input_str && error_msg)
 		ft_printf("%s\n", error_msg);
 	else if (error_msg)
 		ft_printf("Error: %s.\n", error_msg);

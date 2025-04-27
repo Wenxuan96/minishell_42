@@ -18,6 +18,7 @@
 
 struct s_builtin;
 typedef struct s_builtin t_builtin;
+extern volatile sig_atomic_t g_exit_status;
 // typedef struct	s_environment	t_environment;
 
 /*
@@ -109,6 +110,7 @@ typedef struct s_minishell
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;
+	// t_exit_status	exit_status;		
 	int				num_processes;
 	t_environment	*env_list;
 }	t_minishell;
@@ -150,6 +152,7 @@ void			ft_lstclear_redir(t_redirection **redir_list);
 void			ft_lstclear_process_envvars(t_process **process);
 void			ft_lstclear_process(t_process **process_list);
 void			ft_exit(t_minishell *shell, char *error_msg);
+void			free_pipes(t_minishell *shell);
 
 /*utils_malloc*/
 char			**allocate_array(char **commands);
@@ -178,6 +181,18 @@ int				setup_signals();
 void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
 void			prt_tokenlst(t_minishell *shell);
+
+/*parsing*/
+void			tokenize_input(t_minishell *shell);
+int				redir_checker(char *command);
+int				token_checker(char *command);
+void			free_tokenlst(t_minishell *shell);
+void			def_token(t_minishell *shell, int t_len, int t_start);
+void			def_special_token(t_minishell *shell, int *i);
+
+/*errors*/
+void    display_shell_error(char *msg, int exit_status);
+
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 21:23:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/27 15:09:16 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void prt_tokenlst(t_minishell *shell)
 	ft_printf(".\n");
 }
 
-init_processlst(t_minishell *shell)
+int init_processlst(t_minishell *shell)
 {
+	(void)shell;
 	//check tokenlst and count the amount of '|'s
 	//malloc the amount of processes
 	//loop throught the tokenlst to populate each process node
+	return (1);
 }
 
 int	read_input(int argc, t_minishell *shell)

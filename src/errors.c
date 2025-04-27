@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:28:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/24 17:44:21 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/27 15:24:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	error_exit(t_minishell *shell, char *error_msg)
 	int	i;
 
 	i = 0;
-	if (!shell->input_status && error_msg)
+	if (!shell->input_str && error_msg)
 		ft_printf("%s\n", error_msg);
 	else if (error_msg)
 		ft_printf("Error: %s.\n", error_msg);

@@ -87,13 +87,13 @@ typedef struct s_process
 {
 	pid_t				pid;
 	char				**command_arguments;
-	t_redirection		*redirections;
+	t_redirection		*redirections; 
 	t_environment		*env_vars;
 	int					input_fd;
     int					output_fd;
-	int					exit_status;
+	int					exit_status; //keep it for now but do not need to populate
 	bool				is_builtin;
-	bool				is_pipeline;
+	bool				is_pipeline;//keep it for now but do not need to populate
 	t_builtin			*builtin;
 	int					completed;
 	struct s_process	*next_process;

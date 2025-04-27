@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/27 15:11:51 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/27 21:36:45 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,42 @@ void prt_tokenlst(t_minishell *shell)
 	ft_printf(".\n");
 }
 
-int init_processlst(t_minishell *shell)
-{
-	(void)shell;
-	//check tokenlst and count the amount of '|'s
-	//malloc the amount of processes
-	//loop throught the tokenlst to populate each process node
-	return (1);
-}
+// int create_pipes(t_minishell *shell)
+// {
+// 	t_process   *process_lst;
+// 	t_process   *current;
+// 	// char *p1_cmd[] = {"ls", NULL};
+// 	// char *p2_cmd[] = {"grep", "test", NULL};
+// 	// char *p3_cmd[] = {"wc", "-l", NULL};
+
+// 	char *p1_cmd[] = {"echo", "hello", NULL};
+// 	char *p2_cmd[] = {"cat", NULL};
+// 	char *p3_cmd[] = {"wc", "-c", NULL};
+
+// 	process_lst = NULL;
+// 	process_lst_add_back(new_process_lst(shell, p1_cmd), &process_lst);
+// 	process_lst_add_back(new_process_lst(shell, p2_cmd), &process_lst);
+// 	process_lst_add_back(new_process_lst(shell, p3_cmd), &process_lst);
+// 	shell->process_list = process_lst;
+// 	current = process_lst;
+// 	while (current != NULL)
+// 	{
+// 		// printf("%s\n", current->command_arguments[0]);
+// 		current = current->next_process;
+// 		shell->num_processes++;
+// 	}
+// 	current = process_lst;
+// 	if (shell->num_processes > 1)
+// 	{
+// 		while (current != NULL)
+// 		{
+// 			current->is_pipeline = 1;
+// 			current = current->next_process;
+// 		}
+// 	}
+// 	shell->pipes = allocate_pipes(shell->num_processes - 1);
+// 	return (1);
+// }
 
 int	read_input(int argc, t_minishell *shell)
 {
@@ -56,7 +84,7 @@ int	read_input(int argc, t_minishell *shell)
 		return (2);
 	add_history(shell->input_str);
 	tokenize_input(shell);
-	// init_processlst(shell);
+	init_processlst(shell);
 	prt_tokenlst(shell);
 	return(MS_EXIT_SUCCESS);
 }

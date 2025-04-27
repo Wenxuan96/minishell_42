@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 20:58:34 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/27 18:56:08 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 {
 	t_token	*new_token;
 	char	*sub;
-
+	
 	sub = ft_substr(shell->input_str, t_start, t_len);
 	if (!sub || sub[0] == '\0') // <- 🔥 important check
 	{
@@ -30,17 +30,17 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 		return ;
 	}
 	new_token = new_token_lst(sub);
-	if ((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"') ||
-		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\''))
+	new_token->len = t_len;
+	new_token->start = t_start;
+	new_token->type = token_checker(new_token->token_val);
+	if (((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"') ||
+		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\'')))
 	{
 		new_token->in_quotes = true;
 		new_token->token_val = remove_outer_quotes(sub);
 	}
 	else
 		new_token->in_quotes = false;
-	new_token->len = t_len;
-	new_token->start = t_start;
-	new_token->type = token_checker(new_token->token_val);
 	new_token->next_token = NULL;
 	ms_token_add_back(&shell->token_list, new_token);
 }
@@ -66,7 +66,6 @@ void	def_special_token(t_minishell *shell, int *i)
 
 void	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 {
-	i = 0;
 	while (shell->input_str[i])
 	{
 		if ((quote_char == '\0') && (shell->input_str[i] == '\''

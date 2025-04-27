@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/04/17 09:50:07 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:22:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	create_env_lst(t_environment **env_list, char **envp)
 		if (!env_split)
 			return (0);
 		new_env = ft_new_var_lst(env_split[0], env_split[1]);
+		if (!new_env)
+			return(ft_lstclear_env(env_list), 0);
 		ft_var_lstadd_back(env_list, new_env);
 	}
 	// prt_env_lst(env_list);

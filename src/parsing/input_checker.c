@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 21:23:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/27 15:10:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void prt_tokenlst(t_minishell *shell)
 	ft_printf(".\n");
 }
 
-init_processlst(t_minishell *shell)
-{
-	//check tokenlst and count the amount of '|'s
-	//malloc the amount of processes
-	//loop throught the tokenlst to populate each process node
-}
+// init_processlst(t_minishell *shell)
+// {
+// 	//check tokenlst and count the amount of '|'s
+// 	//malloc the amount of processes
+// 	//loop throught the tokenlst to populate each process node
+// }
 
 int	read_input(int argc, t_minishell *shell)
 {
@@ -54,7 +54,7 @@ int	read_input(int argc, t_minishell *shell)
 		return (2);
 	add_history(shell->input_str);
 	tokenize_input(shell);
-	init_processlst(shell);
+	// init_processlst(shell);
 	prt_tokenlst(shell);
 	return(MS_EXIT_SUCCESS);
 }

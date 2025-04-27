@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/24 15:34:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:26:07 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,61 +92,5 @@ int	assign_fd(t_minishell *shell)
 		i++;
 		current = current->next_process;
 	}
-	return (1);
-}
-
-int	create_processes(t_minishell *shell)
-{
-	pid_t		pid;
-	t_process	*current;
-	char		*path;
-	char		**env_vars;
-
-	current = shell->process_list;
-	shell->num_processes = 3;
-	// printf("current node: %s\n", current->command_arguments[0]);
-	while (current != NULL)
-	{
-		current->env_vars = copy_env_list(shell, current);
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("Forking failed");
-			return (0);	
-		}
-		else if(pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			if (current->is_builtin == 1 && shell->num_processes > 1)
-			{
-				execute_builtin(current, shell);
-			}
-			// printf("input_fd: %i\n", current->input_fd);
-			// printf("output_fd: %i\n", current->output_fd);
-			else
-			{
-				handle_redirection(current);
-				dup2(current->input_fd, STDIN_FILENO);
-				dup2(current->output_fd, STDOUT_FILENO);
-				close_pipe_ends(shell, current);
-				path = get_path(current);
-				env_vars = execve_get_envvars(current);
-				// printf_twod(env_vars);
-				execve(path, current->command_arguments, env_vars);
-			}
-			close_pipe_ends(shell, current);
-			exit(0);
-		}
-		else
-		{
-			if (current->is_builtin == 1 && shell->num_processes == 1)
-				execute_builtin(current, shell);	
-			current->pid = pid;
-			current = current->next_process;
-		}
-	}
-	close_pipe_ends_parent(shell);
-	waitpid_children(shell);
 	return (1);
 }

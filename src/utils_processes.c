@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/24 15:33:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:41:05 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process)
 	while (current != NULL)
 	{
 		variable = ft_strdup(current->env_var); ///check the segfault
+		if (!variable)
+		{
+			display_shell_error("memory allocation failed", 1);
+			
+		}
 		if (current->value)
 			value = ft_strdup(current->value);
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/27 18:28:55 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/28 16:47:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int redir_checker(char *command)
 		return (HEREDOC);
 	else if (ft_strncmp("<", command, 1) == 0 && command[1] == '\0')
 		return (INPUT);
-	return (MS_TARGET_NOT_FOUND);
+	return (CMD_NOTFOUND);
 }
 
 int token_checker(char *command)
@@ -65,7 +65,7 @@ int token_checker(char *command)
 		ft_printf("it is pipeline.\n");
 		return(PIPELINE);
 	}
-	if (redir_checker(command) != MS_TARGET_NOT_FOUND)
+	if (redir_checker(command) != CMD_NOTFOUND)
 		return (REDIRECTION);
 	return (WORD);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/23 11:28:43 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/28 16:49:58 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_shell(t_minishell *shell)
 		"pwd", "env", "unset", "alias", "export", "type", "set", "history", NULL};
 	shell->system_commands = (const char **)system_commands;
 	shell->buildin_commands = (const char **)buildin_commands;
-	shell->input_str = "\0";
+	shell->input_str = NULL;
 	shell->token_list = NULL;
 	shell->process_list = NULL;
 	shell->num_processes = 0;

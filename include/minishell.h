@@ -19,6 +19,17 @@
 struct s_builtin;
 typedef struct s_builtin t_builtin;
 extern volatile sig_atomic_t g_exit_status;
+
+#define EXEC_FAILURE 1
+#define EXEC_SUCCESS 0
+#define EX_BADUSAGE 2
+#define EX_MISCERROR 2
+#define EX_BINARY_FILE 126
+#define EX_NOEXEC 126
+#define EX_NOINPUT 126
+#define CMD_NOTFOUND 127
+
+
 // typedef struct	s_environment	t_environment;
 
 /*
@@ -42,12 +53,12 @@ typedef	enum	e_redir_type
 	NONE,
 }	t_redir_type;
 
-typedef	enum e_exit_status
-{
-	MS_EXIT_FAILURE = 1,
-	MS_EXIT_SUCCESS = 0,
-	MS_TARGET_NOT_FOUND = 127,
-}	t_exit_status;
+// typedef	enum e_exit_status
+// {
+// 	EXEC_FAILURE = 1,
+// 	EXEC_SUCCESS = 0,
+// 	MS_TARGET_NOT_FOUND = 127,
+// }	t_exit_status;
 
 typedef struct	s_environment
 {
@@ -134,15 +145,16 @@ int				create_processes(t_minishell *shell);
 int				read_input(int argc, t_minishell *shell);
 
 /*executor*/
-void    execute_builtin(t_process *process, t_minishell *shell);
+int    execute_builtin(t_process *process, t_minishell *shell);
+int    execute_outside_cmd(t_process *process, t_minishell *shell);
 
 /*executor - redirections*/
 int 			redirections(t_process *process_lst);
 int 			handle_redirection(t_process *process);
 
 /*executor - execve*/
-char			**get_pathdirs(t_process *process);
-char    		*get_path(t_process *process);
+char    		**get_pathdirs(t_minishell *shell, t_process *process);
+char    		*get_path(t_minishell *shell, t_process *process);
 char    		**execve_get_envvars(t_process *process);
 
 /*cleanup*/
@@ -153,6 +165,7 @@ void			ft_lstclear_process_envvars(t_process **process);
 void			ft_lstclear_process(t_process **process_list);
 void			ft_exit(t_minishell *shell, char *error_msg);
 void			free_pipes(t_minishell *shell);
+void			free_2darray(char **arr);
 
 /*utils_malloc*/
 char			**allocate_array(char **commands);
@@ -192,6 +205,7 @@ void			def_special_token(t_minishell *shell, int *i);
 
 /*errors*/
 void    display_shell_error(char *msg, int exit_status);
+void    exit_with_error(t_minishell *shell, char *msg, int exit_status);
 
 
 #endif

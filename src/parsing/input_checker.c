@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/27 21:41:40 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/28 16:46:29 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ int	read_input(int argc, t_minishell *shell)
 	tokenize_input(shell);
 	init_processlst(shell);
 	prt_tokenlst(shell);
-	return(MS_EXIT_SUCCESS);
+	return(EXEC_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 21:12:54 by wxi              ###   ########.fr       */
+/*   Updated: 2025/04/28 16:45:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ void	ft_lstclear_token(t_token **token_list)
 		current = next;
 	}
 	*token_list = NULL;
+}
+
+void	free_2darray(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
 void	ft_lstclear_env(t_environment **env_list)
@@ -107,7 +120,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 	else if (error_msg)
 		ft_printf("Error: %s.\n", error_msg);
 	else if (!shell && !error_msg)
-		exit(MS_EXIT_SUCCESS);
+		exit(EXEC_SUCCESS);
 	else
 	{
 		ft_lstclear_token(&shell->token_list);
@@ -119,5 +132,5 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 			free_pipes(shell);
 		shell = NULL;
 	}
-	exit(MS_EXIT_SUCCESS);
+	exit(EXEC_SUCCESS);
 }

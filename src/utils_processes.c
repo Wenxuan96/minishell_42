@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/24 17:41:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:56:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,20 @@ void	waitpid_children(t_minishell *shell)
 {
     t_process *current_process;
     int wait_res;
+	int	status;
     
     current_process = shell->process_list;
     while (current_process != NULL)
     {
-        wait_res = waitpid(current_process->pid, 0, 0);
+        wait_res = waitpid(current_process->pid, &status, 0);
         if (wait_res == -1)
+			exit_with_error(shell, "waitpid() failed", EXEC_FAILURE);
+		if (current_process->next_process == NULL)
         {
-            perror("waitpid failed\n");
-            exit(1);
+            if (WIFEXITED(status))
+                g_exit_status = WEXITSTATUS(status);
+            else if (WIFSIGNALED(status))
+                g_exit_status = 128 + WTERMSIG(status);
         }
         current_process = current_process->next_process;
     }
@@ -77,13 +82,10 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process)
 	while (current != NULL)
 	{
 		variable = ft_strdup(current->env_var); ///check the segfault
-		if (!variable)
-		{
-			display_shell_error("memory allocation failed", 1);
-			
-		}
 		if (current->value)
 			value = ft_strdup(current->value);
+		if (!variable || !value)
+			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 		else
 			value = NULL;
 		new_env_node = ft_new_var_lst(variable, value);

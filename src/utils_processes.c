@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/28 13:56:30 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:57:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,31 @@ void	waitpid_children(t_minishell *shell)
     }
 }
 
-t_environment	*copy_env_list(t_minishell *shell, t_process *process)
-{
-	t_environment	*current;
-	t_environment	*new_env_lst;
-	t_environment	*new_env_node;
-	char			*variable;
-	char			*value;
+// t_environment	*copy_env_list(t_minishell *shell, t_process *process)
+// {
+// 	t_environment	*current;
+// 	t_environment	*new_env_lst;
+// 	t_environment	*new_env_node;
+// 	char			*variable;
+// 	char			*value;
 
-	new_env_lst = NULL;
-	current = shell->env_list;
-	while (current != NULL)
-	{
-		variable = ft_strdup(current->env_var); ///check the segfault
-		if (current->value)
-			value = ft_strdup(current->value);
-		if (!variable || !value)
-			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
-		else
-			value = NULL;
-		new_env_node = ft_new_var_lst(variable, value);
-		ft_var_lstadd_back(&new_env_lst, new_env_node);
-		current = current->next_env_var;
-	}
-	process->env_vars = new_env_lst;
-	// printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
-	return (process->env_vars);
-}
+// 	new_env_lst = NULL;
+// 	current = shell->env_list;
+// 	while (current != NULL)
+// 	{
+// 		variable = ft_strdup(current->env_var);
+// 		if (current->value)
+// 			value = ft_strdup(current->value);
+// 		if (!variable || !value)
+// 			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+// 		else
+// 			value = NULL;
+// 		new_env_node = ft_new_var_lst(variable, value);
+// 		ft_var_lstadd_back(&new_env_lst, new_env_node);
+// 		current = current->next_env_var;
+// 	}
+// 	process->env_vars = new_env_lst;
+// 	// printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
+// 	return (process->env_vars);
+// }
 

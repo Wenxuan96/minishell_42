@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/29 09:35:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:48:04 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 // 	while ((*current) && (*current)->type != PIPELINE)
 // 	{
 // 		commands[i] = strdup((*current)->token_val);
+//         printf("commands: %s\n", commands[i]);
 // 		(*current) = (*current)->next_token;
 // 		i++;
 // 	}
@@ -76,42 +77,42 @@
 // 	}	
 // }
 
-// int create_pipes(t_minishell *shell)
-// {
-// 	t_process   *process_lst;
-// 	t_process   *current;
-// 	// char *p1_cmd[] = {"ls", NULL};
-// 	// char *p2_cmd[] = {"grep", "test", NULL};
-// 	// char *p3_cmd[] = {"wc", "-l", NULL};
+// // int create_pipes(t_minishell *shell)
+// // {
+// // 	t_process   *process_lst;
+// // 	t_process   *current;
+// // 	// char *p1_cmd[] = {"ls", NULL};
+// // 	// char *p2_cmd[] = {"grep", "test", NULL};
+// // 	// char *p3_cmd[] = {"wc", "-l", NULL};
 
-// 	char *p1_cmd[] = {"echo", "hello", NULL};
-// 	char *p2_cmd[] = {"cat", NULL};
-// 	char *p3_cmd[] = {"wc", "-c", NULL};
+// // 	char *p1_cmd[] = {"echo", "hello", NULL};
+// // 	char *p2_cmd[] = {"cat", NULL};
+// // 	char *p3_cmd[] = {"wc", "-c", NULL};
 
-// 	process_lst = NULL;
-// 	process_lst_add_back(new_process_lst(shell, p1_cmd), &process_lst);
-// 	process_lst_add_back(new_process_lst(shell, p2_cmd), &process_lst);
-// 	process_lst_add_back(new_process_lst(shell, p3_cmd), &process_lst);
-// 	shell->process_list = process_lst;
-// 	current = process_lst;
-// 	while (current != NULL)
-// 	{
-// 		// printf("%s\n", current->command_arguments[0]);
-// 		current = current->next_process;
-// 		shell->num_processes++;
-// 	}
-// 	current = process_lst;
-// 	if (shell->num_processes > 1)
-// 	{
-// 		while (current != NULL)
-// 		{
-// 			current->is_pipeline = 1;
-// 			current = current->next_process;
-// 		}
-// 	}
-// 	shell->pipes = allocate_pipes(shell->num_processes - 1);
-// 	return (1);
-// }
+// // 	process_lst = NULL;
+// // 	process_lst_add_back(new_process_lst(shell, p1_cmd), &process_lst);
+// // 	process_lst_add_back(new_process_lst(shell, p2_cmd), &process_lst);
+// // 	process_lst_add_back(new_process_lst(shell, p3_cmd), &process_lst);
+// // 	shell->process_list = process_lst;
+// // 	current = process_lst;
+// // 	while (current != NULL)
+// // 	{
+// // 		// printf("%s\n", current->command_arguments[0]);
+// // 		current = current->next_process;
+// // 		shell->num_processes++;
+// // 	}
+// // 	current = process_lst;
+// // 	if (shell->num_processes > 1)
+// // 	{
+// // 		while (current != NULL)
+// // 		{
+// // 			current->is_pipeline = 1;
+// // 			current = current->next_process;
+// // 		}
+// // 	}
+// // 	shell->pipes = allocate_pipes(shell->num_processes - 1);
+// // 	return (1);
+// // }
 
 // int init_processlst(t_minishell *shell)
 // {

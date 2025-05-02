@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/29 09:47:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:47:38 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,48 @@ int	count_pipes(t_minishell *shell)
 	return (i);
 }
 
-char	**get_commands(t_token	**current)
+char	**get_commands(t_token	**token)
 {
 	int		i;
 	char	**commands;
-	t_token	*process_current;
+	t_token	*current;
 	
 	i = 0;
-	if ((*current)->type == PIPELINE && (*current)->next_token != NULL)
-		*current = (*current)->next_token;
-	process_current = *current;
-	while (process_current && process_current->type != PIPELINE)
+	if ((*token)->type == PIPELINE && (*token)->next_token != NULL)
+		*token = (*token)->next_token;
+	current = *token;
+	while (current && current->type != PIPELINE)
 	{
-		i++;
-		process_current = process_current->next_token;
+		if (current->type == REDIRECTION)
+		{
+			current = current->next_token;
+			if (current)
+				current = current->next_token;
+		}
+		else
+		{
+			i++;
+			current = current->next_token;
+		}
 	}
 	commands = (char **)malloc((i + 1) * sizeof(char *));
 	if (!commands)
 		return (NULL);
 	i = 0;
-	while ((*current) && (*current)->type != PIPELINE)
+	while ((*token) && (*token)->type != PIPELINE)
 	{
-		commands[i] = strdup((*current)->token_val);
-		(*current) = (*current)->next_token;
-		i++;
+		if ((*token)->type == REDIRECTION)
+		{
+			(*token) = (*token)->next_token;
+			if (*token != NULL)
+				(*token) = (*token)->next_token;
+		}
+		else
+		{
+			commands[i] = strdup((*token)->token_val);
+			(*token) = (*token)->next_token;
+			i++;
+		}
 	}
 	commands[i] = NULL;
 	return (commands);
@@ -76,42 +94,72 @@ void prt_cmds(t_process *process_lst)
 	}	
 }
 
-// int create_pipes(t_minishell *shell)
-// {
-// 	t_process   *process_lst;
-// 	t_process   *current;
-// 	// char *p1_cmd[] = {"ls", NULL};
-// 	// char *p2_cmd[] = {"grep", "test", NULL};
-// 	// char *p3_cmd[] = {"wc", "-l", NULL};
+t_redir_type	get_redir_type(t_token *token)
+{
+	t_redir_type	type;
 
-// 	char *p1_cmd[] = {"echo", "hello", NULL};
-// 	char *p2_cmd[] = {"cat", NULL};
-// 	char *p3_cmd[] = {"wc", "-c", NULL};
+	type = NONE;
+	if (ft_strcmp(token->token_val, ">") == 0 && token->token_val[1] == '\0')
+		type = OUTPUT;
+	else if (ft_strcmp(token->token_val, "<") == 0 && token->token_val[1] == '\0')
+		type = INPUT;
+	else if (ft_strcmp(token->token_val, ">>") == 0 && token->token_val[2] == '\0')
+		type = OUTPUT_APPEND;
+	else if (ft_strcmp(token->token_val, "<<") == 0 && token->token_val[2] == '\0')
+		type = HEREDOC;
+	return type;
+}
+char	*get_file(t_token *token)
+{
+	char	*redir_file;
 
-// 	process_lst = NULL;
-// 	process_lst_add_back(new_process_lst(shell, p1_cmd), &process_lst);
-// 	process_lst_add_back(new_process_lst(shell, p2_cmd), &process_lst);
-// 	process_lst_add_back(new_process_lst(shell, p3_cmd), &process_lst);
-// 	shell->process_list = process_lst;
-// 	current = process_lst;
-// 	while (current != NULL)
-// 	{
-// 		// printf("%s\n", current->command_arguments[0]);
-// 		current = current->next_process;
-// 		shell->num_processes++;
-// 	}
-// 	current = process_lst;
-// 	if (shell->num_processes > 1)
-// 	{
-// 		while (current != NULL)
-// 		{
-// 			current->is_pipeline = 1;
-// 			current = current->next_process;
-// 		}
-// 	}
-// 	shell->pipes = allocate_pipes(shell->num_processes - 1);
-// 	return (1);
-// }
+	redir_file = NULL;
+	if (token->next_token->type == WORD)
+		redir_file = token->next_token->token_val;
+	return (redir_file);
+}
+
+int	parse_redirection(t_minishell *shell)
+{
+	t_process *current_process;
+	t_token		*current_token;
+	t_redir_type type;
+	char 		*file;
+
+	current_process = shell->process_list;
+	current_token = shell->token_list;
+	if (current_token->type == PIPELINE && current_token->next_token != NULL)
+		current_token = current_token->next_token;
+	while (current_process != NULL)
+	{
+		while (current_token != NULL)
+		{
+			if (current_token->type == PIPELINE)
+			{
+				current_token = current_token->next_token;
+				break ;
+			}
+			if (current_token->type == REDIRECTION)
+			{
+				type = get_redir_type(current_token);
+				file = ft_strdup(get_file(current_token));
+				if (!current_process->redirections)
+					current_process->redirections = new_redir_lst(type, file);
+				else
+					redir_lst_add_back(new_redir_lst(type, file), &current_process->redirections);
+				current_token = current_token->next_token;
+				if (current_token->next_token)
+					current_token = current_token->next_token;
+				}
+			else
+				current_token = current_token->next_token;
+		}
+		printf("redirection type: %u\n", current_process->redirections->type);
+		printf("redirection file: %s\n", current_process->redirections->file);
+		current_process = current_process->next_process;
+	}
+	return (1);
+}
 
 int init_processlst(t_minishell *shell)
 {
@@ -130,11 +178,12 @@ int init_processlst(t_minishell *shell)
 		if (!arr_commands)
             return (0);
 		if (!shell->process_list)
-		shell->process_list = new_process_lst(shell, arr_commands);
+			shell->process_list = new_process_lst(shell, arr_commands);
 		else
 			process_lst_add_back(new_process_lst(shell, arr_commands), &shell->process_list);
 		i++;
 	}
+	parse_redirection(shell);
 	prt_cmds(shell->process_list);
 	return (1);
 }

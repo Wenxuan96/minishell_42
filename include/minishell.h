@@ -180,7 +180,7 @@ void			close_pipe_ends(t_minishell *shell, t_process	*current);
 void			close_pipe_ends_parent(t_minishell *shell);
 
 /*utils_redir*/
-t_redirection    *new_redir_lst(int fd, t_redir_type type, char *file);
+t_redirection    *new_redir_lst(t_redir_type type, char *file);
 void    		redir_lst_add_back(t_redirection *new_redir, t_redirection **redir_lst);
 
 /*utils_builtins*/

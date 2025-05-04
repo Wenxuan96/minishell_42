@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:28:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/28 16:48:48 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:03:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_everything(t_minishell *shell)
 		free(shell->input_str);
 	if (shell->pipes)
 		free_pipes(shell);
-	exit(g_exit_status);
+	// exit(g_exit_status);
 }
 
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status)

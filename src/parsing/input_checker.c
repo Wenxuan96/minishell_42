@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/28 16:46:29 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:36:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	read_input(int argc, t_minishell *shell)
 	add_history(shell->input_str);
 	tokenize_input(shell);
 	init_processlst(shell);
-	prt_tokenlst(shell);
+	// prt_tokenlst(shell);
 	return(EXEC_SUCCESS);
 }

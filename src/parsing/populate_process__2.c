@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/04 13:53:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:40:57 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ void	print_process(t_minishell *shell)
     current = shell->process_list;
     while (current != NULL)
 	{
-		printf("\n\npid: %u\n", current->pid);
 		printf("command :%s, %s\n", current->command_arguments[0], current->command_arguments[1]);
 		if (current->redirections)
 		{
@@ -214,7 +213,7 @@ int init_processlst(t_minishell *shell)
 	}
 	parse_redirection(shell);
 	parse_builtin(shell);
-	print_process(shell);
+	// print_process(shell);
 	// prt_cmds(shell->process_list);
 	return (1);
 }

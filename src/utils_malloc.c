@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/08 14:46:39 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:28:00 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,5 @@ int	**allocate_pipes(int p_num)
 		pipe(pipes[i]);
 		i++;
 	}
-
 	return (pipes);
 }

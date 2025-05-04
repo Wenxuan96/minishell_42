@@ -166,6 +166,7 @@ void			ft_lstclear_process(t_process **process_list);
 void			ft_exit(t_minishell *shell, char *error_msg);
 void			free_pipes(t_minishell *shell);
 void			free_2darray(char **arr);
+void			free_everything(t_minishell *shell);
 
 /*utils_malloc*/
 char			**allocate_array(char **commands);

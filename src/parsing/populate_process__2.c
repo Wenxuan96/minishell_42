@@ -6,11 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/02 16:47:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/04 13:53:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "builtins.h"
 
 int	count_pipes(t_minishell *shell)
 {
@@ -107,7 +108,7 @@ t_redir_type	get_redir_type(t_token *token)
 		type = OUTPUT_APPEND;
 	else if (ft_strcmp(token->token_val, "<<") == 0 && token->token_val[2] == '\0')
 		type = HEREDOC;
-	return type;
+	return (type);
 }
 char	*get_file(t_token *token)
 {
@@ -154,11 +155,39 @@ int	parse_redirection(t_minishell *shell)
 			else
 				current_token = current_token->next_token;
 		}
-		printf("redirection type: %u\n", current_process->redirections->type);
-		printf("redirection file: %s\n", current_process->redirections->file);
+		// if (current_process->redirections)
+		// {
+		// 	printf("redirection type: %u\n", current_process->redirections->type);
+		// 	printf("redirection file: %s\n", current_process->redirections->file);
+		// }
 		current_process = current_process->next_process;
 	}
 	return (1);
+}
+
+void	print_process(t_minishell *shell)
+{
+	t_process   *current;
+
+    current = shell->process_list;
+    while (current != NULL)
+	{
+		printf("\n\npid: %u\n", current->pid);
+		printf("command :%s, %s\n", current->command_arguments[0], current->command_arguments[1]);
+		if (current->redirections)
+		{
+			while (current->redirections)
+			{
+				printf("redirection type: %u\n", current->redirections->type);
+				printf("redirection file: %s\n", current->redirections->file);
+				current->redirections = current->redirections->next_redir;
+			}
+		}
+		printf("is_builtin: %i\n", current->is_builtin);
+		if (current->is_builtin == 1)
+			printf("type: %u\n", current->builtin->type);
+		current = current->next_process;
+	}
 }
 
 int init_processlst(t_minishell *shell)
@@ -184,6 +213,8 @@ int init_processlst(t_minishell *shell)
 		i++;
 	}
 	parse_redirection(shell);
-	prt_cmds(shell->process_list);
+	parse_builtin(shell);
+	print_process(shell);
+	// prt_cmds(shell->process_list);
 	return (1);
 }

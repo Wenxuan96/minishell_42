@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/28 16:47:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/05 09:16:27 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int token_checker(char *command)
 {
 	if ((ft_strlen(command) == 1 && command[0] == '|'))
 	{
-		ft_printf("it is pipeline.\n");
+		// ft_printf("it is pipeline.\n");
 		return(PIPELINE);
 	}
 	if (redir_checker(command) != CMD_NOTFOUND)

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/04 16:06:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:14:20 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell		shell;
+	t_process *p;
 	// t_environment	*env_list;
 	// t_process		*current;
 	// t_process	*head;
@@ -52,6 +53,13 @@ int	main(int argc, char **argv, char **envp)
 		assign_fd(&shell);
 		// print_fds(&shell);
 		create_processes(&shell);
+		p = shell.process_list;
+		while (p)
+		{
+			p->input_fd = STDIN_FILENO;
+			p->output_fd = STDOUT_FILENO;
+			p = p->next_process;
+		}
 		free_everything(&shell);
 	}
 	// ft_exit(&shell, NULL); //   <--- segfaulting

@@ -6,11 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/28 16:57:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:50:40 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 
@@ -22,8 +23,8 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	new_process->command_arguments = allocate_array(commands);
 	new_process->redirections= NULL;
 	new_process->env_vars = NULL;
-	new_process->input_fd = -1;
-	new_process->output_fd = -1;
+	new_process->input_fd = -2;
+	new_process->output_fd = -2;
 	new_process->next_process= NULL;
 	new_process->is_builtin = 0;
 	new_process->is_pipeline = -1;

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:26:37 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/17 10:06:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/05 09:40:35 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ void	free_pipes(t_minishell *shell)
 	i = 0;
 	while (i < shell->num_processes - 1)
 	{
+		close(shell->pipes[i][0]);
+		close(shell->pipes[i][1]);
 		free(shell->pipes[i]);
 		i++;
 	}
 	free(shell->pipes);
+	shell->pipes = NULL;
 }
 
 void	prt_env_lst(t_environment *env_list)

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/05 15:51:03 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:07:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,18 @@ int    execute_builtin(t_process *process, t_minishell *shell)
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
-    // else
-    // {
-    //     if (current->input_fd != STDIN_FILENO)
-    //         close (current->input_fd);
-    // }
-    // if (current->input_fd != STDIN_FILENO)
-    //     close(current->input_fd);
+
+    if (current->input_fd != STDIN_FILENO)
+        close(current->input_fd);
         
     if (dup2(current->output_fd, STDOUT_FILENO) ==  -1)
     {
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
-    // else
-    // {
-    //     if (current->output_fd != STDOUT_FILENO)
-    //         close (current->output_fd);
-    // }
+
+    if (current->output_fd != STDOUT_FILENO)
+            close (current->output_fd);
     
     // printf("input fd: %i\n",current->input_fd);
 	// printf("output fd: %i\n",current->output_fd);
@@ -56,6 +50,11 @@ int    execute_builtin(t_process *process, t_minishell *shell)
     // }
     close_pipe_ends(shell, current);
     current->builtin->function(current, shell);
+    ft_lstclear_env(&shell->env_list);
+    ft_lstclear_process(&shell->process_list);
+    free_pipes(shell);
+    ft_lstclear_token(&shell->token_list);
+    free(shell->input_str);
     return (1);
 }
 
@@ -86,6 +85,7 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell)
     path = get_path(shell, process);
     env_vars = execve_get_envvars(current);
     // printf_twod(env_vars);
+    ft_lstclear_env(&shell->env_list);
     execve(path, current->command_arguments, env_vars);
     return (1);
 }

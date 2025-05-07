@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/27 18:56:08 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/07 08:29:35 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\'')))
 	{
 		new_token->in_quotes = true;
+		free(new_token->token_val);
 		new_token->token_val = remove_outer_quotes(sub);
 	}
 	else

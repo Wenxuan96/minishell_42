@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/04 15:28:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/07 07:20:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char	**allocate_array(char **commands)
 	while (commands[num_cmd])
 		num_cmd++;
 	
-	malloced_array = (char **)malloc(num_cmd * sizeof(char *));
+	malloced_array = (char **)malloc((num_cmd + 1) * sizeof(char *));
 	while (i < num_cmd)
 	{
-		malloced_array[i] = (char *)malloc(ft_strlen(commands[i]));
+		malloced_array[i] = (char *)malloc(ft_strlen(commands[i]) + 1);
 		ft_strlcpy(malloced_array[i], commands[i], ft_strlen(commands[i]) + 1);
 		i++;
 	}

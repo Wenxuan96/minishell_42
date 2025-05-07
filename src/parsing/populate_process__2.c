@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/04 15:40:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:08:12 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	parse_redirection(t_minishell *shell)
 
 	current_process = shell->process_list;
 	current_token = shell->token_list;
+	file = NULL;
 	if (current_token->type == PIPELINE && current_token->next_token != NULL)
 		current_token = current_token->next_token;
 	while (current_process != NULL)
@@ -168,18 +169,21 @@ int	parse_redirection(t_minishell *shell)
 void	print_process(t_minishell *shell)
 {
 	t_process   *current;
+	t_redirection *curr_redir;
 
     current = shell->process_list;
+	printf("num_proc: %i\n", shell->num_processes);
     while (current != NULL)
 	{
+		curr_redir = current->redirections;
 		printf("command :%s, %s\n", current->command_arguments[0], current->command_arguments[1]);
-		if (current->redirections)
+		if (curr_redir)
 		{
-			while (current->redirections)
+			while (curr_redir)
 			{
-				printf("redirection type: %u\n", current->redirections->type);
-				printf("redirection file: %s\n", current->redirections->file);
-				current->redirections = current->redirections->next_redir;
+				printf("redirection type: %u\n", curr_redir->type);
+				printf("redirection file: %s\n", curr_redir->file);
+				curr_redir = curr_redir->next_redir;
 			}
 		}
 		printf("is_builtin: %i\n", current->is_builtin);
@@ -211,6 +215,7 @@ int init_processlst(t_minishell *shell)
 			process_lst_add_back(new_process_lst(shell, arr_commands), &shell->process_list);
 		i++;
 	}
+	free_2darray(arr_commands);
 	parse_redirection(shell);
 	parse_builtin(shell);
 	// print_process(shell);

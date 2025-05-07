@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/05 11:49:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:50:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,54 +83,77 @@ void	ft_lstclear_redir(t_redirection **redir_list)
 	*redir_list = NULL;
 }
 
-void	ft_lstclear_process(t_process **process_list) //   + clean env_vars
+void ft_lstclear_process(t_process **process_list)
 {
-	t_process	*current;
-	t_process	*next;
-	int			i;
+    t_process *current;
+    t_process *next;
+    int i;
 
-	if (!process_list || !*process_list)
-		return ;
-	current = *process_list;
-	while (current)
-	{
-		next = current->next_process;
-		ft_lstclear_redir(&(current->redirections));
-		ft_lstclear_process_envvars(&current);
-		if (current->command_arguments)
-		{
-			i = 0;
-			while (current->command_arguments[i])
-				free (current->command_arguments[i++]);
-			free (current->command_arguments);
-		}
-		free (current);
-		current = next;
-	}
-	*process_list = NULL;
+    if (!process_list || !*process_list)
+        return;
+    
+    current = *process_list;
+    while (current) {
+        next = current->next_process;
+        ft_lstclear_redir(&current->redirections);
+        if (current->command_arguments) {
+            i = 0;
+            while (current->command_arguments[i]) {
+                free(current->command_arguments[i]);
+                i++;
+            }
+            free(current->command_arguments);
+        }
+        if (current->is_builtin && current->builtin)
+            free(current->builtin);
+        
+        free(current);
+        current = next;
+    }
+    *process_list = NULL;
 }
 
-void	ft_exit(t_minishell *shell, char *error_msg)
-{
-	int	i;
+// void	ft_exit(t_minishell *shell, char *error_msg)
+// {
+// 	int	i;
 
-	i = 0;
-	if (!shell->input_str && error_msg)
-		ft_printf("%s\n", error_msg);
-	else if (error_msg)
-		ft_printf("Error: %s.\n", error_msg);
-	else if (!shell && !error_msg)
-		exit(EXEC_SUCCESS);
-	else
-	{
-		ft_lstclear_token(&shell->token_list);
-		ft_lstclear_env(&shell->env_list);
-		ft_lstclear_process(&shell->process_list);
-		if (shell->input_str)
-			free (shell->input_str);
-		if (shell->pipes)
-			free_pipes(shell);
-		shell = NULL;
-	}
-	exit(EXEC_SUCCESS);
+// 	i = 0;
+// 	if (!shell->input_str && error_msg)
+// 		ft_printf("%s\n", error_msg);
+// 	else if (error_msg)
+// 		ft_printf("Error: %s.\n", error_msg);
+// 	else if (!shell && !error_msg)
+// 		exit(EXEC_SUCCESS);
+// 	else
+// 	{
+// 		ft_lstclear_token(&shell->token_list);
+// 		ft_lstclear_env(&shell->env_list);
+// 		ft_lstclear_process(&shell->process_list);
+// 		if (shell->input_str)
+// 			free (shell->input_str);
+// 		if (shell->pipes)
+// 			free_pipes(shell);
+// 		shell = NULL;
+// 	}
+// 	exit(EXEC_SUCCESS);
+// }
+void ft_exit(t_minishell *shell, char *error_msg)
+{
+    if (error_msg)
+        ft_printf("%s\n", error_msg);
+    
+    if (shell) {
+        ft_lstclear_token(&shell->token_list);
+        ft_lstclear_env(&shell->env_list);
+        ft_lstclear_process(&shell->process_list);
+        
+        if (shell->input_str)
+            free(shell->input_str);
+        
+        if (shell->pipes) {
+            free_pipes(shell);
+            shell->pipes = NULL;
+        }
+    }
+    exit(EXEC_SUCCESS);
 }

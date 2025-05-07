@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/05 16:14:20 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:17:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ int	main(int argc, char **argv, char **envp)
 			p->output_fd = STDOUT_FILENO;
 			p = p->next_process;
 		}
-		free_everything(&shell);
+		ft_lstclear_token(&shell.token_list);
+		ft_lstclear_process(&shell.process_list);
+		if (shell.input_str)
+			free(shell.input_str);
+		if (shell.pipes)
+			free_pipes(&shell);
 	}
-	// ft_exit(&shell, NULL); //   <--- segfaulting
+	ft_exit(&shell, NULL);
 	return (0);
 }

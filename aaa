@@ -1,0 +1,17 @@
+total 148
+-rw-r--r-- 1 tignatov piscine   1113 May  7 13:08 Makefile
+-rw-r--r-- 1 tignatov piscine     16 Mar 25 12:22 README.md
+-rw-r--r-- 1 tignatov piscine      0 May  8 15:55 aaa
+-rw-r--r-- 1 tignatov piscine      6 May  8 15:46 count.log
+drwxr-xr-x 2 tignatov piscine     41 Apr 28 09:56 include
+drwxr-xr-x 2 tignatov piscine   4096 May  8 15:53 libft
+-rwxr-xr-x 1 tignatov piscine 102448 May  8 15:55 minishell
+-rw-r--r-- 1 tignatov piscine     69 May  7 12:59 minishell.supp
+drwxr-xr-x 3 tignatov piscine   4096 May  8 15:55 obj
+drwxr-xr-x 4 tignatov piscine   4096 May  8 15:53 src
+-rw-r--r-- 1 tignatov piscine      6 May  8 15:45 temp
+-rw-r--r-- 1 tignatov piscine      0 May  8 15:52 temp.txt
+-rw-r--r-- 1 tignatov piscine     13 May  8 15:45 temp2
+-rw-r--r-- 1 tignatov piscine      0 May  8 15:52 tenpy
+drwxr-xr-x 2 tignatov piscine      6 Apr 14 11:45 testdir
+-rw-r--r-- 1 tignatov piscine    917 Apr  9 15:16 utils_lists.c

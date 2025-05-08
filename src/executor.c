@@ -6,14 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/08 14:43:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:31:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
-
-#include <stdio.h>
 
 int    execute_builtin(t_process *process, t_minishell *shell)
 {
@@ -47,8 +45,9 @@ int    execute_builtin(t_process *process, t_minishell *shell)
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
+    dprintf(2, "outout fd: %i\n", current->output_fd);
     if (current->output_fd != STDOUT_FILENO)
-            close (current->output_fd);
+        close (current->output_fd);
     
     // printf("input fd: %i\n",current->input_fd);
 	// printf("output fd: %i\n",current->output_fd);

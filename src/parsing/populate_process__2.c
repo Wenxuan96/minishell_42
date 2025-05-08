@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/08 13:54:41 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:19:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ void	print_process(t_minishell *shell)
 				curr_redir = curr_redir->next_redir;
 			}
 		}
-		printf("is_builtin: %i\n", current->is_builtin);
 		if (current->is_builtin == 1)
 			printf("type: %u\n", current->builtin->type);
 		current = current->next_process;

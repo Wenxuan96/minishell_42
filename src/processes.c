@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/08 14:43:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:31:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,18 @@ int	create_processes(t_minishell *shell)
 		else if (shell->num_processes > 1 || current->redirections != NULL)
 		{
 			// current->env_vars = copy_env_list(shell, current);
+			dprintf(2, "fokred!\n");
 			pid = fork();
 			if (pid < 0)
 				return (display_shell_error("fork failed", 2), 0);
-			else if(pid == 0)
+			else if (pid == 0)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, SIG_DFL);
 				// printf("child process running, pid: %d\n", getpid());
 				if (current->is_builtin == 1)
 				{
+					dprintf(2, "builtin!\n");
 					if (execute_builtin(current, shell) == 0)
 						exit(g_exit_status);
 				}
@@ -51,7 +53,6 @@ int	create_processes(t_minishell *shell)
 					if (execute_outside_cmd(current, shell) == 0)
 						exit(g_exit_status);
 				}
-				printf("forked");
 				free_process(shell, current);
 				exit(EXEC_SUCCESS);
 			}

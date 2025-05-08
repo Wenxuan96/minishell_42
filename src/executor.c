@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/07 17:07:36 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:55:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell)
     env_vars = execve_get_envvars(current);
     // printf_twod(env_vars);
     ft_lstclear_env(&shell->env_list);
+    ft_lstclear_token(&shell->token_list);
+    free_pipes(shell);
+    free(shell->input_str);
     execve(path, current->command_arguments, env_vars);
+    // ft_lstclear_process(&shell->process_list);
     return (1);
 }

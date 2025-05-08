@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/08 10:59:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:13:20 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 			continue; /* skip all functions below, rerun while loop and awaits for new input */
 		create_pipes(&shell);
 		assign_fd(&shell);
-		// print_fds(&shell);
+		print_fds(&shell);
 		create_processes(&shell);
 		p = shell.process_list;
 		while (p)
@@ -60,12 +60,12 @@ int	main(int argc, char **argv, char **envp)
 			p->output_fd = STDOUT_FILENO;
 			p = p->next_process;
 		}
-		ft_lstclear_token(&shell.token_list);
-		ft_lstclear_process(&shell.process_list);
-		if (shell.input_str)
-			free(shell.input_str);
-		if (shell.pipes)
-			free_pipes(&shell);
+		// ft_lstclear_token(&shell.token_list);
+		// ft_lstclear_process(&shell.process_list);
+		// if (shell.input_str)
+		// 	free(shell.input_str);
+		// if (shell.pipes)
+		// 	free_pipes(&shell);
 	}
 	ft_exit(&shell, NULL);
 	return (0);

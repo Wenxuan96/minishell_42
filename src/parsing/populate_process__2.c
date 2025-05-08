@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/07 08:08:12 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:54:41 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,8 @@ int init_processlst(t_minishell *shell)
 
 	i = 0;
 	current = shell->token_list;
-	// process_lst = NULL;
 	shell->num_processes = count_pipes(shell);
+	// printf("num proc: %i\n", shell->num_processes);
 	while (i < shell->num_processes)
 	{
 		arr_commands = get_commands(&current);

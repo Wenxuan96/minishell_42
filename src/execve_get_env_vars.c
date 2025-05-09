@@ -6,13 +6,13 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:13:36 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/21 10:22:31 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 08:41:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    **execve_get_envvars(t_process *process)
+char    **execve_get_envvars(t_minishell *shell)
 {
     char    **envvars;
     int     num_vars;
@@ -23,7 +23,7 @@ char    **execve_get_envvars(t_process *process)
     i = 0;
     total_len = 0;
     num_vars = 0;
-    var_list = process->env_vars;
+    var_list = shell->env_list;
     while (var_list != NULL)
     {
         if (var_list->value != NULL)
@@ -33,7 +33,7 @@ char    **execve_get_envvars(t_process *process)
         var_list = var_list->next_env_var;         
     }
     envvars = (char **)malloc((num_vars + 1) * sizeof(char *));
-    var_list = process->env_vars;
+    var_list = shell->env_list;
     while (var_list != NULL)
     {
         if (var_list->value != NULL)

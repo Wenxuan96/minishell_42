@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/05 11:50:40 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:49:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,19 @@ void	waitpid_children(t_minishell *shell)
     current_process = shell->process_list;
     while (current_process != NULL)
     {
-        wait_res = waitpid(current_process->pid, &status, 0);
-        if (wait_res == -1)
-			exit_with_error(shell, "waitpid() failed", EXEC_FAILURE);
-		if (current_process->next_process == NULL)
-        {
-            if (WIFEXITED(status))
-                g_exit_status = WEXITSTATUS(status);
-            else if (WIFSIGNALED(status))
-                g_exit_status = 128 + WTERMSIG(status);
-        }
+		if (current_process->pid != 0)
+		{
+			wait_res = waitpid(current_process->pid, &status, 0);
+			if (wait_res == -1)
+				exit_with_error(shell, "waitpid() failed", EXEC_FAILURE);
+			if (current_process->next_process == NULL)
+			{
+				if (WIFEXITED(status))
+					g_exit_status = WEXITSTATUS(status);
+				else if (WIFSIGNALED(status))
+					g_exit_status = 128 + WTERMSIG(status);
+			}
+		}
         current_process = current_process->next_process;
     }
 }

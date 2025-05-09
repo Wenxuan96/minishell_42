@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/08 16:31:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 09:54:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int	create_processes(t_minishell *shell)
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			execute_builtin(current, shell);
+			current->pid = 0;
+			// free_process(shell, current);
 			// current->builtin->function(current, shell);
 				// exit(g_exit_status);
 		}
-		else if (shell->num_processes > 1 || current->redirections != NULL)
+		else
 		{
 			// current->env_vars = copy_env_list(shell, current);
-			dprintf(2, "fokred!\n");
+			// dprintf(2, "fokred!\n");
 			pid = fork();
 			if (pid < 0)
 				return (display_shell_error("fork failed", 2), 0);
@@ -44,11 +46,11 @@ int	create_processes(t_minishell *shell)
 				// printf("child process running, pid: %d\n", getpid());
 				if (current->is_builtin == 1)
 				{
-					dprintf(2, "builtin!\n");
+					// dprintf(2, "builtin!\n");
 					if (execute_builtin(current, shell) == 0)
 						exit(g_exit_status);
 				}
-				else if (current->is_builtin != 1)
+				else
 				{
 					if (execute_outside_cmd(current, shell) == 0)
 						exit(g_exit_status);
@@ -64,7 +66,7 @@ int	create_processes(t_minishell *shell)
 		current = current->next_process;
 	}
 	close_pipe_ends_parent(shell);
-	// if (shell->num_processes > 1)
-	waitpid_children(shell);
+	if (shell->num_processes >= 1)
+		waitpid_children(shell);
 	return (1);
 }

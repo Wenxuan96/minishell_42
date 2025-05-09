@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/08 15:54:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:02:32 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_status = read_input(argc, &shell);
+		p = shell.process_list;
+		while (p)
+		{
+			p->input_fd = STDIN_FILENO;
+			p->output_fd = STDOUT_FILENO;
+			p = p->next_process;
+		}
 		if (shell.input_status == 2) /* When receiving empty str as input */
 			continue; /* skip all functions below, rerun while loop and awaits for new input */
 		create_pipes(&shell);

@@ -155,7 +155,7 @@ int 			handle_redirection(t_process *process);
 /*executor - execve*/
 char    		**get_pathdirs(t_minishell *shell, t_process *process);
 char    		*get_path(t_minishell *shell, t_process *process);
-char    		**execve_get_envvars(t_process *process);
+char    		**execve_get_envvars(t_minishell *shell);
 
 /*cleanup*/
 void			ft_lstclear_token(t_token **token_list);

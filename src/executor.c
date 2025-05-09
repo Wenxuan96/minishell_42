@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/08 16:31:14 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 08:45:46 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int    execute_builtin(t_process *process, t_minishell *shell)
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
-    dprintf(2, "outout fd: %i\n", current->output_fd);
+    // dprintf(2, "outout fd: %i\n", current->output_fd);
     if (current->output_fd != STDOUT_FILENO)
         close (current->output_fd);
     
@@ -96,7 +96,7 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell)
     if (shell->pipes)
         close_pipe_ends(shell, current);
     path = get_path(shell, process);
-    env_vars = execve_get_envvars(current);
+    env_vars = execve_get_envvars(shell);
     // printf_twod(env_vars);
     // ft_lstclear_env(&shell->env_list);
     // ft_lstclear_token(&shell->token_list);

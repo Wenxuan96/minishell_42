@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/05 15:35:58 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:07:21 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int create_pipes(t_minishell *shell)
 			current->is_pipeline = 1;
 			current = current->next_process;
 		}
+		shell->pipes = allocate_pipes(shell->num_processes - 1);
 	}
-	shell->pipes = allocate_pipes(shell->num_processes - 1);
 	return (1);
 }
 
@@ -100,16 +100,23 @@ int	assign_fd(t_minishell *shell)
 	i = 0;
 	while (current != NULL)
 	{
-		if (i == 0)
-			current->input_fd = STDIN_FILENO;
-		else
-			current->input_fd = shell->pipes[i - 1][0];
-		if (i == shell->num_processes - 1)
-			current->output_fd = STDOUT_FILENO;
-		else
-			current->output_fd = shell->pipes[i][1];
-		i++;
-		
+		if (shell->num_processes > 1)
+		{
+			if (i == 0)
+				current->input_fd = STDIN_FILENO;
+			else
+				current->input_fd = shell->pipes[i - 1][0]; ///segging
+			if (i == shell->num_processes - 1)
+				current->output_fd = STDOUT_FILENO;
+			else
+				current->output_fd = shell->pipes[i][1];
+			i++;
+		}
+		// else
+		// {
+		// 	current->input_fd = STDIN_FILENO;
+		// 	current->output_fd = STDOUT_FILENO;
+		// }
 		// dprintf(2, "PIPE %i: %i | %i\n", i, current->input_fd, current->output_fd);
 		current = current->next_process;
 	}

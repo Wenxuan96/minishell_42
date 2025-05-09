@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/09 09:54:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:31:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	create_processes(t_minishell *shell)
 			signal(SIGQUIT, SIG_DFL);
 			execute_builtin(current, shell);
 			current->pid = 0;
+			ft_lstclear_process(&shell->process_list);
+			free(shell->input_str);
+			free_pipes(shell);
 			// free_process(shell, current);
 			// current->builtin->function(current, shell);
 				// exit(g_exit_status);
@@ -65,6 +68,7 @@ int	create_processes(t_minishell *shell)
 		}
 		current = current->next_process;
 	}
+	// free_process(shell, current);
 	close_pipe_ends_parent(shell);
 	if (shell->num_processes >= 1)
 		waitpid_children(shell);

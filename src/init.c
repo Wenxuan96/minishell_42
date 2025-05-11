@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/28 16:49:58 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:38:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_token	*new_token_lst(char *token)
 	
 	(void)token;
 	new_token = malloc(sizeof(t_token));
-	new_token->token_val = token;
+	new_token->token_val = ft_strdup(token);
 	new_token->next_token = NULL;
 	return (new_token);
 }

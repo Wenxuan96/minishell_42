@@ -1,0 +1,13 @@
+a
+b
+c
+include
+libft
+Makefile
+minishell
+minishell.supp
+obj
+README.md
+src
+testdir
+utils_lists.c

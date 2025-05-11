@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/09 11:32:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:23:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell)
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
+    // dprintf(2, "input fd: %i\n", current->input_fd);
     if (current->input_fd != STDIN_FILENO)
         close(current->input_fd);
     if (dup2(current->output_fd, STDOUT_FILENO) ==  -1)
@@ -91,6 +92,7 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell)
         display_shell_error("dup2 failed", EXEC_FAILURE);
         return (close_pipe_ends(shell, current), 0);
     }
+    // dprintf(2, "outout fd: %i\n", current->output_fd);
     if (current->output_fd != STDOUT_FILENO)
         close(current->output_fd);
     if (shell->pipes)

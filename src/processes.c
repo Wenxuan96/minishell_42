@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/09 11:31:36 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:35:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	create_processes(t_minishell *shell)
 {
 	pid_t		pid;
 	t_process	*current;
+	// int saved_stdin;
+	// int saved_stdout;
 
 	current = shell->process_list;
 	// printf("current node: %s\n", current->command_arguments[0]);
@@ -24,13 +26,13 @@ int	create_processes(t_minishell *shell)
 	{
 		if (current->is_builtin == 1 && shell->num_processes == 1 && !current->redirections)
 		{
+			// dprintf(2, "builtin in parent!\n");
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			execute_builtin(current, shell);
 			current->pid = 0;
-			ft_lstclear_process(&shell->process_list);
-			free(shell->input_str);
-			free_pipes(shell);
+			// ft_lstclear_process(&shell->process_list);
+			// free_pipes(shell);
 			// free_process(shell, current);
 			// current->builtin->function(current, shell);
 				// exit(g_exit_status);
@@ -44,6 +46,8 @@ int	create_processes(t_minishell *shell)
 				return (display_shell_error("fork failed", 2), 0);
 			else if (pid == 0)
 			{
+				// saved_stdin = dup(STDIN_FILENO);
+				// saved_stdout = dup(STDOUT_FILENO);
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, SIG_DFL);
 				// printf("child process running, pid: %d\n", getpid());
@@ -55,10 +59,11 @@ int	create_processes(t_minishell *shell)
 				}
 				else
 				{
+					// dprintf(2, "cmd./!\n");
 					if (execute_outside_cmd(current, shell) == 0)
 						exit(g_exit_status);
 				}
-				free_process(shell, current);
+				// free_process(shell, current);
 				exit(EXEC_SUCCESS);
 			}
 			else

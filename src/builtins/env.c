@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:42:33 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:29:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 10:58:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	env_builtin(t_process *process, t_minishell *shell)
 {
-	(void)shell;
-	prt_env_lst(process->env_vars);
+	(void)process;
+	prt_env_lst(shell->env_list);
 	return (1);
 }

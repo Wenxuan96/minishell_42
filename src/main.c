@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/09 10:02:32 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 11:38:05 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ int	main(int argc, char **argv, char **envp)
 			p = p->next_process;
 		}
 		// ft_lstclear_token(&shell.token_list);
-		// ft_lstclear_process(&shell.process_list);
-		// if (shell.input_str)
-		// 	free(shell.input_str);
-		// if (shell.pipes)
-		// 	free_pipes(&shell);
+		ft_lstclear_process(&shell.process_list);
+		// ft_lstclear_env(&shell.env_list);
+		if (shell.pipes)
+			free_pipes(&shell);
 	}
 	ft_exit(&shell, NULL);
 	return (0);

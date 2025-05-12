@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/12 10:58:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:42:19 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	create_processes(t_minishell *shell)
 				{
 					// dprintf(2, "builtin!\n");
 					if (execute_builtin(current, shell) == 0)
+					{
+						free_process(shell, current);
 						exit(g_exit_status);
+					}
 				}
 				else
 				{

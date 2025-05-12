@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/11 16:30:22 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:48:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int    execute_builtin(t_process *process, t_minishell *shell)
     }
     // dprintf(2, "outout fd: %i\n", current->output_fd);
     if (current->output_fd != STDOUT_FILENO)
-        close (current->output_fd);
+        close(current->output_fd);
     
     // printf("input fd: %i\n",current->input_fd);
 	// printf("output fd: %i\n",current->output_fd);

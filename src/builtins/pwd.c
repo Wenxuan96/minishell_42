@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:07:55 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/11 10:59:53 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:47:58 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int pwd_builtin(t_process *process, t_minishell *shell)
     // write(process->output_fd, "\n", 1);
     write(STDOUT_FILENO, path_buffer, ft_strlen(path_buffer));
     write(STDOUT_FILENO, "\n", 1);
+    free(path_buffer);
     return (1);
 }

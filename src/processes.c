@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/11 12:56:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 10:58:15 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	create_processes(t_minishell *shell)
 				{
 					// dprintf(2, "cmd./!\n");
 					if (execute_outside_cmd(current, shell) == 0)
+					{
+						free_process(shell, current);
 						exit(g_exit_status);
+					}
 				}
 				free_process(shell, current);
 				exit(EXEC_SUCCESS);

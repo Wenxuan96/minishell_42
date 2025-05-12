@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 21:02:56 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/11 16:17:12 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*remove_outer_quotes(char *str)
 		trimmed = ft_substr(str, 1, len - 2);
 		if (str[0] == '\"' && str[len - 1] == '\"')
 			trimmed = handle_dollar_sign(trimmed);
-		free(str);
+		// free(str);
 		return (trimmed);
 	}
 	return (str);

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/07 08:18:52 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:18:25 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
             // printf("the path: %s\n", current->value);
             dir_paths = ft_split(current->value, ':');
             if (!dir_paths)
-                exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+            {
+                free_2darray(dir_paths);
+                display_shell_error("memory allocation failed", EXEC_FAILURE);
+                return (0);
+            }
             // printf_twod_array(dir_paths);
             break ;
         }
@@ -98,6 +102,7 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
     }
     // printf("pro-commnd: %s\n", process->command_arguments[0]);
     new_dir_paths = concat_path(shell, dir_paths, process->command_arguments[0]);
+    free_2darray(dir_paths);
     // printf_twod_array(new_dir_paths);
     return (new_dir_paths);
 }
@@ -110,17 +115,27 @@ char    *get_path(t_minishell *shell, t_process *process)
 
     i = 0;
     path_dirs = get_pathdirs(shell, process);
+    if (!path_dirs)
+        return (NULL);
     while (path_dirs[i] != NULL)
     {
         if (access(path_dirs[i], X_OK) == 0)
         {
             path = ft_strdup(path_dirs[i]);
             if (!path)
-                exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+            {
+                free_2darray(path_dirs);
+                display_shell_error("memory allocation failed", EXEC_FAILURE);
+                return (NULL);
+            }
+                
             break ;
         }
         i++;
     }
+    free_2darray(path_dirs);
+    if (!path)
+        return (display_shell_error("command not found", CMD_NOTFOUND), NULL);
     return (path);
 }
 

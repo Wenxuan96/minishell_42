@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:30:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:14:17 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int export_builtin(t_process *process, t_minishell *shell)
     t_environment *current;
 
     found = 0;
-    (void)shell;
-    current = process->env_vars;
+    // (void)process;
+    current = shell->env_list;
     if (process->command_arguments[1] == NULL)
     {
-        prt_env_lst(process->env_vars);
+        prt_env_lst(shell->env_list);
         return (1);
     }
     split_vars = ft_split(process->command_arguments[1], '=');
@@ -39,8 +39,9 @@ int export_builtin(t_process *process, t_minishell *shell)
         current = current->next_env_var;
     }
     if (found == 0)
-        ft_var_lstadd_back(&process->env_vars, ft_new_var_lst(split_vars[0], split_vars[1]));
-    // prt_env_lst(&process->env_vars);
+        ft_var_lstadd_back(&shell->env_list, ft_new_var_lst(split_vars[0], split_vars[1]));
+    free(split_vars);
+    // prt_env_lst(&shell->env_list);
     // printf("\n\n\n");
     return (1);
 }

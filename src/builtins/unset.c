@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:10:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/04/22 13:30:17 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:16:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int unset_builtin(t_process *process, t_minishell *shell)
     // t_environment   *to_del;
     
     prev = NULL;
-    (void)shell;
-    current = process->env_vars;
+    // (void)shell;
+    current = shell->env_list;
     while (current != NULL)
     {
         if (ft_strcmp(current->env_var, process->command_arguments[1]) == 0)
@@ -29,7 +29,7 @@ int unset_builtin(t_process *process, t_minishell *shell)
             // to_del = current;
             if (prev == NULL)
             {
-                process->env_vars = current->next_env_var;
+                shell->env_list = current->next_env_var;
                 free(current->env_var);
                 free(current->value);
                 free(current);
@@ -47,6 +47,6 @@ int unset_builtin(t_process *process, t_minishell *shell)
         prev = current;
         current = current->next_env_var;
     }
-    // prt_env_lst(&process->env_vars);
+    // prt_env_lst(&shell->env_list);
     return (1);
 }

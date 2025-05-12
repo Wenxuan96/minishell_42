@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/11 11:24:11 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:01:39 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**get_commands(t_token	**token)
 	}
 	commands = (char **)malloc((i + 1) * sizeof(char *));
 	if (!commands)
-		return (NULL);
+		return (display_shell_error("memory allocation failed", EXEC_FAILURE), NULL);
 	i = 0;
 	while ((*token) && (*token)->type != PIPELINE)
 	{
@@ -70,6 +70,12 @@ char	**get_commands(t_token	**token)
 		else
 		{
 			commands[i] = strdup((*token)->token_val);
+			if (!commands[i])
+			{
+				free_2darray(commands);
+                display_shell_error("memory allocation failed", EXEC_FAILURE);
+                return (NULL);
+			}
 			(*token) = (*token)->next_token;
 			i++;
 		}
@@ -212,9 +218,10 @@ int init_processlst(t_minishell *shell)
 			shell->process_list = new_process_lst(shell, arr_commands);
 		else
 			process_lst_add_back(new_process_lst(shell, arr_commands), &shell->process_list);
+		free_2darray(arr_commands);
 		i++;
 	}
-	free_2darray(arr_commands);
+	// free_2darray(arr_commands);
 	parse_redirection(shell);
 	parse_builtin(shell);
 	// print_process(shell);

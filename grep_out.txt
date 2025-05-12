@@ -1,0 +1,6 @@
+CFLAGS = -Wall -Wextra -Werror -g -Iinclude -I$(LIBFT_DIR) -Isrc/builtins -Isrc/parsing
+all: $(NAME)
+valgrind: all
+	valgrind --show-leak-kinds=all --track-origins=yes --leak-check=full --track-fds=yes --suppressions=minishell.supp ./$(NAME)
+re: fclean all
+.PHONY: all clean fclean re

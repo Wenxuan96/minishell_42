@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/11 11:17:00 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:51:40 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,14 @@ int	read_input(int argc, t_minishell *shell)
 		return (2);
 	add_history(shell->input_str);
 	tokenize_input(shell);
-	init_processlst(shell);
+	if (init_processlst(shell) == 0)
+	{
+		free(shell->input_str);
+		free(shell->token_list);
+		free(shell);
+		shell = NULL;
+		exit(g_exit_status);
+	}
 	// prt_tokenlst(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);

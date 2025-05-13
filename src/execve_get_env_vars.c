@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:13:36 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/11 10:49:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:34:04 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char    **execve_get_envvars(t_minishell *shell)
         var_list = var_list->next_env_var;         
     }
     envvars = (char **)malloc((num_vars + 1) * sizeof(char *));
+    if (!envvars)
+        return (NULL);
     var_list = shell->env_list;
     while (var_list != NULL)
     {
@@ -40,6 +42,8 @@ char    **execve_get_envvars(t_minishell *shell)
         {
             total_len = ft_strlen(var_list->env_var) + ft_strlen(var_list->value) + 2;
             envvars[i] = (char *)malloc(total_len * sizeof(char));
+            if (!envvars[i])
+                return (free_2darray(envvars), NULL);
             ft_strlcpy(envvars[i], var_list->env_var, total_len);
             ft_strlcat(envvars[i], "=", total_len);
             ft_strlcat(envvars[i], var_list->value, total_len);

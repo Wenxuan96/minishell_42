@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:25:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/12 10:51:46 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:04:42 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ void    free_process(t_minishell *shell, t_process *current)
         free_pipes(shell);
     // ft_lstclear_token(&shell->token_list);
     // free(shell->input_str);
+}
+
+void	free_pipes2(int **pipes, int p_num)
+{
+	int	i;
+	
+	i = 0;
+	while (i < p_num)
+	{
+		free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+	pipes = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/09 10:07:21 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:27:04 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int create_pipes(t_minishell *shell)
 			current = current->next_process;
 		}
 		shell->pipes = allocate_pipes(shell->num_processes - 1);
+		if (!shell->pipes)
+			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 	}
 	return (1);
 }

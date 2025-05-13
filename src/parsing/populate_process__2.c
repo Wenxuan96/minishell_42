@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/12 13:01:39 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 12:51:24 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**get_commands(t_token	**token)
 	}
 	commands = (char **)malloc((i + 1) * sizeof(char *));
 	if (!commands)
-		return (display_shell_error("memory allocation failed", EXEC_FAILURE), NULL);
+		return (NULL);
 	i = 0;
 	while ((*token) && (*token)->type != PIPELINE)
 	{
@@ -73,7 +73,6 @@ char	**get_commands(t_token	**token)
 			if (!commands[i])
 			{
 				free_2darray(commands);
-                display_shell_error("memory allocation failed", EXEC_FAILURE);
                 return (NULL);
 			}
 			(*token) = (*token)->next_token;
@@ -151,8 +150,14 @@ int	parse_redirection(t_minishell *shell)
 			{
 				type = get_redir_type(current_token);
 				file = ft_strdup(get_file(current_token));
+				if (!file)
+					return (0);
 				if (!current_process->redirections)
+				{
 					current_process->redirections = new_redir_lst(type, file);
+					if (!current_process->redirections)
+						return (0);
+				}
 				else
 					redir_lst_add_back(new_redir_lst(type, file), &current_process->redirections);
 				current_token = current_token->next_token;
@@ -213,16 +218,21 @@ int init_processlst(t_minishell *shell)
 	{
 		arr_commands = get_commands(&current);
 		if (!arr_commands)
-            return (0);
+			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 		if (!shell->process_list)
+		{
 			shell->process_list = new_process_lst(shell, arr_commands);
+			if (!shell->process_list)
+				exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+		}
 		else
 			process_lst_add_back(new_process_lst(shell, arr_commands), &shell->process_list);
 		free_2darray(arr_commands);
 		i++;
 	}
 	// free_2darray(arr_commands);
-	parse_redirection(shell);
+	if (!parse_redirection(shell))
+		exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 	parse_builtin(shell);
 	// print_process(shell);
 	// prt_cmds(shell->process_list);

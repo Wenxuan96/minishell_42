@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:26:37 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/11 15:55:46 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:00:44 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_clean_exit(t_minishell *shell)
 	shell = NULL;
 	exit(0);
 }
+
 void	free_pipes(t_minishell *shell)
 {
 	int	i;

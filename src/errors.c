@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:28:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/07 12:11:12 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:12:22 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    display_shell_error(char *msg, int exit_status)
 
 void	free_everything(t_minishell *shell)
 {
-	ft_lstclear_token(&shell->token_list);
+	// ft_lstclear_token(&shell->token_list);
 	ft_lstclear_env(&shell->env_list);
 	ft_lstclear_process(&shell->process_list);
 	if (shell->input_str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:56:13 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/26 19:56:14 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/13 12:49:49 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int echo_builtin(t_process *process, t_minishell *shell);
 
 
 t_builtin	*new_builtin(t_builtin_type type, builtin_func *function);
-void		assign_builtin(t_process *process, t_builtin_type type, builtin_func *function);
+int		assign_builtin(t_process *process, t_builtin_type type, builtin_func *function);
 void		ft_clean_exit(t_minishell *shell);
 void		free_pipes(t_minishell *shell);
 

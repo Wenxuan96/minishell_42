@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/09 09:49:11 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:09:47 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	t_process	*new_process;
 	(void)shell;
 	new_process = malloc(sizeof(t_process));
+	if (!new_process)
+		return (NULL);
 	new_process->command_arguments = allocate_array(commands);
+	if (!new_process->command_arguments)
+		return (NULL);
 	new_process->redirections= NULL;
 	new_process->env_vars = NULL;
 	new_process->input_fd = -2;

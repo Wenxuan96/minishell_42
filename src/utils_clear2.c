@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:25:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 11:04:42 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:33:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void    free_process(t_minishell *shell, t_process *current)
 {
     if (shell->pipes)
         close_pipe_ends(shell, current);
-    ft_lstclear_env(&shell->env_list);
+    if (shell->env_list)
+        ft_lstclear_env(&shell->env_list);
     ft_lstclear_process(&shell->process_list); 
     if (shell->pipes)
         free_pipes(shell);

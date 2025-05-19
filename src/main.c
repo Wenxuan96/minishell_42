@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/11 11:38:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:55:44 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell(&shell);
-	setup_signals();
+	setup_signals(0);
 	create_env_lst(&shell.env_list, envp);
 	while (1)
 	{

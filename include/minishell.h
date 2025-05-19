@@ -191,7 +191,7 @@ void			prt_env_lst(t_environment *env_list);
 int    			parse_builtin(t_minishell *shell);
 
 /*signals*/
-int				setup_signals();
+int				setup_signals(int is_child);
 
 /*testing*/
 void			print_fds(t_minishell *shell);

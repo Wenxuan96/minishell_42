@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/12 13:42:19 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:11:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	create_processes(t_minishell *shell)
 		if (current->is_builtin == 1 && shell->num_processes == 1 && !current->redirections)
 		{
 			// dprintf(2, "builtin in parent!\n");
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+			setup_signals(0);
 			execute_builtin(current, shell);
 			current->pid = 0;
 			// ft_lstclear_process(&shell->process_list);
@@ -48,8 +47,7 @@ int	create_processes(t_minishell *shell)
 			{
 				// saved_stdin = dup(STDIN_FILENO);
 				// saved_stdout = dup(STDOUT_FILENO);
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, SIG_DFL);
+				setup_signals(1);
 				// printf("child process running, pid: %d\n", getpid());
 				if (current->is_builtin == 1)
 				{

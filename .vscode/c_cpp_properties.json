@@ -1,0 +1,48 @@
+{
+    "configurations": [
+      {
+        "name": "Linux",
+        "includePath": [
+          "${workspaceFolder}/include",
+          "${workspaceFolder}/libft",
+          "${workspaceFolder}/src",
+          "${workspaceFolder}/src/builtins",
+          "/usr/include",
+          "/usr/include/x86_64-linux-gnu",  // adjust if needed
+          "/usr/local/include"
+        ],
+        "defines": [],
+        "compilerPath": "/usr/bin/gcc",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "linux-gcc-x64"
+      }
+    ],
+    "version": 4
+}
+  
+// {
+//     "files.associations": {
+//         "*.h": "c",
+//         "minishell.h": "c",
+//         "libft.h": "c",
+//         "stdio.h": "c",
+//         "unistd.h": "c",
+//         "string.h": "c",
+//         "stdlib.h": "c",
+//         "stdarg.h": "c",
+//         "fcntl.h": "c"
+//     },
+//     "C_Cpp.default.includePath": [
+//         "${workspaceFolder}/include",
+//         "${workspaceFolder}/libft",
+//         "${workspaceFolder}/src",
+//         "${workspaceFolder}/src/builtins",
+//         "/usr/include",
+//         "/usr/local/include"
+//     ],
+//     "C_Cpp.default.compilerPath": "/usr/bin/clang",
+//     "C_Cpp.default.cStandard": "c11",
+//     "C_Cpp.default.cppStandard": "c++17",
+//     "C_Cpp.errorSquiggles": "disabled"
+// }

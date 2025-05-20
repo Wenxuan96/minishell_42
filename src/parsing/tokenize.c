@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/11 16:17:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:19:10 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 	
 	sub = ft_substr(shell->input_str, t_start, t_len);
 	if (!sub || sub[0] == '\0') // <- 🔥 important check
-	{
-		free(sub);
-		return ;
-	}
+		return (free(sub), (void)0);
 	new_token = new_token_lst(sub);
 	new_token->len = t_len;
 	new_token->start = t_start;
@@ -50,17 +47,13 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 
 void	def_special_token(t_minishell *shell, int *i)
 {
-	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
-		(*i)++;
-	if (ft_strncmp(shell->input_str + *i, "||", 2) == 0
-		|| ft_strncmp(shell->input_str + *i, "&&", 2) == 0
-		|| ft_strncmp(shell->input_str + *i, "<<", 2) == 0
+	if (ft_strncmp(shell->input_str + *i, "<<", 2) == 0
 		|| ft_strncmp(shell->input_str + *i, ">>", 2) == 0)
 	{
 		def_token(shell, 2, *i);
 		(*i) += 2;
 	}
-	else if (ft_strchr("|&<>", shell->input_str[*i]) != NULL)
+	else if (ft_strchr("|<>", shell->input_str[*i]) != NULL)
 	{
 		def_token(shell, 1, *i);
 		(*i)++;
@@ -78,13 +71,12 @@ void	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 			quote_char = '\0';//check if a quote is closed
 		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
 		{
-			if (i != start)
+			if (i != start)// to define the token before it hits a special character
 				def_token(shell, i - start, start);
-			while (ft_strchr(" \t|<>", shell->input_str[i]) != NULL)
-			{
+			while (shell->input_str[i] == ' ' || shell->input_str[i] == '\t')
+				i++;
+			while (ft_strchr("|<>", shell->input_str[i]) != NULL)
 				def_special_token(shell, &i);
-				skip_whitespace(shell->input_str, &i);
-			}
 			start = i;
 			continue;
 		}

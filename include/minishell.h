@@ -199,14 +199,6 @@ void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
 void			prt_tokenlst(t_minishell *shell);
 
-/*parsing*/
-// void			tokenize_input(t_minishell *shell);
-// int				redir_checker(char *command);
-// int				token_checker(char *command);
-// void			free_tokenlst(t_minishell *shell);
-// void			def_token(t_minishell *shell, int t_len, int t_start);
-// void			def_special_token(t_minishell *shell, int *i);
-
 /*errors*/
 void    display_shell_error(char *msg, int exit_status);
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status);

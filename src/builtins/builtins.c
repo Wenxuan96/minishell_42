@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:09:16 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 12:50:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 09:27:09 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int    parse_builtin(t_minishell *shell)
     int         assign_error;
  
     current = shell->process_list;
-    while (current != NULL)
+    while (current != NULL && current->command_arguments[0] != NULL)
     {
         if (is_builtin(shell, current))
         {

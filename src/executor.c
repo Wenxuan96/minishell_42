@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/13 11:45:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 09:33:25 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,36 @@ int	execute_builtin(t_process *process, t_minishell *shell)
 		if (handle_redirection(current) == 0)
 			return (close_pipe_ends(shell, current), 0);
 	}
-	if (dup2(current->input_fd, STDIN_FILENO) == -1)
+	if (current->command_arguments[0] == NULL)
 	{
-		display_shell_error("dup2 failed", EXEC_FAILURE);
-		return (close_pipe_ends(shell, current), 0);
+		if (current->input_fd != STDIN_FILENO)
+			close(current->input_fd);
+		if (current->output_fd != STDOUT_FILENO)
+			close(current->output_fd);
+		if (shell->pipes)
+			close_pipe_ends(shell, current);
 	}
-	if (current->input_fd != STDIN_FILENO)
-		close(current->input_fd);
-	if (dup2(current->output_fd, STDOUT_FILENO) == -1)
+	else
 	{
-		display_shell_error("dup2 failed", EXEC_FAILURE);
-		return (close_pipe_ends(shell, current), 0);
+		if (dup2(current->input_fd, STDIN_FILENO) == -1)
+		{
+			display_shell_error("dup2 failed", EXEC_FAILURE);
+			return (close_pipe_ends(shell, current), 0);
+		}
+		if (current->input_fd != STDIN_FILENO)
+			close(current->input_fd);
+		if (dup2(current->output_fd, STDOUT_FILENO) == -1)
+		{
+			display_shell_error("dup2 failed", EXEC_FAILURE);
+			return (close_pipe_ends(shell, current), 0);
+		}
+		// dprintf(2, "outout fd: %i\n", current->output_fd);
+		if (current->output_fd != STDOUT_FILENO)
+			close(current->output_fd);
+		if (shell->pipes)
+			close_pipe_ends(shell, current);
+		current->builtin->function(current, shell);
 	}
-	// dprintf(2, "outout fd: %i\n", current->output_fd);
-	if (current->output_fd != STDOUT_FILENO)
-		close(current->output_fd);
-	if (shell->pipes)
-		close_pipe_ends(shell, current);
-	current->builtin->function(current, shell);
 	return (1);
 }
 
@@ -56,34 +68,46 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 		if (handle_redirection(current) == 0)
 			return (close_pipe_ends(shell, current), 0);
 	}
-	if (dup2(current->input_fd, STDIN_FILENO) == -1)
+	if (current->command_arguments[0] == NULL)
 	{
-		display_shell_error("dup2 failed", EXEC_FAILURE);
-		return (close_pipe_ends(shell, current), 0);
+		if (current->input_fd != STDIN_FILENO)
+			close(current->input_fd);
+		if (current->output_fd != STDOUT_FILENO)
+			close(current->output_fd);
+		if (shell->pipes)
+			close_pipe_ends(shell, current);
 	}
-	// dprintf(2, "input fd: %i\n", current->input_fd);
-	if (current->input_fd != STDIN_FILENO)
-		close(current->input_fd);
-	if (dup2(current->output_fd, STDOUT_FILENO) == -1)
+	else
 	{
-		display_shell_error("dup2 failed", EXEC_FAILURE);
-		return (close_pipe_ends(shell, current), 0);
+		if (dup2(current->input_fd, STDIN_FILENO) == -1)
+		{
+			display_shell_error("dup2 failed", EXEC_FAILURE);
+			return (close_pipe_ends(shell, current), 0);
+		}
+		// dprintf(2, "input fd: %i\n", current->input_fd);
+		if (current->input_fd != STDIN_FILENO)
+			close(current->input_fd);
+		if (dup2(current->output_fd, STDOUT_FILENO) == -1)
+		{
+			display_shell_error("dup2 failed", EXEC_FAILURE);
+			return (close_pipe_ends(shell, current), 0);
+		}
+		// dprintf(2, "outout fd: %i\n", current->output_fd);
+		if (current->output_fd != STDOUT_FILENO)
+			close(current->output_fd);
+		if (shell->pipes)
+			close_pipe_ends(shell, current);
+		path = get_path(shell, process);
+		if (!path)
+		{
+			display_shell_error("memory allocation failed", EXEC_FAILURE);
+			return (close_pipe_ends(shell, current), 0);
+		}
+		env_vars = execve_get_envvars(shell);
+		if (!env_vars)
+			return (display_shell_error("memory allocation failed", EXEC_FAILURE),
+				close_pipe_ends(shell, current), 0);
+		execve(path, current->command_arguments, env_vars);
 	}
-	// dprintf(2, "outout fd: %i\n", current->output_fd);
-	if (current->output_fd != STDOUT_FILENO)
-		close(current->output_fd);
-	if (shell->pipes)
-		close_pipe_ends(shell, current);
-	path = get_path(shell, process);
-	if (!path)
-	{
-		display_shell_error("memory allocation failed", EXEC_FAILURE);
-		return (close_pipe_ends(shell, current), 0);
-	}
-	env_vars = execve_get_envvars(shell);
-	if (!env_vars)
-		return (display_shell_error("memory allocation failed", EXEC_FAILURE),
-			close_pipe_ends(shell, current), 0);
-	execve(path, current->command_arguments, env_vars);
 	return (1);
 }

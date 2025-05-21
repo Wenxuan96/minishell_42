@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 16:07:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 16:08:40 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	count_pipes(t_minishell *shell)
 	}
 	return (i);
 }
-int	count_commands(t_token	**token)
+
+static int	count_commands(t_token	**token)
 {
 	int		i;
 	t_token	*current;

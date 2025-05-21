@@ -173,6 +173,7 @@ void    		free_process(t_minishell *shell, t_process *current);
 /*utils_malloc*/
 char			**allocate_array(char **commands);
 int				**allocate_pipes(int p_num);
+char			*ft_strjoin_heredoc(const char *s1, const char *s2);
 
 /*utils_processes*/
 void			process_lst_add_back(t_process *new_process, t_process **process_lst);

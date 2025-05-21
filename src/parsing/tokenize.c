@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/20 18:19:10 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 09:22:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	skip_whitespace(const char *str, int *i)
-{
-	while (str[*i] == ' ' || str[*i] == '\t')
-		(*i)++;
-}
+// static void	skip_whitespace(const char *str, int *i)
+// {
+// 	while (str[*i] == ' ' || str[*i] == '\t')
+// 		(*i)++;
+// }
 
 void	def_token(t_minishell *shell, int t_len, int t_start)
 {

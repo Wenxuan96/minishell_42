@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 11:15:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:45:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,31 @@ int	**allocate_pipes(int p_num)
 		i++;
 	}
 	return (pipes);
+}
+
+char	*ft_strjoin_heredoc(const char *s1, const char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\n';
+	i++;
+	while (s2[j])
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
 }

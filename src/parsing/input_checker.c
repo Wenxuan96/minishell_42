@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/19 14:09:29 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:54:55 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void prt_tokenlst(t_minishell *shell)
 	ft_printf("current tokens are:");
 	while (current != NULL)
 	{
-		ft_printf(" [%s]", current->token_val);
+		ft_printf(" [%s: %s]", current->token_val, current->type);
 		current = current->next_token;
 	}
 	ft_printf(".\n");
@@ -54,7 +54,7 @@ int	read_input(int argc, t_minishell *shell)
 		shell = NULL;
 		exit(g_exit_status);
 	}
-	// prt_tokenlst(shell);
+	prt_tokenlst(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);
 	return(EXEC_SUCCESS);

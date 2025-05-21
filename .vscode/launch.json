@@ -10,7 +10,7 @@
 		"stopAtEntry": true,
 		"cwd": "${workspaceFolder}",
 		"environment": [],
-		"externalConsole": false,
+		"externalConsole": true, // ✅ Open in a native terminal
 		"MIMode": "gdb",
 		"miDebuggerPath": "/usr/bin/gdb",
 		"setupCommands": [
@@ -27,7 +27,8 @@
 		]
 	  }
 	]
-}
+  }
+  
   
 // {
 //   "version": "0.2.0",

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 14:51:42 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 15:34:41 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,6 @@ int	parse_redirection(t_minishell *shell)
 	{
 		while (current_token != NULL)
 		{
-			if (current_token->type == PIPELINE)
-			{
-				current_token = current_token->next_token;
-				break ;
-			}
 			if (current_token->type == REDIRECTION)
 			{
 				type = get_redir_type(current_token);

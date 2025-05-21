@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 14:57:53 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 15:34:33 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	read_input(int argc, t_minishell *shell)
 	if (shell->input_str[0] == '\0')
 		return (2);
 	add_history(shell->input_str);
-	tokenize_input(shell);
+	if (!tokenize_input(shell))
+		return (0);
 	if (init_processlst(shell) == 0)
 	{
 		free(shell->input_str);

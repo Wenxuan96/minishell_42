@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/21 12:33:52 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 15:28:24 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_status = read_input(argc, &shell);
+		if (!shell.input_status)
+			display_shell_error("lexer failed", EXEC_FAILURE);
 		p = shell.process_list;
 		while (p)
 		{

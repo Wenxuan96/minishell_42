@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:03:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:09:26 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void prt_tokenlst(t_minishell *shell)
 	ft_printf("current tokens are:");
 	while (current != NULL)
 	{
-		ft_printf(" [%s]", current->token_val);
+		ft_printf(" [%s: %s]", current->token_val, current->type);
 		current = current->next_token;
 	}
 	ft_printf(".\n");

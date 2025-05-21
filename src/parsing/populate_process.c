@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:34:41 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 16:07:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ int	count_pipes(t_minishell *shell)
 	}
 	return (i);
 }
-
-char	**get_commands(t_token	**token)
+int	count_commands(t_token	**token)
 {
 	int		i;
-	char	**commands;
 	t_token	*current;
-	
+
 	i = 0;
 	if ((*token)->type == PIPELINE && (*token)->next_token != NULL)
 		*token = (*token)->next_token;
@@ -55,7 +53,15 @@ char	**get_commands(t_token	**token)
 			current = current->next_token;
 		}
 	}
-	commands = (char **)malloc((i + 1) * sizeof(char *));
+	return (i);
+}
+
+char	**get_commands(t_token	**token)
+{
+	int		i;
+	char	**commands;
+	
+	commands = (char **)malloc((count_commands(token) + 1) * sizeof(char *));
 	if (!commands)
 		return (NULL);
 	i = 0;

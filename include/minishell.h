@@ -203,17 +203,13 @@ void			prt_tokenlst(t_minishell *shell);
 void    display_shell_error(char *msg, int exit_status);
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status);
 
+/*  stdout = fd1
+ ls | cat | grep
+readin cat = fd7
+  dup so that stdout = fd7
+ exec ls -> ls output fd7 
+ fork
+ child -> stdout = fd7
+ parent -> stdout = fd7 */
 
 #endif
-
-
-/// stdout = fd1
-// ls | cat | grep
-/// readin cat = fd7
-//  dup so that stdout = fd7
-// exec ls -> ls output fd7 
-
-
-// fork
-// child -> stdout = fd7
-// parent -> stdout = fd7

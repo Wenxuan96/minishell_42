@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:24:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:20:30 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 {
 	t_token	*new_token;
 	char	*sub;
+	bool	double_quoted;
 	
+	double_quoted = false;
 	sub = ft_substr(shell->input_str, t_start, t_len);
 	if (!sub || sub[0] == '\0') // <- 🔥 important check
 		return (free(sub), (void)0);
@@ -28,6 +30,8 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\'')))
 	{
 		new_token->in_quotes = true;
+		if ((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"'))
+			double_quoted = true;
 		free(new_token->token_val);
 		new_token->token_val = NULL;
 		new_token->token_val = remove_outer_quotes(sub);
@@ -35,6 +39,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 	else
 		new_token->in_quotes = false;
 	new_token->next_token = NULL;
+	/* if double_quoted is true then expand */
 	free(sub);
 	ms_token_add_back(&shell->token_list, new_token);
 }

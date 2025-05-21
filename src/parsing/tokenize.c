@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 14:35:48 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 15:24:59 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 		def_token(shell, i - start, start);
 }
 
-void tokenize_input(t_minishell *shell)
+int tokenize_input(t_minishell *shell)
 {
 	int		i;
 	int		start;
@@ -92,7 +92,8 @@ void tokenize_input(t_minishell *shell)
 	if (!validate_quotes(shell->input_str))
 	{
 		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
-		return;
+		return (0);
 	}
 	iter_input_str(shell, i, start, quote_char);
+	return (1);
 }

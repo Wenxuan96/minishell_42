@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/04/27 21:37:16 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/21 15:26:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef struct s_minishell t_minishell;
 typedef struct s_token t_token;
 
 /*Tokenization*/
-void			tokenize_input(t_minishell *shell);
+int             tokenize_input(t_minishell *shell);
 int				redir_checker(char *command);
 int				token_checker(char *command);
 void			free_tokenlst(t_minishell *shell);

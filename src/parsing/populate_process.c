@@ -6,14 +6,14 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 16:16:07 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/24 17:29:48 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-char	**get_commands(t_token	**token)
+char	**get_commands(t_token	**token, t_minishell *shell)
 {
 	int		i;
 	char	**commands;
@@ -32,7 +32,7 @@ char	**get_commands(t_token	**token)
 		}
 		else
 		{
-			commands[i] = strdup((*token)->token_val);
+			commands[i] = def_expansion(*token, shell);
 			if (!commands[i])
 			{
 				free_2darray(commands);
@@ -61,8 +61,6 @@ t_redir_type	get_redir_type(t_token *token)
 		type = HEREDOC;
 	return (type);
 }
-
-
 
 int	parse_redirection(t_minishell *shell)
 {
@@ -124,7 +122,7 @@ int init_processlst(t_minishell *shell)
 	// printf("num proc: %i\n", shell->num_processes);
 	while (i < shell->num_processes)
 	{
-		arr_commands = get_commands(&current);
+		arr_commands = get_commands(&current, shell);
 		if (!arr_commands)
 			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 		if (!shell->process_list)

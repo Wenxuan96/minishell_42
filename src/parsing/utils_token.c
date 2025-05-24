@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/24 13:45:36 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/24 20:16:40 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int token_checker(char *command)
 
 void	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
 {
-	if ((c1 == '\"' && c2 == '\"') || (c1 == '\'' && c2 == '\''))
+	if (c1 == '\"' && c2 == '\"')
 	{
 		new_token->in_quotes = true;
 		if ((c1 == '\"' && c2 == '\"'))

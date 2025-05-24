@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/24 13:43:12 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/24 17:27:08 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void 			prt_cmds(t_process *process_lst);
 char			*get_file(t_token *token);
 void			print_process(t_minishell *shell);
 void			def_in_quotes(char c1, char c2, t_token	*new_token, char *sub);
+char 			*def_expansion(t_token *token, t_minishell *shell);
 
 #endif

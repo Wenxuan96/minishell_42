@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/05 09:16:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:45:36 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,22 @@ int token_checker(char *command)
 	if (redir_checker(command) != CMD_NOTFOUND)
 		return (REDIRECTION);
 	return (WORD);
+}
+
+void	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
+{
+	if ((c1 == '\"' && c2 == '\"') || (c1 == '\'' && c2 == '\''))
+	{
+		new_token->in_quotes = true;
+		if ((c1 == '\"' && c2 == '\"'))
+			new_token->double_quoted = true;
+		free(new_token->token_val);
+		new_token->token_val = NULL;
+		new_token->token_val = remove_outer_quotes(sub);
+	}
+	else
+	{
+		new_token->double_quoted = false;
+		new_token->in_quotes = false;
+	}
 }

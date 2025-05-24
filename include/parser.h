@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:26:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:43:12 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct s_minishell t_minishell;
 typedef struct s_token t_token;
+typedef struct s_process t_process;
 
 /*Tokenization*/
 int             tokenize_input(t_minishell *shell);
@@ -27,5 +28,11 @@ char			*remove_outer_quotes(char *str);
 int				validate_quotes(const char *input);
 void			ms_token_add_back(t_token **token_lst, t_token *new_token);
 int 			init_processlst(t_minishell *shell);
+int				count_commands(t_token	**token);
+int				count_pipes(t_minishell *shell);
+void 			prt_cmds(t_process *process_lst);
+char			*get_file(t_token *token);
+void			print_process(t_minishell *shell);
+void			def_in_quotes(char c1, char c2, t_token	*new_token, char *sub);
 
 #endif

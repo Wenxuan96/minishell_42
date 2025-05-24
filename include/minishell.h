@@ -73,6 +73,7 @@ typedef struct s_token
 	int				start;
 	t_token_type	type;
 	char			*token_val;
+	bool			double_quoted;
 	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
 	struct s_token	*next_token;
 }	t_token;
@@ -199,30 +200,18 @@ void			print_fds(t_minishell *shell);
 void    		printf_twod(char **arr);
 void			prt_tokenlst(t_minishell *shell);
 
-/*parsing*/
-// void			tokenize_input(t_minishell *shell);
-// int				redir_checker(char *command);
-// int				token_checker(char *command);
-// void			free_tokenlst(t_minishell *shell);
-// void			def_token(t_minishell *shell, int t_len, int t_start);
-// void			def_special_token(t_minishell *shell, int *i);
-
 /*errors*/
 void    display_shell_error(t_process *process, char *msg, int exit_status);
 void    display_shell_error2(t_minishell *shell, char *msg, int exit_status);
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status);
 
+/*  stdout = fd1
+ ls | cat | grep
+readin cat = fd7
+  dup so that stdout = fd7
+ exec ls -> ls output fd7 
+ fork
+ child -> stdout = fd7
+ parent -> stdout = fd7 */
 
 #endif
-
-
-/// stdout = fd1
-// ls | cat | grep
-/// readin cat = fd7
-//  dup so that stdout = fd7
-// exec ls -> ls output fd7 
-
-
-// fork
-// child -> stdout = fd7
-// parent -> stdout = fd7

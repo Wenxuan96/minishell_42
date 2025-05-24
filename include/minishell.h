@@ -73,6 +73,7 @@ typedef struct s_token
 	int				start;
 	t_token_type	type;
 	char			*token_val;
+	bool			double_quoted;
 	bool			in_quotes;  /* Indicates if the token was enclosed in quotes (if not in_quotes, give an error)*/
 	struct s_token	*next_token;
 }	t_token;

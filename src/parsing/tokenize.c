@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 17:20:30 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/24 13:46:08 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 {
 	t_token	*new_token;
 	char	*sub;
-	bool	double_quoted;
-	
-	double_quoted = false;
+
 	sub = ft_substr(shell->input_str, t_start, t_len);
 	if (!sub || sub[0] == '\0') // <- 🔥 important check
 		return (free(sub), (void)0);
@@ -26,20 +24,13 @@ void	def_token(t_minishell *shell, int t_len, int t_start)
 	new_token->len = t_len;
 	new_token->start = t_start;
 	new_token->type = token_checker(new_token->token_val);
-	if (((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"') ||
-		(sub[0] == '\'' && sub[ft_strlen(sub) - 1] == '\'')))
-	{
-		new_token->in_quotes = true;
-		if ((sub[0] == '\"' && sub[ft_strlen(sub) - 1] == '\"'))
-			double_quoted = true;
-		free(new_token->token_val);
-		new_token->token_val = NULL;
-		new_token->token_val = remove_outer_quotes(sub);
-	}
-	else
-		new_token->in_quotes = false;
+	def_in_quotes(sub[0], sub[ft_strlen(sub) - 1], new_token, sub);
 	new_token->next_token = NULL;
 	/* if double_quoted is true then expand */
+	if (new_token->double_quoted == true)
+	{
+		ft_printf("double quote_detected\n");
+	}
 	free(sub);
 	ms_token_add_back(&shell->token_list, new_token);
 }
@@ -100,5 +91,6 @@ int tokenize_input(t_minishell *shell)
 		return (0);
 	}
 	iter_input_str(shell, i, start, quote_char);
+	// def_expansion(shell->token_list);
 	return (1);
 }

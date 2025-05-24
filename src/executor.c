@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/21 09:33:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:38:06 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	execute_builtin(t_process *process, t_minishell *shell)
 	{
 		if (dup2(current->input_fd, STDIN_FILENO) == -1)
 		{
-			display_shell_error("dup2 failed", EXEC_FAILURE);
+			display_shell_error(current, "dup2 failed", EXEC_FAILURE);
 			return (close_pipe_ends(shell, current), 0);
 		}
 		if (current->input_fd != STDIN_FILENO)
 			close(current->input_fd);
 		if (dup2(current->output_fd, STDOUT_FILENO) == -1)
 		{
-			display_shell_error("dup2 failed", EXEC_FAILURE);
+			display_shell_error(current, "dup2 failed", EXEC_FAILURE);
 			return (close_pipe_ends(shell, current), 0);
 		}
 		// dprintf(2, "outout fd: %i\n", current->output_fd);
@@ -81,7 +81,7 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 	{
 		if (dup2(current->input_fd, STDIN_FILENO) == -1)
 		{
-			display_shell_error("dup2 failed", EXEC_FAILURE);
+			display_shell_error(current, "dup2 failed", EXEC_FAILURE);
 			return (close_pipe_ends(shell, current), 0);
 		}
 		// dprintf(2, "input fd: %i\n", current->input_fd);
@@ -89,7 +89,7 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 			close(current->input_fd);
 		if (dup2(current->output_fd, STDOUT_FILENO) == -1)
 		{
-			display_shell_error("dup2 failed", EXEC_FAILURE);
+			display_shell_error(current, "dup2 failed", EXEC_FAILURE);
 			return (close_pipe_ends(shell, current), 0);
 		}
 		// dprintf(2, "outout fd: %i\n", current->output_fd);
@@ -100,12 +100,12 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 		path = get_path(shell, process);
 		if (!path)
 		{
-			display_shell_error("memory allocation failed", EXEC_FAILURE);
+			// display_shell_error(current, "memory allocation failed", EXEC_FAILURE);
 			return (close_pipe_ends(shell, current), 0);
 		}
 		env_vars = execve_get_envvars(shell);
 		if (!env_vars)
-			return (display_shell_error("memory allocation failed", EXEC_FAILURE),
+			return (display_shell_error(current, "memory allocation failed", EXEC_FAILURE),
 				close_pipe_ends(shell, current), 0);
 		execve(path, current->command_arguments, env_vars);
 	}

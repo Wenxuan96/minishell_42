@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/12 11:18:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:33:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
             if (!dir_paths)
             {
                 free_2darray(dir_paths);
-                display_shell_error("memory allocation failed", EXEC_FAILURE);
+                display_shell_error(process, "memory allocation failed", EXEC_FAILURE);
                 return (0);
             }
             // printf_twod_array(dir_paths);
@@ -125,7 +125,7 @@ char    *get_path(t_minishell *shell, t_process *process)
             if (!path)
             {
                 free_2darray(path_dirs);
-                display_shell_error("memory allocation failed", EXEC_FAILURE);
+                display_shell_error(process, "memory allocation failed", EXEC_FAILURE);
                 return (NULL);
             }
                 
@@ -135,7 +135,7 @@ char    *get_path(t_minishell *shell, t_process *process)
     }
     free_2darray(path_dirs);
     if (!path)
-        return (display_shell_error("command not found", CMD_NOTFOUND), NULL);
+        return (display_shell_error(process, "command not found", CMD_NOTFOUND), NULL);
     return (path);
 }
 

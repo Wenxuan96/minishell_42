@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/21 12:49:14 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:25:38 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_redirection(t_process *process)
 			current->output_fd = open(curr_redir->file,
 					O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			if (current->output_fd == -1)
-				return (display_shell_error("open failed", EXEC_FAILURE), 0);
+				return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
 			if (curr_redir->next_redir != NULL)
 				close(current->output_fd);
 		}
@@ -39,7 +39,7 @@ int	handle_redirection(t_process *process)
 		{
 			current->input_fd = open(curr_redir->file, O_RDONLY);
 			if (current->input_fd == -1)
-				return (display_shell_error("open failed", EXEC_FAILURE), 0);
+				return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
 			if (curr_redir->next_redir != NULL
 				&& (curr_redir->next_redir->type == INPUT))
 				close(current->input_fd);
@@ -49,7 +49,7 @@ int	handle_redirection(t_process *process)
 			current->output_fd = open(curr_redir->file,
 					O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (current->output_fd == -1)
-				return (display_shell_error("open failed", EXEC_FAILURE), 0);
+				return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
 			if (curr_redir->next_redir != NULL
 				&& (curr_redir->next_redir->type == OUTPUT
 					|| curr_redir->next_redir->type == OUTPUT_APPEND))

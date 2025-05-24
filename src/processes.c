@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/19 14:11:30 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:24:51 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	create_processes(t_minishell *shell)
 			// dprintf(2, "fokred!\n");
 			pid = fork();
 			if (pid < 0)
-				return (display_shell_error("fork failed", 2), 0);
+				return (display_shell_error(current, "fork failed", 2), 0);
 			else if (pid == 0)
 			{
 				// saved_stdin = dup(STDIN_FILENO);

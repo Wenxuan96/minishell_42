@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:24:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:31:20 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int tokenize_input(t_minishell *shell)
 	quote_char = '\0';
 	if (!validate_quotes(shell->input_str))
 	{
-		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
+		display_shell_error2(shell, "minishell: syntax error: unclosed quote", 2);
 		return (0);
 	}
 	iter_input_str(shell, i, start, quote_char);

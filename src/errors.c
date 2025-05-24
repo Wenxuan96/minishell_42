@@ -6,19 +6,26 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:28:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 11:12:22 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:34:22 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    display_shell_error(char *msg, int exit_status)
+void    display_shell_error(t_process *process, char *msg, int exit_status)
 {
     write(STDERR_FILENO, "minishell: ", 11);
     write(STDERR_FILENO, msg, strlen(msg));
     write(STDERR_FILENO, "\n", 1);
-    g_exit_status = exit_status;
-	
+    process->exit_status = exit_status;
+}
+
+void    display_shell_error2(t_minishell *shell, char *msg, int exit_status)
+{
+    write(STDERR_FILENO, "minishell: ", 11);
+    write(STDERR_FILENO, msg, strlen(msg));
+    write(STDERR_FILENO, "\n", 1);
+    shell->exit_status = exit_status;
 }
 
 void	free_everything(t_minishell *shell)
@@ -35,6 +42,6 @@ void	free_everything(t_minishell *shell)
 
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status)
 {
-    display_shell_error(msg, exit_status);
+    display_shell_error2(shell, msg, exit_status);
     free_everything(shell);
 }

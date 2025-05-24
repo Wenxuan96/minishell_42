@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:09:16 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/21 09:27:09 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:27:22 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int    parse_builtin(t_minishell *shell)
             else if (ft_strcmp(current->command_arguments[0], "unset") == 0)
                 assign_error = assign_builtin(current, UNSET, unset_builtin);
             if (assign_error == 0)
-                exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+                display_shell_error(current, "memory allocation failed", EXEC_FAILURE);
         }
         current = current->next_process;
     }

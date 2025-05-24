@@ -121,7 +121,7 @@ typedef struct s_minishell
 	t_token			*token_list;
 	t_process		*process_list;
 	int				**pipes;
-	// t_exit_status	exit_status;	
+	int				exit_status;	
 	int				num_processes;
 	t_environment	*env_list;
 }	t_minishell;
@@ -208,7 +208,8 @@ void			prt_tokenlst(t_minishell *shell);
 // void			def_special_token(t_minishell *shell, int *i);
 
 /*errors*/
-void    display_shell_error(char *msg, int exit_status);
+void    display_shell_error(t_process *process, char *msg, int exit_status);
+void    display_shell_error2(t_minishell *shell, char *msg, int exit_status);
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status);
 
 

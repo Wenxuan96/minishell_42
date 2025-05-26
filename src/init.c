@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:39 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/26 16:00:34 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_shell(t_minishell *shell)
 {
 	static const char *const system_commands[] = {"ls", "cat", "grep",
-		"wc", "head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill", NULL};
+		"wc", "head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill", "./minishell", NULL};
 	static const char *const buildin_commands[] = {"cd", "echo", "exit",
 		"pwd", "env", "unset", "alias", "export", "type", "set", "history", NULL};
 	shell->system_commands = (const char **)system_commands;

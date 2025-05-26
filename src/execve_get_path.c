@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/24 14:33:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:10:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,16 @@ char    *get_path(t_minishell *shell, t_process *process)
     char    *path = NULL;;
     int i;
 
+    if (ft_strchr(process->command_arguments[0], '/'))
+    {
+        if (access(process->command_arguments[0], X_OK) == 0)
+            return (ft_strdup(process->command_arguments[0]));
+        else
+        {
+            display_shell_error(process, "memory allocation failed", EXEC_FAILURE);
+            return (NULL);
+        }
+    }
     i = 0;
     path_dirs = get_pathdirs(shell, process);
     if (!path_dirs)

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/19 14:14:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:46:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	new_process->is_pipeline = -1;
 	new_process->builtin = NULL;
 	new_process->completed = 0;
+	new_process->exit_status = -1;
 	return (new_process);
 }
 
@@ -63,8 +64,9 @@ void	waitpid_children(t_minishell *shell)
 		if (current_process->pid != 0)
 		{
 			wait_res = waitpid(current_process->pid, &status, 0);
-			if (wait_res == -1)
-				exit_with_error(shell, "waitpid() failed", EXEC_FAILURE);
+			while (wait_res == -1 && errno == EINTR)
+				wait_res = waitpid(current_process->pid, &status, 0);
+				// display_shell_error2(shell, "waitpid() failed", EXEC_FAILURE);
 			if (current_process->next_process == NULL)
 			{
 				if (WIFEXITED(status))

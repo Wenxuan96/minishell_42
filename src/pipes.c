@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 11:27:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:29:15 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,6 @@ int	assign_fd(t_minishell *shell)
 				current->output_fd = shell->pipes[i][1];
 			i++;
 		}
-		// else
-		// {
-		// 	current->input_fd = STDIN_FILENO;
-		// 	current->output_fd = STDOUT_FILENO;
-		// }
-		// dprintf(2, "PIPE %i: %i | %i\n", i, current->input_fd, current->output_fd);
 		current = current->next_process;
 	}
 	return (1);

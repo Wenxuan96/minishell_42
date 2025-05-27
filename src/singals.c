@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/20 15:21:27 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/27 10:49:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int setup_signals(int is_child)
 {
     struct sigaction sa_int;
     struct sigaction sa_quit;
+
+    ft_memset(&sa_int, 0, sizeof(sa_int));
+    ft_memset(&sa_quit, 0, sizeof(sa_quit));
     
     sigemptyset(&sa_int.sa_mask);
     sigemptyset(&sa_quit.sa_mask);

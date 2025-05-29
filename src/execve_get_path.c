@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/26 16:23:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:27:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char    **concat_path(t_minishell *shell, char **dir_paths, char  *command)
         num_dirs++;
     new_dir_path = (char **)malloc((num_dirs + 1) * sizeof(char *) + 1);
     if (!new_dir_path)
-        exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+        display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
     while (i < num_dirs)
     {
         j = 0;
@@ -51,7 +51,7 @@ char    **concat_path(t_minishell *shell, char **dir_paths, char  *command)
         if (!new_dir_path[i])
         {
             free_2darray(new_dir_path);
-            exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
+            display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
         }
         while (j < dir_path_len)
         {

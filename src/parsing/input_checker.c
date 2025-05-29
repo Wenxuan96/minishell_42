@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/21 15:34:33 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/29 14:21:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	read_input(int argc, t_minishell *shell)
 	else
 		init = 1;
 	shell->input_str = readline("minishell$ ");
+	// write(2, "read_line\n", 11);
 	if (!shell->input_str) /*When ctrl+D is pressed, break the loop, clean memory and exit*/
 		ft_exit(shell, "exit");
 	if (shell->input_str[0] == '\0')

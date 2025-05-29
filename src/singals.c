@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 11:19:13 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:37:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void    sig_handler_parent(int sig)
     write(STDOUT_FILENO, "\n", 1);
     rl_on_new_line();
     rl_replace_line("", 0);
-    // rl_redisplay();
+    rl_redisplay();
     // write(STDOUT_FILENO, "signal", 6);
     g_exit_status = 128 + SIGINT;
-    dprintf(2, "exit status: %i\n", g_exit_status);
 }
 
 void    sig_handler_heredoc(int sig)
@@ -33,6 +32,7 @@ void    sig_handler_heredoc(int sig)
     write(STDOUT_FILENO, "\n", 1);
     rl_on_new_line();
     rl_replace_line("", 0);
+    rl_redisplay();
     g_exit_status = 128 + SIGINT;
 }
 

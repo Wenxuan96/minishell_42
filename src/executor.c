@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/24 14:38:06 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:19:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	execute_builtin(t_process *process, t_minishell *shell)
 	current = process;
 	if (current->redirections != NULL)
 	{
-		if (handle_redirection(current) == 0)
+		if (handle_redirection(current, shell) == 0)
 			return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->command_arguments[0] == NULL)
@@ -65,7 +65,7 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 	current = process;
 	if (current->redirections != NULL)
 	{
-		if (handle_redirection(current) == 0)
+		if (handle_redirection(current, shell) == 0)
 			return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->command_arguments[0] == NULL)
@@ -104,9 +104,9 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 			return (close_pipe_ends(shell, current), 0);
 		}
 		env_vars = execve_get_envvars(shell);
-		if (!env_vars)
-			return (display_shell_error(current, "memory allocation failed", EXEC_FAILURE),
-				close_pipe_ends(shell, current), 0);
+		// if (!env_vars)
+		// 	return (display_shell_error(current, "memory allocation failed", EXEC_FAILURE),
+		// 		close_pipe_ends(shell, current), 0);
 		execve(path, current->command_arguments, env_vars);
 	}
 	return (1);

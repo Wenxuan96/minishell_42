@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/11 16:17:12 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:46:32 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,14 @@ char	*remove_outer_quotes(char *str)
 		(str[0] == '\'' && str[len - 1] == '\''))
 	{
 		trimmed = ft_substr(str, 1, len - 2);
+		if (!trimmed)
+			return (NULL);
 		if (str[0] == '\"' && str[len - 1] == '\"')
+		{
 			trimmed = handle_dollar_sign(trimmed);
+			if (!trimmed)
+				return (NULL);
+		}
 		// free(str);
 		return (trimmed);
 	}

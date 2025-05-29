@@ -151,7 +151,7 @@ int    execute_outside_cmd(t_process *process, t_minishell *shell);
 
 /*executor - redirections*/
 int 			redirections(t_process *process_lst);
-int 			handle_redirection(t_process *process);
+int 			handle_redirection(t_process *process, t_minishell *shell);
 
 /*executor - execve*/
 char    		**get_pathdirs(t_minishell *shell, t_process *process);

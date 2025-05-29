@@ -6,13 +6,13 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 11:19:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:53:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_redirection(t_process *process)
+int	handle_redirection(t_process *process, t_minishell *shell)
 {
 	t_process		*current;
 	t_redirection	*curr_redir;
@@ -23,6 +23,7 @@ int	handle_redirection(t_process *process)
 
 	current = process;
     heredoc_buff = NULL;
+    (void)shell;
 	curr_redir = current->redirections;
 	while (curr_redir != NULL)
 	{
@@ -60,7 +61,6 @@ int	handle_redirection(t_process *process)
             setup_signals_heredoc();
             pipe(pipe_fd);
             input_line = readline("> ");
-            // dprintf(2, "exit status: %i\n", g_exit_status);
             if (!input_line || g_exit_status == 130)
             {
                 free(input_line);
@@ -84,8 +84,8 @@ int	handle_redirection(t_process *process)
             }
             if (current->command_arguments[0] == NULL)
             {
-                write(1, heredoc_buff, ft_strlen(heredoc_buff));
-                write(1, "\n", 1);
+                // write(1, heredoc_buff, ft_strlen(heredoc_buff));
+                // write(1, "\n", 1);
                 close(pipe_fd[1]);
                 close(pipe_fd[0]);
             }

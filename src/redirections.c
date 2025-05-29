@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/24 14:25:38 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:19:47 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,18 @@ int	handle_redirection(t_process *process)
 		}
         else if (curr_redir->type == HEREDOC)
         {
+            setup_signals_heredoc();
             pipe(pipe_fd);
             input_line = readline("> ");
+            // dprintf(2, "exit status: %i\n", g_exit_status);
+            if (!input_line || g_exit_status == 130)
+            {
+                free(input_line);
+                free(heredoc_buff);
+                close(pipe_fd[0]);
+                close(pipe_fd[1]);
+                return (0);
+            }
             while (input_line && ft_strcmp(input_line, curr_redir->file) != 0)
             {
                 if (heredoc_buff == NULL)

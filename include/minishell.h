@@ -194,6 +194,7 @@ int    			parse_builtin(t_minishell *shell);
 
 /*signals*/
 int				setup_signals(int is_child);
+int 			setup_signals_heredoc();
 
 /*testing*/
 void			print_fds(t_minishell *shell);

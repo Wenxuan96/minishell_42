@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/27 10:49:18 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:19:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,22 @@ volatile sig_atomic_t g_exit_status = 0;
 void    sig_handler_parent(int sig)
 {
     (void)sig;
-    // dprintf(2, "weare triggered signal in parent\n");
     write(STDOUT_FILENO, "\n", 1);
     rl_on_new_line();
     rl_replace_line("", 0);
-    rl_redisplay();
+    // rl_redisplay();
+    // write(STDOUT_FILENO, "signal", 6);
     g_exit_status = 128 + SIGINT;
-    // dprintf(2, "exit status: %u\n", g_exit_status);
-    //reprint the prompt?
+    dprintf(2, "exit status: %i\n", g_exit_status);
+}
+
+void    sig_handler_heredoc(int sig)
+{
+    (void)sig;
+    write(STDOUT_FILENO, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    g_exit_status = 128 + SIGINT;
 }
 
 int setup_signals(int is_child)
@@ -65,6 +73,34 @@ int setup_signals(int is_child)
 
         if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
             perror("sigaction child");
+    }
+    return (1);
+}
+
+int setup_signals_heredoc()
+{
+    struct sigaction sa_int;
+    struct sigaction sa_quit;
+
+    ft_memset(&sa_int, 0, sizeof(sa_int));
+    ft_memset(&sa_quit, 0, sizeof(sa_quit));
+    
+    sigemptyset(&sa_int.sa_mask);
+    sigemptyset(&sa_quit.sa_mask);
+
+    sa_int.sa_flags = 0;
+    sa_int.sa_handler = sig_handler_heredoc;
+    if (sigaction(SIGINT, &sa_int, NULL) == -1)
+    {
+        perror("sigaction parent");
+        return (0);
+    }
+    sa_quit.sa_flags = 0;
+    sa_quit.sa_handler = SIG_IGN;
+    if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+    {
+        perror("sigaction parent");
+        return (0);
     }
     return (1);
 }

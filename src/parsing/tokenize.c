@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 12:08:41 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:30:50 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 		return (free(sub), 0);
 	new_token->next_token = NULL;
 	/* if double_quoted is true then expand */
-	if (new_token->double_quoted == true)
-	{
-		ft_printf("double quote_detected\n");
-	}
+	// if (new_token->double_quoted == true)
+	// {
+	// 	ft_printf("double quote_detected\n");
+	// }
 	free(sub);
 	ms_token_add_back(&shell->token_list, new_token);
 	return (1);

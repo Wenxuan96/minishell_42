@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:08:01 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 15:56:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:32:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,58 +21,32 @@
 // echo "this is a test" | grep test | wc -w
 
 
-
-int echo_builtin(t_process *process, t_minishell *shell) //-n -> not handled yet! how args after echo are parsed??
+int	echo_builtin(t_process *process, t_minishell *shell)
 {
-    t_process   *current;
     int i;
-    int entered_arg;
+    int no_newline;
 
+    i = 1;
+    no_newline = 0;
     (void)shell;
-    entered_arg = 0;
-    current = process;
-    if (current->command_arguments[1] == NULL && current->redirections == NULL)
-        return (1);
-    else if (current->command_arguments[1] == NULL && current->redirections != NULL)
+    while (process->command_arguments[i] && ft_strlen(process->command_arguments[i]) > 1 && process->command_arguments[i][0] == '-')
     {
+        int j = 1;
+        while (process->command_arguments[i][j] == 'n')
+            j++;
+        if (process->command_arguments[i][j] != '\0')
+            break;
+        no_newline = 1;
+        i++;
+    }
+    while (process->command_arguments[i])
+    {
+        write(STDOUT_FILENO, process->command_arguments[i], ft_strlen(process->command_arguments[i]));
+        if (process->command_arguments[i + 1])
+            write(STDOUT_FILENO, " ", 1);
+        i++;
+    }
+    if (!no_newline)
         write(STDOUT_FILENO, "\n", 1);
-        return (1);
-    }
-    if (ft_strncmp(current->command_arguments[1], "-n", 2) == 0)
-    {
-        i = 2;
-        while (current->command_arguments[i] != NULL)
-        {
-            if (ft_strncmp(current->command_arguments[i], "-n", 2) != 0)
-            {
-                entered_arg = 1;
-                write(STDOUT_FILENO, current->command_arguments[i], ft_strlen(current->command_arguments[i]));
-                i++;   
-                if (current->command_arguments[i] != NULL)
-                    write(STDOUT_FILENO, " ", 1);
-            }
-            else if (ft_strncmp(current->command_arguments[i], "-n", 2) == 0 && entered_arg == 0)
-                i++;
-            else
-            {
-                write(STDOUT_FILENO, current->command_arguments[i], ft_strlen(current->command_arguments[i]));
-                i++;   
-                if (current->command_arguments[i] != NULL)
-                    write(STDOUT_FILENO, " ", 1);
-            }
-        }
-    }
-    else
-    {
-        i = 1;
-        while (current->command_arguments[i] != NULL)
-        {
-            write(STDOUT_FILENO, current->command_arguments[i], ft_strlen(current->command_arguments[i]));
-            i++;
-            if (current->command_arguments[i] != NULL)
-                write(STDOUT_FILENO, " ", 1);
-        }
-        write(STDOUT_FILENO, "\n", 1);
-    }
     return (1);
 }

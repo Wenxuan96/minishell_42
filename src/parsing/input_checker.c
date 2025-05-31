@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 14:21:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:05:23 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void prt_tokenlst(t_minishell *shell)
 int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
-	int	i;
+	// int	i;
 	
-	i = 0;
+	// i = 0;
 	init = 0;
 	if (init == 0 && argc != 1)
 		ft_exit(NULL, "Expecting <./minishell> to start the program.");

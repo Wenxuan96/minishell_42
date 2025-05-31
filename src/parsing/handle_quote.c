@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 11:46:32 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:09:29 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ char	*handle_dollar_sign(char *trimmed)
 	size_t	i;
 
 	i = 0;
-	while (trimmed[i] && trimmed[i + 1] != '\0')
+	// if (trimmed[0] == '$' && ft_strlen(trimmed) == 1)
+	// 	return(trimmed);
+	
+	while ((i < ft_strlen(trimmed)) &&
+		trimmed[i] && trimmed[i + 1] != '\0')
 	{
 		if (trimmed[i] == '\\' && trimmed[i + 1] == '$')
 		{
@@ -52,26 +56,27 @@ char	*handle_dollar_sign(char *trimmed)
 }
 
 // Helper to remove surrounding quotes if they match
-char	*remove_outer_quotes(char *str)
+char	*remove_outer_quotes(char *sub)
 {
 	size_t	len;
 	char	*trimmed;
 
-	len = ft_strlen(str);
-	if ((str[0] == '\"' && str[len - 1] == '\"') ||
-		(str[0] == '\'' && str[len - 1] == '\''))
+	len = ft_strlen(sub);
+	trimmed = NULL;
+	if ((sub[0] == '\"' && sub[len - 1] == '\"') ||
+		(sub[0] == '\'' && sub[len - 1] == '\''))
 	{
-		trimmed = ft_substr(str, 1, len - 2);
+		trimmed = ft_substr(sub, 1, len - 2);
 		if (!trimmed)
 			return (NULL);
-		if (str[0] == '\"' && str[len - 1] == '\"')
+		if (sub[0] == '\"' && sub[len - 1] == '\"')
 		{
 			trimmed = handle_dollar_sign(trimmed);
 			if (!trimmed)
 				return (NULL);
 		}
-		// free(str);
+
 		return (trimmed);
 	}
-	return (str);
+	return (sub);
 }

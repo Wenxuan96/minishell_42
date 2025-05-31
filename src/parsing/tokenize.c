@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 16:30:50 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:15:09 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 	if (!def_in_quotes(sub[0], sub[ft_strlen(sub) - 1], new_token, sub))
 		return (free(sub), 0);
 	new_token->next_token = NULL;
-	/* if double_quoted is true then expand */
-	// if (new_token->double_quoted == true)
-	// {
-	// 	ft_printf("double quote_detected\n");
-	// }
-	free(sub);
+	if (sub)
+	{
+		free(sub);
+		sub = NULL;
+	}
 	ms_token_add_back(&shell->token_list, new_token);
 	return (1);
 }

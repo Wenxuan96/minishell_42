@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 11:59:25 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:16:41 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int token_checker(char *command)
 
 int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
 {
-	if (c1 == '\"' && c2 == '\"')
+	if ((c1 == '\"' && c2 == '\"') || (c1 == '\'' && c2 == '\''))
 	{
 		new_token->in_quotes = true;
 		if ((c1 == '\"' && c2 == '\"'))
@@ -88,5 +88,6 @@ int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
 		new_token->double_quoted = false;
 		new_token->in_quotes = false;
 	}
+	printf("token is :%s \n", new_token->token_val);
 	return (1);
 }

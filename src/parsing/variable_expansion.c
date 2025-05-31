@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/26 12:12:26 by wxi              ###   ########.fr       */
+/*   Updated: 2025/05/31 21:59:51 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,12 @@ char *def_expansion(t_token *token, t_minishell *shell)
 	if (find_dollar(token->token_val) == true && 
 			(token->in_quotes == false || token->double_quoted == true))
 	{
-		printf("expanded\n");
-		commands = expand_token(token, shell);
+		if ((ft_strcmp(token->token_val, "\\$") == 0) || (ft_strcmp(token->token_val, "$") == 0))
+			commands = ft_strdup("$");//fix \$ when it is in ""
+		else
+			commands = expand_token(token, shell);
 	}
 	else
-		commands = strdup(token->token_val);
+		commands = ft_strdup(token->token_val);
 	return (commands);
 }

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/01 18:55:59 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/01 18:56:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*expand_token(t_token *token, t_minishell *shell)
 		{
 			var_start = i;
 			i++;
-		
 			if (result[i] == '$')
 			{
 				var_val = ft_itoa(getpid());
@@ -89,7 +88,6 @@ char	*expand_token(t_token *token, t_minishell *shell)
 				int var_len = 0;
 				while (ft_isalnum(result[i + var_len]) || result[i + var_len] == '_')
 					var_len++;
-			
 				var_name = ft_substr(result, i, var_len);
 				if (!var_name)
 					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
@@ -98,27 +96,21 @@ char	*expand_token(t_token *token, t_minishell *shell)
 					var_val = "";
 				i += var_len;
 			}
-		
 			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
-		
 			tmp = ft_strjoin(before, var_val);
 			new_result = ft_strjoin(tmp, after);
-		
 			free(var_name);
 			free(before);
 			free(after);
 			free(tmp);
 			free(result);
-		
 			result = new_result;
 			i = var_start + ft_strlen(var_val); // Move i past the inserted value
 			free(var_val);
 		}
 		else
-		{
 			i++;
-		}
 	}
 	return (result);
 }

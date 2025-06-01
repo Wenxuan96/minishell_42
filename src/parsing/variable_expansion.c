@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/01 18:54:19 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/01 18:55:59 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,25 +123,6 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	return (result);
 }
 
-
-// char	*ctr_continuous_dollar(t_token *token, t_minishell *shell)
-// {
-// 	char	*result;
-// 	char	*tmp;
-// 	int		i;
-// 	int		size;
-// 	char	*pid;
-
-// 	i = 0;
-// 	pid = ft_itoa(shell->process_list->pid);
-// 	while (token->token_val[i] != 0 && token->token_val[i + 1] != 0)
-// 	{
-// 		if (token->token_val[i] == '\\' && token->token_val[i + 1] == '$')
-			
-// 		i++;
-// 	}
-// }
-
 char *def_expansion(t_token *token, t_minishell *shell)
 {
 	char	*commands;
@@ -149,7 +130,7 @@ char *def_expansion(t_token *token, t_minishell *shell)
 	commands = NULL;
 	if (find_dollar(token->token_val) == true && 
 			(token->in_quotes == false || token->double_quoted == true))
-			commands = expand_token(token, shell);
+		commands = expand_token(token, shell);
 	else
 		commands = ft_strdup(token->token_val);
 	return (commands);

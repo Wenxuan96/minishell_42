@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/31 21:09:29 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/01 15:08:46 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,10 @@ char	*handle_dollar_sign(char *trimmed)
 	size_t	i;
 
 	i = 0;
-	// if (trimmed[0] == '$' && ft_strlen(trimmed) == 1)
-	// 	return(trimmed);
-	
 	while ((i < ft_strlen(trimmed)) &&
 		trimmed[i] && trimmed[i + 1] != '\0')
 	{
-		if (trimmed[i] == '\\' && trimmed[i + 1] == '$')
+		if (trimmed[i] == '\\' && trimmed[i + 1] == '\\')
 		{
 			while (i < ft_strlen(trimmed))
 			{

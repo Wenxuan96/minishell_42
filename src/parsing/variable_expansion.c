@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/31 21:59:51 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/01 18:54:19 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,78 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	{
 		if (result[i] == '$')
 		{
-			i += 1;
 			var_start = i;
-			while ((ft_isalnum(result[i])) || result[i] == '_')
-				i++;	
-			var_name = ft_substr(result, var_start, i - var_start);
-			if (!var_name)
-				display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
-			var_val = ft_getenv(var_name, shell);
-			if (!var_val)
-				var_val = "";
-			before = ft_substr(result, 0, var_start - 1);
+			i++;
+		
+			if (result[i] == '$')
+			{
+				var_val = ft_itoa(getpid());
+				i++; // consume both $$
+			}
+			else if (result[i] == '?')
+			{
+				var_val = ft_itoa(g_exit_status);
+				i++; // consume $?
+			}
+			else if (result[i] == '\0')
+				var_val = ft_strdup("$");
+			else
+			{
+				int var_len = 0;
+				while (ft_isalnum(result[i + var_len]) || result[i + var_len] == '_')
+					var_len++;
+			
+				var_name = ft_substr(result, i, var_len);
+				if (!var_name)
+					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+				var_val = ft_getenv(var_name, shell);
+				if (!var_val)
+					var_val = "";
+				i += var_len;
+			}
+		
+			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
+		
 			tmp = ft_strjoin(before, var_val);
 			new_result = ft_strjoin(tmp, after);
+		
 			free(var_name);
 			free(before);
 			free(after);
 			free(tmp);
 			free(result);
+		
 			result = new_result;
-			i = 0;
+			i = var_start + ft_strlen(var_val); // Move i past the inserted value
+			free(var_val);
 		}
 		else
+		{
 			i++;
+		}
 	}
 	return (result);
 }
+
+
+// char	*ctr_continuous_dollar(t_token *token, t_minishell *shell)
+// {
+// 	char	*result;
+// 	char	*tmp;
+// 	int		i;
+// 	int		size;
+// 	char	*pid;
+
+// 	i = 0;
+// 	pid = ft_itoa(shell->process_list->pid);
+// 	while (token->token_val[i] != 0 && token->token_val[i + 1] != 0)
+// 	{
+// 		if (token->token_val[i] == '\\' && token->token_val[i + 1] == '$')
+			
+// 		i++;
+// 	}
+// }
 
 char *def_expansion(t_token *token, t_minishell *shell)
 {
@@ -104,12 +149,7 @@ char *def_expansion(t_token *token, t_minishell *shell)
 	commands = NULL;
 	if (find_dollar(token->token_val) == true && 
 			(token->in_quotes == false || token->double_quoted == true))
-	{
-		if ((ft_strcmp(token->token_val, "\\$") == 0) || (ft_strcmp(token->token_val, "$") == 0))
-			commands = ft_strdup("$");//fix \$ when it is in ""
-		else
 			commands = expand_token(token, shell);
-	}
 	else
 		commands = ft_strdup(token->token_val);
 	return (commands);

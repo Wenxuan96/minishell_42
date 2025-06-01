@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/01 18:56:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/01 19:27:10 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ bool	find_dollar(char *token_val)
 
 char	*ft_getenv(char *var_name, t_minishell *shell)
 {
-	char	*var_val;
 	t_environment	*current;
 
-	var_val = NULL;
 	current = shell->env_list;
 	while(current != NULL)
 	{
@@ -40,7 +38,7 @@ char	*ft_getenv(char *var_name, t_minishell *shell)
 			return	(current->value);
 		current = current->next_env_var;
 	}
-	return (var_val);
+	return (NULL);
 }
 
 char	*expand_token(t_token *token, t_minishell *shell)
@@ -54,9 +52,11 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	char	*tmp;
 	char	*var_name;
 	char	*var_val;
+	int		var_len;
 
 	i = 0;
 	var_start = 0;
+	var_len = 0;
 	new_result = NULL;
 	before = NULL;
 	var_name = NULL;
@@ -85,22 +85,21 @@ char	*expand_token(t_token *token, t_minishell *shell)
 				var_val = ft_strdup("$");
 			else
 			{
-				int var_len = 0;
 				while (ft_isalnum(result[i + var_len]) || result[i + var_len] == '_')
 					var_len++;
 				var_name = ft_substr(result, i, var_len);
 				if (!var_name)
 					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
 				var_val = ft_getenv(var_name, shell);
+				free(var_name);
 				if (!var_val)
-					var_val = "";
+					var_val = ft_strdup("");
 				i += var_len;
 			}
 			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
 			tmp = ft_strjoin(before, var_val);
 			new_result = ft_strjoin(tmp, after);
-			free(var_name);
 			free(before);
 			free(after);
 			free(tmp);
@@ -114,6 +113,51 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	}
 	return (result);
 }
+
+//echo "HELLO $USER_NAME, how are you?"
+
+/*
+
+if (result[i] == '$')
+		{
+			var_start = i;
+			i++;
+			if (result[i] == '$')
+			{
+				var_val = ft_itoa(getpid());
+				i++; // consume both $$
+			}
+			else if (result[i] == '?')
+			{
+				var_val = ft_itoa(g_exit_status);
+				i++; // consume $?
+			}
+			else if (result[i] == '\0')
+				var_val = ft_strdup("$");
+
+bool	is_a_varible()
+{
+if (result[i] == '$')
+		{
+			var_start = i;
+			i++;
+			if (result[i] == '$')
+			{
+				var_val = ft_itoa(getpid());
+				i++; // consume both $$
+			}
+			else if (result[i] == '?')
+			{
+				var_val = ft_itoa(g_exit_status);
+				i++; // consume $?
+			}
+			else if (result[i] == '\0')
+				var_val = ft_strdup("$");
+}
+
+
+if (is_variable())
+*/
 
 char *def_expansion(t_token *token, t_minishell *shell)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 14:47:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:57:56 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	create_processes(t_minishell *shell)
 		if (current->is_builtin == 1 && shell->num_processes == 1 && !current->redirections)
 		{
 			setup_signals(0);
+			// dprintf(2, "we are hrre\n");
 			execute_builtin(current, shell);
 			current->pid = 0;
 		}

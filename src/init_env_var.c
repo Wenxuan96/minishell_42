@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/05/07 17:04:36 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/04 09:53:20 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ t_environment	*ft_new_var_lst(char *variable, char *value)
 	new_node = malloc(sizeof(t_environment));
 	if (!new_node)
 		return (NULL);
-	new_node->env_var = variable;
-	new_node->value = value;
+	new_node->env_var = ft_strdup(variable);
+	new_node->value = ft_strdup(value);
 	new_node->next_env_var = NULL;
 	return (new_node);
 }

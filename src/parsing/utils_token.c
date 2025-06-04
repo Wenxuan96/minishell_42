@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/31 21:16:41 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/04 19:15:53 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
 		new_token->double_quoted = false;
 		new_token->in_quotes = false;
 	}
-	printf("token is :%s \n", new_token->token_val);
+	// printf("token is :%s \n", new_token->token_val);
 	return (1);
 }

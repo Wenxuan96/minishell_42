@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 16:57:48 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:24:00 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,28 @@ int	cd_builtin(t_process *process, t_minishell *shell)
 	char    *path;
     char    *new_path_buffer;
     int     len;
+    t_environment   *env_list;
 
-    (void)shell;
-    if (process->command_arguments[2] != NULL)
+    path = NULL;
+    if (process->command_arguments[1] != NULL && process->command_arguments[2] != NULL)
         return(display_shell_error(process, "cd: too many arguments", EXEC_FAILURE), 0);
-    path = process->command_arguments[1];
+    if (process->command_arguments[1] == NULL)
+    {
+        env_list = shell->env_list;
+        while (env_list != NULL)
+        {
+            if (ft_strcmp(env_list->env_var, "HOME") == 0)
+            {
+                path = env_list->value;
+                break ;
+            }
+            env_list = env_list->next_env_var;
+        }
+        if (!path)
+            return (display_shell_error(process, "cd: HOME does not exist", EXEC_FAILURE), 0);
+    }
+    else
+        path = process->command_arguments[1];
     if (chdir(path) == -1)
     {
         if (errno == ENOENT)

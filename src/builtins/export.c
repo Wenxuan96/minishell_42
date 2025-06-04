@@ -6,75 +6,19 @@
 /*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/04 09:56:21 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/04 10:14:21 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-// static int	row(char const *s, char c)
-// {
-// 	int		i;
-// 	int		nrow;
-// 	int		add;
-
-// 	i = 0;
-// 	nrow = 0;
-// 	add = 1;
-// 	while (s[i])
-// 	{
-// 		if (s[i] != c && add == 1)
-// 		{
-// 			add = 0;
-// 			nrow++;
-// 		}
-// 		if (s[i] == c && add == 0)
-// 			add = 1;
-// 		i++;
-// 	}
-// 	return (nrow);
-// }
-
-// static int	splitlen(char const *s, char c, int i)
-// {
-// 	int		nlen;
-
-// 	nlen = 0;
-// 	while (s[i + nlen] != c && s[i + nlen] != '\0')
-// 	{
-// 		nlen++;
-// 	}
-// 	return (nlen);
-// }
-
-// static void	*freeall(char **split, int j)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < j)
-// 	{
-// 		free (split[i]);
-// 		i++;
-// 	}
-// 	free (split);
-// 	return (NULL);
-// }
-
-
 char	**ft_split_env(char const *s, char c)
 {
 	int		i;
-	// int		j;
 	char	**split;
-    // int     found_var;
-    // int     str_len;
 
 	i = 0;
-	// j = 0;
-    // found_var = 0;
-    // str_len = ft_strlen(s);
 	if (!s || s[0] == c)
         return (NULL);
     
@@ -126,7 +70,6 @@ char *ft_trim_quotes(char *str)
 
     len = 0;
     len = ft_strlen(str);
-    dprintf(2, "str: %s\n", str);
     if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'') ||(str[0] == '\"' && str[len - 1] == '\"')))
         trimmed_str = ft_substr(str, 1, len - 2);
     else if (len >= 2 && (str[0] == '\'' || str[0] == '\"'))
@@ -135,7 +78,6 @@ char *ft_trim_quotes(char *str)
         trimmed_str = ft_substr(str, 0, len - 2);
     else
         trimmed_str =  ft_strdup(str);
-    dprintf(2, "str  after: %s\n", trimmed_str);
     return (trimmed_str);
 }
 
@@ -231,14 +173,8 @@ int export_builtin(t_process *process, t_minishell *shell)
             }
             if (found == 0)
             {
-                // dprintf(2, "new var[0]%s\n", split_vars[0]);
-                // dprintf(2, "new var[1]%s\n", split_vars[1]);
-                // prt_env_lst(shell->env_list);
                 ft_var_lstadd_back(&shell->env_list, ft_new_var_lst(split_vars[0], split_vars[1]));
-                // prt_env_lst(shell->env_list);
             }
-            // prt_env_lst(&shell->env_list);
-            // printf("\n\n\n");
         }
         else
             display_shell_error(process, "export: not a valid identifier", EXEC_FAILURE);

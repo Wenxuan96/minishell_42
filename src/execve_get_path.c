@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_get_path.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 15:27:52 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:07:11 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,12 @@ char    *get_path(t_minishell *shell, t_process *process)
             return (ft_strdup(process->command_arguments[0]));
         else
         {
-            display_shell_error(process, "command not found", CMD_NOTFOUND);
+            if (errno == ENOTDIR)
+                display_shell_error(process, "Not a directory", EX_NOEXEC);
+            else if (errno == ENOENT)
+                display_shell_error(process, "No such file or directory", EX_NOEXEC);
+            else if (errno == EACCES)
+                display_shell_error(process, "Permission is denied", EX_NOEXEC);
             return (NULL);
         }
     }

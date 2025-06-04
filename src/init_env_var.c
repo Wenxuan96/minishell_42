@@ -6,7 +6,7 @@
 /*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/06/04 09:53:20 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/04 20:27:35 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ int	create_env_lst(t_environment **env_list, char **envp)
 	while (envp[i] != NULL)
 	{
 		env_split = ft_split(envp[i++], '=');
-		if (!env_list)
-			return (free_2darray(env_split), 0);
 		if (!env_split)
 			return (free_2darray(env_split),0);
 		if (env_split[1] == NULL)
-			new_env = ft_new_var_lst(ft_strdup(env_split[0]), ft_strdup(""));
+			new_env = ft_new_var_lst(env_split[0], "");
 		else
-			new_env = ft_new_var_lst(ft_strdup(env_split[0]), ft_strdup(env_split[1]));
+			new_env = ft_new_var_lst(env_split[0], env_split[1]);
 		if (!new_env)
 		{
 				free_2darray(env_split);
@@ -68,6 +66,7 @@ int	create_env_lst(t_environment **env_list, char **envp)
 		}
 		ft_var_lstadd_back(env_list, new_env);
 		free_2darray(env_split);
+		i++;
 	}
 	// prt_env_lst(env_list);
     return (1);

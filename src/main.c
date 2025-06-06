@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 14:33:07 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:06:58 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@
 // 	return (0);
 // }
 
+void    print_env(t_environment   *env_list)
+{
+    while (env_list)
+    {
+        printf("%s=", env_list->env_var);
+        printf("%s\n", env_list->value);
+        env_list = env_list->next_env_var;
+    }
+}
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -41,6 +51,9 @@ int	main(int argc, char **argv, char **envp)
 	// t_process	*head;
 	(void)argc;
 	(void)argv;
+	// for (int i = 0; envp[i]; i++)
+    // 	printf("%s\n", envp[i]);
+
 	init_shell(&shell);
 	setup_signals(0);
 	create_env_lst(&shell.env_list, envp);

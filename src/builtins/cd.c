@@ -6,12 +6,22 @@
 /*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:31:54 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/04 19:24:00 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 14:00:14 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
+
+// void    print_env(t_environment   *env_list)
+// {
+//     while (env_list)
+//     {
+//         printf("%s=", env_list->env_var);
+//         printf("%s\n", env_list->value);
+//         env_list = env_list->next_env_var;
+//     }
+// }
 
 int	cd_builtin(t_process *process, t_minishell *shell)
 {
@@ -26,6 +36,7 @@ int	cd_builtin(t_process *process, t_minishell *shell)
     if (process->command_arguments[1] == NULL)
     {
         env_list = shell->env_list;
+        // print_env(env_list);
         while (env_list != NULL)
         {
             if (ft_strcmp(env_list->env_var, "HOME") == 0)

@@ -6,7 +6,7 @@
 /*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/06/04 20:27:35 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 14:07:34 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	create_env_lst(t_environment **env_list, char **envp)
 	*env_list = NULL;
 	while (envp[i] != NULL)
 	{
-		env_split = ft_split(envp[i++], '=');
+		env_split = ft_split(envp[i], '=');
 		if (!env_split)
 			return (free_2darray(env_split),0);
 		if (env_split[1] == NULL)
@@ -68,7 +68,6 @@ int	create_env_lst(t_environment **env_list, char **envp)
 		free_2darray(env_split);
 		i++;
 	}
-	// prt_env_lst(env_list);
     return (1);
 }
 

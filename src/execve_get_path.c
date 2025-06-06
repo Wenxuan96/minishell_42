@@ -6,7 +6,7 @@
 /*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/04 20:07:11 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 13:17:15 by tanja            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,16 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
     t_environment   *current;
     char            **dir_paths = NULL;
     char            **new_dir_paths = NULL;
+    int             found;
     
     current = shell->env_list;
+    found = 0;
     while (current != NULL)
     {
         if (ft_strcmp(current->env_var, "PATH") == 0)
         {
             // printf("the path: %s\n", current->value);
+            found = 1;
             dir_paths = ft_split(current->value, ':');
             if (!dir_paths)
             {
@@ -100,6 +103,8 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
         }
         current = current->next_env_var;
     }
+    if (found == 0)
+        return (display_shell_error(process, "No such file or directory", CMD_NOTFOUND), NULL);
     // printf("pro-commnd: %s\n", process->command_arguments[0]);
     new_dir_paths = concat_path(shell, dir_paths, process->command_arguments[0]);
     free_2darray(dir_paths);
@@ -125,6 +130,7 @@ char    *get_path(t_minishell *shell, t_process *process)
                 display_shell_error(process, "No such file or directory", EX_NOEXEC);
             else if (errno == EACCES)
                 display_shell_error(process, "Permission is denied", EX_NOEXEC);
+            else
             return (NULL);
         }
     }

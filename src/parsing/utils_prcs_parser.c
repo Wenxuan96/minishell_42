@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prcs_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:12:21 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/27 10:34:02 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:37:49 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	count_pipes(t_minishell *shell)
 {
 	int		i;
 	t_token	*current;
-	
+
 	i = 1;
 	current = shell->token_list;
 	while (current)
@@ -67,9 +67,9 @@ char	*get_file(t_token *token)
 	return (redir_file);
 }
 
-void prt_cmds(t_process *process_lst)
+void	prt_cmds(t_process *process_lst)
 {
-	t_process *current;
+	t_process	*current;
 	int			i;
 	
 	i = 0;
@@ -86,12 +86,12 @@ void prt_cmds(t_process *process_lst)
 
 void	print_process(t_minishell *shell)
 {
-	t_process   *current;
-	t_redirection *curr_redir;
+	t_process		*current;
+	t_redirection	*curr_redir;
 
-    current = shell->process_list;
+	current = shell->process_list;
 	printf("num_proc: %i\n", shell->num_processes);
-    while (current != NULL)
+	while (current != NULL)
 	{
 		curr_redir = current->redirections;
 		printf("command :%s, %s\n", current->command_arguments[0], current->command_arguments[1]);

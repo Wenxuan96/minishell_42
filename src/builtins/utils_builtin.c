@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:26:37 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/04 10:13:21 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 17:33:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_clean_exit(t_minishell *shell, int exit_code)
 void	free_pipes(t_minishell *shell)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < shell->num_processes - 1)
 	{

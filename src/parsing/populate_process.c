@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/24 17:29:48 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/06 17:36:26 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**get_commands(t_token	**token, t_minishell *shell)
 {
 	int		i;
 	char	**commands;
-	
+
 	commands = (char **)malloc((count_commands(token) + 1) * sizeof(char *));
 	if (!commands)
 		return (NULL);
@@ -64,10 +64,10 @@ t_redir_type	get_redir_type(t_token *token)
 
 int	parse_redirection(t_minishell *shell)
 {
-	t_process *current_process;
-	t_token		*current_token;
-	t_redir_type type;
-	char 		*file;
+	t_process		*current_process;
+	t_token			*current_token;
+	t_redir_type	type;
+	char			*file;
 
 	current_process = shell->process_list;
 	current_token = shell->token_list;
@@ -109,7 +109,7 @@ int	parse_redirection(t_minishell *shell)
 	return (1);
 }
 
-int init_processlst(t_minishell *shell)
+int	init_processlst(t_minishell *shell)
 {
 	char		**arr_commands;
 	// t_process	*process_lst;

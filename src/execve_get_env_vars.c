@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_get_env_vars.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:13:36 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/13 11:34:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:51:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ char    **execve_get_envvars(t_minishell *shell)
     while (var_list != NULL)
     {
         if (var_list->value != NULL)
-        {
             num_vars++;
-        }
         var_list = var_list->next_env_var;         
     }
     envvars = (char **)malloc((num_vars + 1) * sizeof(char *));

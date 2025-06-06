@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/04 19:15:53 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 17:38:14 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_tokenlst(t_minishell *shell)
+void	free_tokenlst(t_minishell *shell)
 {
 	t_token	*current;
 
@@ -45,7 +45,7 @@ void	ms_token_add_back(t_token **token_lst, t_token *new_token)
 	current->next_token = new_token;
 }
 
-int redir_checker(char *command)
+int	redir_checker(char *command)
 {
 	if (ft_strncmp(">>", command, 2) == 0 && command[2] == '\0')
 		return (OUTPUT_APPEND);
@@ -58,7 +58,7 @@ int redir_checker(char *command)
 	return (CMD_NOTFOUND);
 }
 
-int token_checker(char *command)
+int	token_checker(char *command)
 {
 	if ((ft_strlen(command) == 1 && command[0] == '|'))
 	{

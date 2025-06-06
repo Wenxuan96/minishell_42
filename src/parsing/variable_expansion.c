@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/01 19:27:10 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/06 17:38:21 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 				var_name = ft_substr(result, i, var_len);
 				if (!var_name)
 					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
-				var_val = ft_getenv(var_name, shell);
+				var_val = ft_strdup(ft_getenv(var_name, shell));
 				free(var_name);
 				if (!var_val)
 					var_val = ft_strdup("");
@@ -114,52 +114,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	return (result);
 }
 
-//echo "HELLO $USER_NAME, how are you?"
-
-/*
-
-if (result[i] == '$')
-		{
-			var_start = i;
-			i++;
-			if (result[i] == '$')
-			{
-				var_val = ft_itoa(getpid());
-				i++; // consume both $$
-			}
-			else if (result[i] == '?')
-			{
-				var_val = ft_itoa(g_exit_status);
-				i++; // consume $?
-			}
-			else if (result[i] == '\0')
-				var_val = ft_strdup("$");
-
-bool	is_a_varible()
-{
-if (result[i] == '$')
-		{
-			var_start = i;
-			i++;
-			if (result[i] == '$')
-			{
-				var_val = ft_itoa(getpid());
-				i++; // consume both $$
-			}
-			else if (result[i] == '?')
-			{
-				var_val = ft_itoa(g_exit_status);
-				i++; // consume $?
-			}
-			else if (result[i] == '\0')
-				var_val = ft_strdup("$");
-}
-
-
-if (is_variable())
-*/
-
-char *def_expansion(t_token *token, t_minishell *shell)
+char	*def_expansion(t_token *token, t_minishell *shell)
 {
 	char	*commands;
 

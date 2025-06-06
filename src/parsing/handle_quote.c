@@ -6,16 +6,16 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/01 15:08:46 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/06 17:35:05 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int validate_quotes(const char *input)
+int	validate_quotes(const char *input)
 {
 	int		i;
-	char 	quote;
+	char	quote;
 	
 	i = 0;
 	quote = '\0';

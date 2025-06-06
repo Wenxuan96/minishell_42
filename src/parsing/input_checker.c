@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 19:05:23 by tanja            ###   ########.fr       */
+/*   Updated: 2025/06/06 17:35:31 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void prt_tokenlst(t_minishell *shell)
+void	prt_tokenlst(t_minishell *shell)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = shell->token_list;
 	if (!current)

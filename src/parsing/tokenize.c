@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/31 21:15:09 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/06 17:37:03 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	return (1);
 }
 
-int tokenize_input(t_minishell *shell)
+int	tokenize_input(t_minishell *shell)
 {
 	int		i;
 	int		start;

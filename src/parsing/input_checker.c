@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:35:31 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 14:04:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,26 @@ void	prt_tokenlst(t_minishell *shell)
 	ft_printf(".\n");
 }
 
+static void	free_shell(t_minishell *shell)
+{
+	free(shell->input_str);
+	free(shell->token_list);
+	free(shell);
+	shell = NULL;
+	exit(g_exit_status);
+}
+
 int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
-	// int	i;
-	
-	// i = 0;
+
 	init = 0;
 	if (init == 0 && argc != 1)
 		ft_exit(NULL, "Expecting <./minishell> to start the program.");
 	else
 		init = 1;
 	shell->input_str = readline("minishell$ ");
-	// write(2, "read_line\n", 11);
-	if (!shell->input_str) /*When ctrl+D is pressed, break the loop, clean memory and exit*/
+	if (!shell->input_str)
 		ft_exit(shell, "exit");
 	if (shell->input_str[0] == '\0')
 		return (2);
@@ -49,14 +55,7 @@ int	read_input(int argc, t_minishell *shell)
 	if (!tokenize_input(shell))
 		return (0);
 	if (init_processlst(shell) == 0)
-	{
-		free(shell->input_str);
-		free(shell->token_list);
-		free(shell);
-		shell = NULL;
-		exit(g_exit_status);
-	}
-	// prt_tokenlst(shell);
+		free_shell(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);
 	return(EXEC_SUCCESS);

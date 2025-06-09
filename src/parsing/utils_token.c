@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:38:14 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 17:20:00 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ int	redir_checker(char *command)
 int	token_checker(char *command)
 {
 	if ((ft_strlen(command) == 1 && command[0] == '|'))
-	{
-		// ft_printf("it is pipeline.\n");
 		return(PIPELINE);
-	}
 	if (redir_checker(command) != CMD_NOTFOUND)
 		return (REDIRECTION);
 	return (WORD);
@@ -88,6 +85,5 @@ int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
 		new_token->double_quoted = false;
 		new_token->in_quotes = false;
 	}
-	// printf("token is :%s \n", new_token->token_val);
 	return (1);
 }

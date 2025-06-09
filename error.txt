@@ -1,0 +1,156 @@
+minishell$ export + VAR=1 #It only has invalid read the first time.
+==132287== Invalid read of size 1
+==132287==    at 0x407BF7: ft_strlen (in /home/wxi/CodamProjects/Rank3/minishell/gitminishell/minishell)
+==132287==    by 0x4077C4: ft_strdup (in /home/wxi/CodamProjects/Rank3/minishell/gitminishell/minishell)
+==132287==    by 0x404892: ft_split_env (export.c:32)
+==132287==    by 0x404CCC: export_builtin (export.c:133)
+==132287==    by 0x40161A: execute_builtin (executor.c:54)
+==132287==    by 0x40279F: create_processes (processes.c:30)
+==132287==    by 0x402552: main (main.c:77)
+==132287==  Address 0x4b76552 is 0 bytes after a block of size 2 alloc'd
+==132287==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==132287==    by 0x403536: allocate_array (utils_malloc.c:31)
+==132287==    by 0x40396E: new_process_lst (utils_processes.c:25)
+==132287==    by 0x405C00: init_processlst (populate_process.c:130)
+==132287==    by 0x405684: read_input (input_checker.c:57)
+==132287==    by 0x4024C9: main (main.c:62)
+==132287== 
+==132287== Invalid read of size 1
+==132287==    at 0x407809: ft_strdup (in /home/wxi/CodamProjects/Rank3/minishell/gitminishell/minishell)
+==132287==    by 0x404892: ft_split_env (export.c:32)
+==132287==    by 0x404CCC: export_builtin (export.c:133)
+==132287==    by 0x40161A: execute_builtin (executor.c:54)
+==132287==    by 0x40279F: create_processes (processes.c:30)
+==132287==    by 0x402552: main (main.c:77)
+==132287==  Address 0x4b76552 is 0 bytes after a block of size 2 alloc'd
+==132287==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==132287==    by 0x403536: allocate_array (utils_malloc.c:31)
+==132287==    by 0x40396E: new_process_lst (utils_processes.c:25)
+==132287==    by 0x405C00: init_processlst (populate_process.c:130)
+==132287==    by 0x405684: read_input (input_checker.c:57)
+==132287==    by 0x4024C9: main (main.c:62)
+==132287== 
+minishell: export: not a valid identifier
+
+minishell$ ""
+==133487== 
+==133487== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==133487== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==133487==    <inherited from parent>
+==133487== 
+==133487== Open file descriptor 37: /home/wxi/.config/Code/logs/20250609T165427/ptyhost.log
+==133487==    <inherited from parent>
+==133487== 
+==133487== Open file descriptor 2: /dev/pts/0
+==133487==    <inherited from parent>
+==133487== 
+==133487== Open file descriptor 1: /dev/pts/0
+==133487==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==133487==    by 0x401764: execute_outside_cmd (executor.c:90)
+==133487==    by 0x402854: create_processes (processes.c:52)
+==133487==    by 0x402552: main (main.c:77)
+==133487== 
+==133487== Open file descriptor 0: /dev/pts/0
+==133487==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==133487==    by 0x4016FF: execute_outside_cmd (executor.c:82)
+==133487==    by 0x402854: create_processes (processes.c:52)
+==133487==    by 0x402552: main (main.c:77)
+==133487== 
+==133487== 
+==133487== HEAP SUMMARY:
+==133487==     in use at exit: 212,029 bytes in 320 blocks
+==133487==   total heap usage: 1,255 allocs, 935 frees, 253,390 bytes allocated
+==133487== 
+==133487== 17 bytes in 1 blocks are definitely lost in loss record 12 of 69
+==133487==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133487==    by 0x4077DF: ft_strdup (in /home/wxi/CodamProjects/Rank3/minishell/gitminishell/minishell)
+==133487==    by 0x401F5F: get_path (execve_get_path.c:145)
+==133487==    by 0x4017E1: execute_outside_cmd (executor.c:100)
+==133487==    by 0x402854: create_processes (processes.c:52)
+==133487==    by 0x402552: main (main.c:77)
+==133487== 
+==133487== 3,055 bytes in 93 blocks are indirectly lost in loss record 43 of 69
+==133487==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133487==    by 0x401931: execve_get_envvars (execve_get_env_vars.c:42)
+==133487==    by 0x401812: execute_outside_cmd (executor.c:106)
+==133487==    by 0x402854: create_processes (processes.c:52)
+==133487==    by 0x402552: main (main.c:77)
+==133487== 
+==133487== 3,807 (752 direct, 3,055 indirect) bytes in 1 blocks are definitely lost in loss record 44 of 69
+==133487==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133487==    by 0x4018B3: execve_get_envvars (execve_get_env_vars.c:33)
+==133487==    by 0x401812: execute_outside_cmd (executor.c:106)
+==133487==    by 0x402854: create_processes (processes.c:52)
+==133487==    by 0x402552: main (main.c:77)
+==133487== 
+==133487== LEAK SUMMARY:
+==133487==    definitely lost: 769 bytes in 2 blocks
+==133487==    indirectly lost: 3,055 bytes in 93 blocks
+==133487==      possibly lost: 0 bytes in 0 blocks
+==133487==    still reachable: 0 bytes in 0 blocks
+==133487==         suppressed: 208,205 bytes in 225 blocks
+==133487== 
+==133487== For lists of detected and suppressed errors, rerun with: -s
+==133487== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+
+minishell$ //
+==133913== 
+==133913== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==133913== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==133913==    <inherited from parent>
+==133913== 
+==133913== Open file descriptor 37: /home/wxi/.config/Code/logs/20250609T165427/ptyhost.log
+==133913==    <inherited from parent>
+==133913== 
+==133913== Open file descriptor 2: /dev/pts/0
+==133913==    <inherited from parent>
+==133913== 
+==133913== Open file descriptor 1: /dev/pts/0
+==133913==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==133913==    by 0x401764: execute_outside_cmd (executor.c:90)
+==133913==    by 0x402854: create_processes (processes.c:52)
+==133913==    by 0x402552: main (main.c:77)
+==133913== 
+==133913== Open file descriptor 0: /dev/pts/0
+==133913==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==133913==    by 0x4016FF: execute_outside_cmd (executor.c:82)
+==133913==    by 0x402854: create_processes (processes.c:52)
+==133913==    by 0x402552: main (main.c:77)
+==133913== 
+==133913== 
+==133913== HEAP SUMMARY:
+==133913==     in use at exit: 212,015 bytes in 320 blocks
+==133913==   total heap usage: 1,228 allocs, 908 frees, 252,856 bytes allocated
+==133913== 
+==133913== 3 bytes in 1 blocks are definitely lost in loss record 2 of 69
+==133913==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133913==    by 0x4077DF: ft_strdup (in /home/wxi/CodamProjects/Rank3/minishell/gitminishell/minishell)
+==133913==    by 0x401E3C: get_path (execve_get_path.c:124)
+==133913==    by 0x4017E1: execute_outside_cmd (executor.c:100)
+==133913==    by 0x402854: create_processes (processes.c:52)
+==133913==    by 0x402552: main (main.c:77)
+==133913== 
+==133913== 3,055 bytes in 93 blocks are indirectly lost in loss record 43 of 69
+==133913==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133913==    by 0x401931: execve_get_envvars (execve_get_env_vars.c:42)
+==133913==    by 0x401812: execute_outside_cmd (executor.c:106)
+==133913==    by 0x402854: create_processes (processes.c:52)
+==133913==    by 0x402552: main (main.c:77)
+==133913== 
+==133913== 3,807 (752 direct, 3,055 indirect) bytes in 1 blocks are definitely lost in loss record 44 of 69
+==133913==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==133913==    by 0x4018B3: execve_get_envvars (execve_get_env_vars.c:33)
+==133913==    by 0x401812: execute_outside_cmd (executor.c:106)
+==133913==    by 0x402854: create_processes (processes.c:52)
+==133913==    by 0x402552: main (main.c:77)
+==133913== 
+==133913== LEAK SUMMARY:
+==133913==    definitely lost: 755 bytes in 2 blocks
+==133913==    indirectly lost: 3,055 bytes in 93 blocks
+==133913==      possibly lost: 0 bytes in 0 blocks
+==133913==    still reachable: 0 bytes in 0 blocks
+==133913==         suppressed: 208,205 bytes in 225 blocks
+==133913== 
+==133913== For lists of detected and suppressed errors, rerun with: -s
+==133913== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+

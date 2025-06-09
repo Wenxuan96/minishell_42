@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:37:03 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 17:28:23 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 	char	*sub;
 
 	sub = ft_substr(shell->input_str, t_start, t_len);
-	if (!sub || sub[0] == '\0') // <- 🔥 important check
+	if (!sub || sub[0] == '\0')
 		return (free(sub), 0);
 	new_token = new_token_lst(sub);
 	if (!new_token)
@@ -56,30 +56,37 @@ int	def_special_token(t_minishell *shell, int *i)
 	return (1);
 }
 
+static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
+{
+	if (*i != *start)
+	{
+		if (!def_token(shell, *i - *start, *start))
+			return (0);
+	}
+	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
+		(*i)++;
+	while (ft_strchr("|<>", shell->input_str[*i]) != NULL)
+	{
+		if (!def_special_token(shell, i))
+			return (0);
+	}
+	*start = *i;
+	return (1);
+}
+
 int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 {
 	while (shell->input_str[i])
 	{
 		if ((quote_char == '\0') && (shell->input_str[i] == '\''
-			|| shell->input_str[i] == '\"'))//check if it is in-quote
+			|| shell->input_str[i] == '\"'))
 			quote_char = shell->input_str[i];
 		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
-			quote_char = '\0';//check if a quote is closed
+			quote_char = '\0';
 		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
 		{
-			if (i != start)// to define the token before it hits a special character
-			{
-				if (!def_token(shell, i - start, start))
-					return (0);
-			}
-			while (shell->input_str[i] == ' ' || shell->input_str[i] == '\t')
-				i++;
-			while (ft_strchr("|<>", shell->input_str[i]) != NULL)
-			{
-				if (!def_special_token(shell, &i))
-					return (0);
-			}
-			start = i;
+			if (!handle_token_boundaries(shell, &i, &start))
+				return (0);
 			continue;
 		}
 		i++;
@@ -111,6 +118,5 @@ int	tokenize_input(t_minishell *shell)
 		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
 		return (0);
 	}
-	// def_expansion(shell->token_list);
 	return (1);
 }

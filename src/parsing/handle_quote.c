@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:35:05 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 17:19:03 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*handle_dollar_sign(char *trimmed)
 	return(trimmed);
 }
 
-// Helper to remove surrounding quotes if they match
 char	*remove_outer_quotes(char *sub)
 {
 	size_t	len;

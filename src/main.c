@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/06 15:55:40 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 17:01:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@
 
 void    print_env(t_environment   *env_list)
 {
-    while (env_list)
-    {
-        printf("%s=", env_list->env_var);
-        printf("%s\n", env_list->value);
-        env_list = env_list->next_env_var;
-    }
+	while (env_list)
+	{
+		printf("%s=", env_list->env_var);
+		printf("%s\n", env_list->value);
+		env_list = env_list->next_env_var;
+	}
 }
 
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell		shell;
-	t_process *p;
+	t_process		*p;
 	// t_environment	*env_list;
 	// t_process		*current;
 	// t_process	*head;

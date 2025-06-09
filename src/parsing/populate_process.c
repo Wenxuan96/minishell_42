@@ -6,22 +6,32 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/09 14:29:46 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 14:54:16 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
+static char	**malloc_mem(t_token **token, int *i)
+{
+	char	**commands;
+
+	*i = 0;
+	commands = (char **)malloc((count_commands(token) + 1) * sizeof(char *));
+	if (!commands)
+		return (NULL);
+	return(commands);
+}
+
 char	**get_commands(t_token	**token, t_minishell *shell)
 {
 	int		i;
 	char	**commands;
 
-	commands = (char **)malloc((count_commands(token) + 1) * sizeof(char *));
+	commands = malloc_mem(token, &i);
 	if (!commands)
 		return (NULL);
-	i = 0;
 	while ((*token) && (*token)->type != PIPELINE)
 	{
 		if ((*token)->type == REDIRECTION)
@@ -34,10 +44,7 @@ char	**get_commands(t_token	**token, t_minishell *shell)
 		{
 			commands[i] = def_expansion(*token, shell);
 			if (!commands[i])
-			{
-				free_2darray(commands);
-                return (NULL);
-			}
+                return (free_2darray(commands), NULL);
 			(*token) = (*token)->next_token;
 			i++;
 		}

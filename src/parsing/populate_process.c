@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:36:26 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/09 14:29:46 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,6 @@ int	parse_redirection(t_minishell *shell)
 			else
 				current_token = current_token->next_token;
 		}
-		// if (current_process->redirections)
-		// {
-		// 	printf("redirection type: %u\n", current_process->redirections->type);
-		// 	printf("redirection file: %s\n", current_process->redirections->file);
-		// }
 		current_process = current_process->next_process;
 	}
 	return (1);
@@ -112,14 +107,12 @@ int	parse_redirection(t_minishell *shell)
 int	init_processlst(t_minishell *shell)
 {
 	char		**arr_commands;
-	// t_process	*process_lst;
 	t_token		*current;
 	int			i;
 
 	i = 0;
 	current = shell->token_list;
 	shell->num_processes = count_pipes(shell);
-	// printf("num proc: %i\n", shell->num_processes);
 	while (i < shell->num_processes)
 	{
 		arr_commands = get_commands(&current, shell);
@@ -136,11 +129,8 @@ int	init_processlst(t_minishell *shell)
 		free_2darray(arr_commands);
 		i++;
 	}
-	// free_2darray(arr_commands);
 	if (!parse_redirection(shell))
 		exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 	parse_builtin(shell);
-	// print_process(shell);
-	// prt_cmds(shell->process_list);
 	return (1);
 }

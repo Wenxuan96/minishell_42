@@ -1,0 +1,11 @@
+Makefile
+README.md
+include
+libft
+minishell
+minishell.supp
+obj
+out.txt
+src
+textcase_donot_delete.txt
+utils_lists.c

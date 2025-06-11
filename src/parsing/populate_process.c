@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/09 14:54:16 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/11 17:43:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,5 @@ int	init_processlst(t_minishell *shell)
 	if (!parse_redirection(shell))
 		exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
 	parse_builtin(shell);
-	return (1);
+	return (EXEC_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/11 12:39:52 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/11 17:44:16 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ void	prt_tokenlst(t_minishell *shell)
 	ft_printf("current tokens are:");
 	while (current != NULL)
 	{
-		ft_printf(" [%s: %s]", current->token_val, current->type);
+		ft_printf(" [%s: %d]", current->token_val, current->type);
 		current = current->next_token;
 	}
 	ft_printf(".\n");
 }
 
-static void	free_shell(t_minishell *shell)
-{
-	free(shell->input_str);
-	free(shell->token_list);
-	free(shell);
-	shell = NULL;
-	exit(g_exit_status);
-}
+// static void	free_shell(t_minishell *shell)
+// {
+// 	free(shell->input_str);
+// 	free(shell->token_list);
+// 	free(shell);
+// 	shell = NULL;
+// 	exit(g_exit_status);
+// }
 
 int	read_input(int argc, t_minishell *shell)
 {
@@ -57,8 +57,9 @@ int	read_input(int argc, t_minishell *shell)
 	add_history(shell->input_str);
 	if (tokenize_input(shell) != EXEC_SUCCESS)
 		return (EXEC_FAILURE);
-	if (init_processlst(shell) == 0)
-		free_shell(shell);
+	if (init_processlst(shell) != EXEC_SUCCESS)
+		return (EXEC_FAILURE);
+	prt_tokenlst(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);
 	return(EXEC_SUCCESS);

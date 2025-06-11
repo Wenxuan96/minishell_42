@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/09 17:01:44 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/11 12:45:06 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_status = read_input(argc, &shell);
-		if (shell.input_status != EXEC_SUCCESS)
-			display_shell_error2(&shell, "lexer failed", EXEC_FAILURE);
+		if (shell.input_status == EXEC_FAILURE)
+			display_shell_error2(&shell, "lexer failed.", EXEC_FAILURE);
 		p = shell.process_list;
 		while (p)
 		{
@@ -71,6 +71,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (shell.input_status == 2) /* When receiving empty str as input */
 			continue; /* skip all functions below, rerun while loop and awaits for new input */
+		if (shell.input_status == CMD_NOTFOUND)
+		{
+			display_shell_error2(&shell, "Command '' not found.", CMD_NOTFOUND);
+			continue;
+		}
 		create_pipes(&shell);
 		assign_fd(&shell);
 		// print_fds(&shell);

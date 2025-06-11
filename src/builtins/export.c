@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/06 17:32:56 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/11 12:11:39 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**ft_split_env(char const *s, char c)
 	
 	while (s[i] != '\0' && s[i] != c)
 		i++;
-	if (s[i] != c && i == 0)
+	if (s[i] != c)
 		return (NULL);
 
 	split = (char **)malloc((2 + 1) * sizeof(char *));

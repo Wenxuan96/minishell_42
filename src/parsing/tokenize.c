@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/11 12:39:33 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/14 14:19:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,26 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 	char	*sub;
 
 	sub = ft_substr(shell->input_str, t_start, t_len);
+	ft_printf("t_start: %d, t_len: %d. \n", t_start, t_len);
 	if (!sub || sub[0] == '\0')
+	{
+		ft_printf("test11\n");
 		return (free(sub), 0);
+	}
 	new_token = new_token_lst(sub);
 	if (!new_token)
+	{
+		ft_printf("test22\n");
 		return (free(sub), 0);
+	}
 	new_token->len = t_len;
 	new_token->start = t_start;
 	new_token->type = token_checker(new_token->token_val);
 	if (!def_in_quotes(sub[0], sub[ft_strlen(sub) - 1], new_token, sub))
+	{
+		ft_printf("test33\n");
 		return (free(sub), 0);
+	}
 	new_token->next_token = NULL;
 	if (sub)
 	{
@@ -61,14 +71,25 @@ static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 	if (*i != *start)
 	{
 		if (!def_token(shell, *i - *start, *start))
+		{
+			ft_printf("test1\ni: %d, start: %d, test1\n", *i, *start);
 			return (0);
+		}
 	}
 	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
 		(*i)++;
-	while (ft_strchr("|<>", shell->input_str[*i]) != NULL)
+	while (shell->input_str[*i] != '\0' && ft_strchr("|<>", shell->input_str[*i]) != NULL)
 	{
+		if (shell->input_str[*i] == '|' && (*i == 0 || shell->input_str[*i + 1] == '\0'))
+		{
+			ft_printf("syntax error near unexpected token `|'\n");
+			return (0); //syntax error
+		}
 		if (!def_special_token(shell, i))
+		{
+			ft_printf("test2\ni: %d, start: %d, test1\n", *i, *start);
 			return (0);
+		}
 	}
 	*start = *i;
 	return (1);
@@ -86,7 +107,10 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
 		{
 			if (!handle_token_boundaries(shell, &i, &start))
+			{
+				ft_printf("test01\ni: %d, start: %d, quote_char: %c\n", i, start, quote_char);
 				return (0);
+			}
 			continue;
 		}
 		i++;
@@ -94,7 +118,10 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	if (i != start)
 	{
 		if (!def_token(shell, i - start, start))
+		{
+			ft_printf("test02\n");
 			return (0);
+		}
 	}
 	return (1);
 }

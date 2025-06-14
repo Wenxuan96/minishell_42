@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/11 17:44:16 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/11 17:46:53 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ int	read_input(int argc, t_minishell *shell)
 		return (CMD_NOTFOUND);
 	add_history(shell->input_str);
 	if (tokenize_input(shell) != EXEC_SUCCESS)
+	{
+		prt_tokenlst(shell);
 		return (EXEC_FAILURE);
+	}
 	if (init_processlst(shell) != EXEC_SUCCESS)
 		return (EXEC_FAILURE);
-	prt_tokenlst(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);
 	return(EXEC_SUCCESS);

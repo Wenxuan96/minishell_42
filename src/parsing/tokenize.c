@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/14 14:19:28 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/16 15:08:24 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	def_special_token(t_minishell *shell, int *i)
 
 static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 {
+	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
+		(*i)++;
 	if (*i != *start)
 	{
 		if (!def_token(shell, *i - *start, *start))
@@ -76,8 +78,6 @@ static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 			return (0);
 		}
 	}
-	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
-		(*i)++;
 	while (shell->input_str[*i] != '\0' && ft_strchr("|<>", shell->input_str[*i]) != NULL)
 	{
 		if (shell->input_str[*i] == '|' && (*i == 0 || shell->input_str[*i + 1] == '\0'))

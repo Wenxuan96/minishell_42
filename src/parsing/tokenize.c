@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/16 15:08:24 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/16 16:19:17 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 	char	*sub;
 
 	sub = ft_substr(shell->input_str, t_start, t_len);
-	ft_printf("t_start: %d, t_len: %d. \n", t_start, t_len);
+	// ft_printf("t_start: %d, t_len: %d. \n", t_start, t_len);
 	if (!sub || sub[0] == '\0')
 	{
 		ft_printf("test11\n");
@@ -68,8 +68,11 @@ int	def_special_token(t_minishell *shell, int *i)
 
 static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 {
-	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
-		(*i)++;
+	if (*i == 0)
+	{
+		while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
+			(*i)++;
+	}
 	if (*i != *start)
 	{
 		if (!def_token(shell, *i - *start, *start))
@@ -78,6 +81,8 @@ static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 			return (0);
 		}
 	}
+	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
+		(*i)++;
 	while (shell->input_str[*i] != '\0' && ft_strchr("|<>", shell->input_str[*i]) != NULL)
 	{
 		if (shell->input_str[*i] == '|' && (*i == 0 || shell->input_str[*i + 1] == '\0'))

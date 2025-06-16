@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/06 17:38:21 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/16 16:44:39 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_getenv(char *var_name, t_minishell *shell)
 	while(current != NULL)
 	{
 		if (ft_strcmp(current->env_var, var_name) == 0)
-			return	(current->value);
+			return	(ft_strdup(current->value));
 		current = current->next_env_var;
 	}
 	return (NULL);
@@ -90,7 +90,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 				var_name = ft_substr(result, i, var_len);
 				if (!var_name)
 					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
-				var_val = ft_strdup(ft_getenv(var_name, shell));
+				var_val = ft_getenv(var_name, shell);
 				free(var_name);
 				if (!var_val)
 					var_val = ft_strdup("");
@@ -106,7 +106,8 @@ char	*expand_token(t_token *token, t_minishell *shell)
 			free(result);
 			result = new_result;
 			i = var_start + ft_strlen(var_val); // Move i past the inserted value
-			free(var_val);
+			if (var_val)
+				free(var_val);
 		}
 		else
 			i++;
@@ -117,12 +118,25 @@ char	*expand_token(t_token *token, t_minishell *shell)
 char	*def_expansion(t_token *token, t_minishell *shell)
 {
 	char	*commands;
+	int		i;
 
-	commands = NULL;
+	commands = ft_strdup(token->token_val);
+	i = 0;
 	if (find_dollar(token->token_val) == true && 
 			(token->in_quotes == false || token->double_quoted == true))
+	{
+		while (token->token_val[i])
+		{
+			if (token->token_val[i] == '$')
+			{
+				i++;
+				if (ft_strchr(" \\|<>", token->token_val[i]) != NULL)
+					return (commands);
+			}
+			i++;
+		}
+		free (commands);
 		commands = expand_token(token, shell);
-	else
-		commands = ft_strdup(token->token_val);
+	}
 	return (commands);
 }

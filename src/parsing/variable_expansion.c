@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 18:36:45 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 18:57:59 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,24 @@ void free_var(char *before, char *after, char *tmp, char *result)
 	free(result);
 }
 
+void	def_var_val(char *result, int *i, t_minishell *shell, char **var_val)
+{
+	if (result[*i] == '$')
+	{
+		*var_val = ft_itoa(getpid());
+		(*i)++; // consume both $$
+	}
+	else if (result[*i] == '?')
+	{
+		*var_val = ft_itoa(g_exit_status);
+		(*i)++; // consume $?
+	}
+	else if (result[*i] == '\0')
+		*var_val = ft_strdup("$");
+	else
+		*var_val = expand_val(i, result, shell);
+}
+
 char	*expand_token(t_token *token, t_minishell *shell)
 {
 	int		i;
@@ -82,7 +100,6 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	char	*var_val;
 	char	*result;
 
-	i = 0;
 	init_val(&var_start, &before, &after, &new_result);
 	init_val(&i, &tmp, &result, &var_val);
 	result = ft_strdup(token->token_val);
@@ -94,20 +111,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 		{
 			var_start = i;
 			i++;
-			if (result[i] == '$')
-			{
-				var_val = ft_itoa(getpid());
-				i++; // consume both $$
-			}
-			else if (result[i] == '?')
-			{
-				var_val = ft_itoa(g_exit_status);
-				i++; // consume $?
-			}
-			else if (result[i] == '\0')
-				var_val = ft_strdup("$");
-			else
-				var_val = expand_val(&i, result, shell);
+			def_var_val(result, &i, shell, &var_val);
 			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
 			tmp = ft_strjoin(before, var_val);

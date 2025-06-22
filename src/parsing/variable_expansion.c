@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 18:57:59 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 19:17:14 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,37 @@ void	def_var_val(char *result, int *i, t_minishell *shell, char **var_val)
 		*var_val = expand_val(i, result, shell);
 }
 
-char	*expand_token(t_token *token, t_minishell *shell)
+void	expand_result(char **result, int *i, char *tmp, t_minishell *shell)
 {
-	int		i;
 	int		var_start;
 	char	*before;
 	char	*after;
 	char	*new_result;
+	char	*var_val;
+	
+	init_val(&var_start, &before, &after, &new_result);
+	var_val = NULL;
+	var_start = *i;
+	(*i)++;
+	def_var_val(*result, i, shell, &var_val);
+	before = ft_substr(*result, 0, var_start);
+	after = ft_strdup(*result + *i);
+	tmp = ft_strjoin(before, var_val);
+	new_result = ft_strjoin(tmp, after);
+	free_var(before, after, tmp, *result);
+	*result = new_result;
+	*i = var_start + ft_strlen(var_val); // Move i past the inserted value
+	if (var_val)
+		free(var_val);
+}
+
+char	*expand_token(t_token *token, t_minishell *shell)
+{
+	int		i;
 	char	*tmp;
 	char	*var_val;
 	char	*result;
 
-	init_val(&var_start, &before, &after, &new_result);
 	init_val(&i, &tmp, &result, &var_val);
 	result = ft_strdup(token->token_val);
 	if (!result)
@@ -108,20 +127,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	while (result[i])
 	{
 		if (result[i] == '$')
-		{
-			var_start = i;
-			i++;
-			def_var_val(result, &i, shell, &var_val);
-			before = ft_substr(result, 0, var_start);
-			after = ft_strdup(result + i);
-			tmp = ft_strjoin(before, var_val);
-			new_result = ft_strjoin(tmp, after);
-			free_var(before, after, tmp, result);
-			result = new_result;
-			i = var_start + ft_strlen(var_val); // Move i past the inserted value
-			if (var_val)
-				free(var_val);
-		}
+			expand_result(&result, &i, tmp, shell);
 		else
 			i++;
 	}

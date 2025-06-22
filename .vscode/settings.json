@@ -2,6 +2,7 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"functional": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"random": "c"
 	}
 }

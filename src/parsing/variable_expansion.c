@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/16 16:44:39 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 17:52:51 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,16 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	int		var_start;
 	char	*before;
 	char	*after;
-	char	*result;
 	char	*new_result;
+	int		var_len;
 	char	*tmp;
 	char	*var_name;
 	char	*var_val;
-	int		var_len;
+	char	*result;
 
 	i = 0;
-	var_start = 0;
-	var_len = 0;
-	new_result = NULL;
-	before = NULL;
-	var_name = NULL;
-	tmp = NULL;
-	var_val = NULL;
+	init_val(&var_start, &before, &after, &new_result);
+	init_val(&var_len, &tmp, &var_name, &var_val);
 	result = ft_strdup(token->token_val);
 	if (!result)
 		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);

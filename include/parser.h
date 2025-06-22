@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 17:53:20 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 19:20:40 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ int				find_n_def_redir(t_redir_type type, char *file, t_process *current_proces
 int				fill_redirlst(t_redir_type type, char *file, t_process *current_process, t_token **current_token);
 t_redir_type	get_redir_type(t_token *token);
 void			init_val(int *n, char **a, char **b, char **c);
+void			free_var(char *before, char *after, char *tmp, char *result);
+bool			find_dollar(char *token_val);
+char			*ft_getenv(char *var_name, t_minishell *shell);
 
 #endif

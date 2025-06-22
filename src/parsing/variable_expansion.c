@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 18:16:37 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 18:36:45 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ char	*ft_getenv(char *var_name, t_minishell *shell)
 	return (NULL);
 }
 
-char *expand_val(int *i, int var_len, char *result, t_minishell *shell)
+char *expand_val(int *i, char *result, t_minishell *shell)
 {
 	char	*var_name;
 	char	*var_val;
+	int		var_len;
 
 	var_name = NULL;
 	var_val = NULL;
+	var_len = 0;
 	while (ft_isalnum(result[*i + var_len]) || result[*i + var_len] == '_')
 		var_len++;
 	var_name = ft_substr(result, *i, var_len);
@@ -76,14 +78,13 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	char	*before;
 	char	*after;
 	char	*new_result;
-	int		var_len;
 	char	*tmp;
 	char	*var_val;
 	char	*result;
 
 	i = 0;
 	init_val(&var_start, &before, &after, &new_result);
-	init_val(&var_len, &tmp, &result, &var_val);
+	init_val(&i, &tmp, &result, &var_val);
 	result = ft_strdup(token->token_val);
 	if (!result)
 		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
@@ -106,7 +107,7 @@ char	*expand_token(t_token *token, t_minishell *shell)
 			else if (result[i] == '\0')
 				var_val = ft_strdup("$");
 			else
-				var_val = expand_val(&i, var_len, result, shell);
+				var_val = expand_val(&i, result, shell);
 			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
 			tmp = ft_strjoin(before, var_val);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/29 12:06:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/22 16:55:21 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 typedef struct s_minishell t_minishell;
 typedef struct s_token t_token;
 typedef struct s_process t_process;
+typedef enum e_redir_type t_redir_type;
+
 
 /*Tokenization*/
 int             tokenize_input(t_minishell *shell);
@@ -35,5 +37,8 @@ char			*get_file(t_token *token);
 void			print_process(t_minishell *shell);
 int			    def_in_quotes(char c1, char c2, t_token	*new_token, char *sub);
 char 			*def_expansion(t_token *token, t_minishell *shell);
+int				find_n_def_redir(t_redir_type type, char *file, t_process *current_process, t_token **current_token);
+int				fill_redirlst(t_redir_type type, char *file, t_process *current_process, t_token **current_token);
+t_redir_type	get_redir_type(t_token *token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/16 16:04:36 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 15:53:18 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ int	main(int argc, char **argv, char **envp)
 			free_pipes(&shell);
 	}
 	ft_exit(&shell, NULL);
-	return (0);
+	return (EXEC_SUCCESS);
 }

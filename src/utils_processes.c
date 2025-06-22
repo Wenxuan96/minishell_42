@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/29 14:39:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:14:55 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 t_process	*new_process_lst(t_minishell *shell, char **commands)
 {
 	t_process	*new_process;
+
 	(void)shell;
 	new_process = malloc(sizeof(t_process));
 	if (!new_process)

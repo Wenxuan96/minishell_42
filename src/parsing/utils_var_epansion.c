@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 17:43:09 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 19:20:08 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 19:23:19 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_val(int *n, char **a, char **b, char **c)
 	*c = NULL;
 }
 
-void free_var(char *before, char *after, char *tmp, char *result)
+void	free_var(char *before, char *after, char *tmp, char *result)
 {
 	free(before);
 	free(after);

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 17:52:51 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/22 18:16:37 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,34 @@ char	*ft_getenv(char *var_name, t_minishell *shell)
 	return (NULL);
 }
 
+char *expand_val(int *i, int var_len, char *result, t_minishell *shell)
+{
+	char	*var_name;
+	char	*var_val;
+
+	var_name = NULL;
+	var_val = NULL;
+	while (ft_isalnum(result[*i + var_len]) || result[*i + var_len] == '_')
+		var_len++;
+	var_name = ft_substr(result, *i, var_len);
+	if (!var_name)
+		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+	var_val = ft_getenv(var_name, shell);
+	free(var_name);
+	if (!var_val)
+		var_val = ft_strdup("");
+	*i += var_len;
+	return (var_val);
+}
+
+void free_var(char *before, char *after, char *tmp, char *result)
+{
+	free(before);
+	free(after);
+	free(tmp);
+	free(result);
+}
+
 char	*expand_token(t_token *token, t_minishell *shell)
 {
 	int		i;
@@ -50,13 +78,12 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	char	*new_result;
 	int		var_len;
 	char	*tmp;
-	char	*var_name;
 	char	*var_val;
 	char	*result;
 
 	i = 0;
 	init_val(&var_start, &before, &after, &new_result);
-	init_val(&var_len, &tmp, &var_name, &var_val);
+	init_val(&var_len, &tmp, &result, &var_val);
 	result = ft_strdup(token->token_val);
 	if (!result)
 		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
@@ -79,26 +106,12 @@ char	*expand_token(t_token *token, t_minishell *shell)
 			else if (result[i] == '\0')
 				var_val = ft_strdup("$");
 			else
-			{
-				while (ft_isalnum(result[i + var_len]) || result[i + var_len] == '_')
-					var_len++;
-				var_name = ft_substr(result, i, var_len);
-				if (!var_name)
-					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
-				var_val = ft_getenv(var_name, shell);
-				free(var_name);
-				if (!var_val)
-					var_val = ft_strdup("");
-				i += var_len;
-			}
+				var_val = expand_val(&i, var_len, result, shell);
 			before = ft_substr(result, 0, var_start);
 			after = ft_strdup(result + i);
 			tmp = ft_strjoin(before, var_val);
 			new_result = ft_strjoin(tmp, after);
-			free(before);
-			free(after);
-			free(tmp);
-			free(result);
+			free_var(before, after, tmp, result);
 			result = new_result;
 			i = var_start + ft_strlen(var_val); // Move i past the inserted value
 			if (var_val)
@@ -109,6 +122,75 @@ char	*expand_token(t_token *token, t_minishell *shell)
 	}
 	return (result);
 }
+
+// char	*expand_token(t_token *token, t_minishell *shell)
+// {
+// 	int		i;
+// 	int		var_start;
+// 	char	*before;
+// 	char	*after;
+// 	char	*new_result;
+// 	int		var_len;
+// 	char	*tmp;
+// 	char	*var_name;
+// 	char	*var_val;
+// 	char	*result;
+
+// 	i = 0;
+// 	init_val(&var_start, &before, &after, &new_result);
+// 	init_val(&var_len, &tmp, &var_name, &var_val);
+// 	result = ft_strdup(token->token_val);
+// 	if (!result)
+// 		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+// 	while (result[i])
+// 	{
+// 		if (result[i] == '$')
+// 		{
+// 			var_start = i;
+// 			i++;
+// 			if (result[i] == '$')
+// 			{
+// 				var_val = ft_itoa(getpid());
+// 				i++; // consume both $$
+// 			}
+// 			else if (result[i] == '?')
+// 			{
+// 				var_val = ft_itoa(g_exit_status);
+// 				i++; // consume $?
+// 			}
+// 			else if (result[i] == '\0')
+// 				var_val = ft_strdup("$");
+// 			else
+// 			{
+// 				while (ft_isalnum(result[i + var_len]) || result[i + var_len] == '_')
+// 					var_len++;
+// 				var_name = ft_substr(result, i, var_len);
+// 				if (!var_name)
+// 					display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+// 				var_val = ft_getenv(var_name, shell);
+// 				free(var_name);
+// 				if (!var_val)
+// 					var_val = ft_strdup("");
+// 				i += var_len;
+// 			}
+// 			before = ft_substr(result, 0, var_start);
+// 			after = ft_strdup(result + i);
+// 			tmp = ft_strjoin(before, var_val);
+// 			new_result = ft_strjoin(tmp, after);
+// 			free(before);
+// 			free(after);
+// 			free(tmp);
+// 			free(result);
+// 			result = new_result;
+// 			i = var_start + ft_strlen(var_val); // Move i past the inserted value
+// 			if (var_val)
+// 				free(var_val);
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	return (result);
+// }
 
 char	*def_expansion(t_token *token, t_minishell *shell)
 {

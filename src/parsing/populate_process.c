@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 17:17:07 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/23 16:13:45 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ char	**get_commands(t_token	**token, t_minishell *shell)
 	while ((*token) && (*token)->type != PIPELINE)
 	{
 		if ((*token)->type == REDIRECTION)
-		{
-			(*token) = (*token)->next_token;
-			if (*token != NULL)
-				(*token) = (*token)->next_token;
-		}
+			expand_n_skip(token, shell);
 		else
 		{
 			commands[i] = def_expansion(*token, shell);

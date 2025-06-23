@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/22 15:53:18 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/23 15:19:42 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.input_status == EXEC_FAILURE)
 			display_shell_error2(&shell, "lexer failed.", EXEC_FAILURE);
 		p = shell.process_list;
+		prt_cmds(shell.process_list);
 		while (p)
 		{
 			p->input_fd = STDIN_FILENO;

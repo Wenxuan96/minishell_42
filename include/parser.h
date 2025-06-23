@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 19:20:40 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/23 16:14:05 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void			init_val(int *n, char **a, char **b, char **c);
 void			free_var(char *before, char *after, char *tmp, char *result);
 bool			find_dollar(char *token_val);
 char			*ft_getenv(char *var_name, t_minishell *shell);
+void			expand_n_skip(t_token	**token, t_minishell *shell);
 
 #endif

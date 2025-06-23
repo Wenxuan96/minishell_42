@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:52:12 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 19:25:55 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/23 16:13:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,19 @@ int	find_n_def_redir(t_redir_type type, char *file, t_process *current_process, 
 			*current_token = (*current_token)->next_token;
 	}
 	return (1);
+}
+
+void expand_n_skip(t_token	**token, t_minishell *shell)
+{
+	char	*new_val;
+
+	(*token) = (*token)->next_token;
+	if (*token != NULL && (*token)->token_val[0] == '$')
+	{
+		new_val = def_expansion(*token, shell);
+		free((*token)->token_val);
+		(*token)->token_val = new_val;
+	}
+	if (*token != NULL)
+		(*token) = (*token)->next_token;
 }

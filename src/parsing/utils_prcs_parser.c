@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:12:21 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/09 17:19:37 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/23 15:21:26 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	prt_cmds(t_process *process_lst)
 			ft_printf("[%s] ", current->command_arguments[i++]);
 		current = current->next_process;
 		i = 0;
-	}	
+	}
+	ft_printf("\n");
 }
 
 void	print_process(t_minishell *shell)

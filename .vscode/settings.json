@@ -3,6 +3,7 @@
 		"minishell.h": "c",
 		"functional": "c",
 		"readline.h": "c",
-		"random": "c"
+		"random": "c",
+		"wait.h": "c"
 	}
 }

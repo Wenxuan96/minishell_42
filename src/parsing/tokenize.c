@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 17:41:48 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/30 20:31:33 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,22 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	return (1);
 }
 
+static int	skip_white_space(t_minishell *shell)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (shell->input_str[i] == ' ' || shell->input_str[i] == '\t')
+		i++;
+	tmp = ft_strdup(shell->input_str + i);
+	if (!tmp)
+		return (EXEC_FAILURE);
+	free(shell->input_str);
+	shell->input_str = tmp;
+	return (EXEC_SUCCESS);
+}
+
 int	tokenize_input(t_minishell *shell)
 {
 	int		i;
@@ -118,6 +134,11 @@ int	tokenize_input(t_minishell *shell)
 	i = 0;
 	start = 0;
 	quote_char = '\0';
+	if (skip_white_space(shell) == EXEC_FAILURE)
+	{
+		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+		return (EXEC_FAILURE);
+	}
 	if (!validate_quotes(shell->input_str))
 	{
 		display_shell_error2(shell, "minishell: syntax error: unclosed quote", EX_BADUSAGE);

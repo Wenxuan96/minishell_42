@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/05/08 11:25:31 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:19:00 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,28 +113,70 @@ void ft_lstclear_process(t_process **process_list)
     *process_list = NULL;
 }
 
-// void	ft_exit(t_minishell *shell, char *error_msg)
-// {
-// 	int	i;
+void	free_pipes2(int **pipes, int p_num)
+{
+	int	i;
+	
+	i = 0;
+	while (i < p_num)
+	{
+		free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+	pipes = NULL;
+}
 
-// 	i = 0;
-// 	if (!shell->input_str && error_msg)
-// 		ft_printf("%s\n", error_msg);
-// 	else if (error_msg)
-// 		ft_printf("Error: %s.\n", error_msg);
-// 	else if (!shell && !error_msg)
-// 		exit(EXEC_SUCCESS);
-// 	else
-// 	{
-// 		ft_lstclear_token(&shell->token_list);
-// 		ft_lstclear_env(&shell->env_list);
-// 		ft_lstclear_process(&shell->process_list);
-// 		if (shell->input_str)
-// 			free (shell->input_str);
-// 		if (shell->pipes)
-// 			free_pipes(shell);
-// 		shell = NULL;
-// 	}
-// 	exit(EXEC_SUCCESS);
-// }
+void    free_process(t_minishell *shell, t_process *current)
+{
+    if (shell->pipes)
+        close_pipe_ends(shell, current);
+    if (shell->env_list)
+        ft_lstclear_env(&shell->env_list);
+    ft_lstclear_process(&shell->process_list); 
+    if (shell->pipes)
+        free_pipes(shell);
+    // ft_lstclear_token(&shell->token_list);
+    // free(shell->input_str);
+}
 
+void	ft_exit(t_minishell *shell, char *error_msg)
+{
+	if (error_msg)
+		ft_printf("%s\n", error_msg);
+	else if (!shell && !error_msg)
+		exit(EXEC_SUCCESS);
+	else if (shell)
+	{
+		ft_lstclear_token(&shell->token_list);
+		ft_lstclear_env(&shell->env_list);
+		ft_lstclear_process(&shell->process_list);
+		if (shell->input_str)
+			free (shell->input_str);
+		if (shell->pipes)
+		{
+			free_pipes(shell);
+			shell->pipes = NULL;
+		}
+		shell = NULL;
+	}
+	exit(EXEC_SUCCESS);
+}
+
+void	ft_clear_shell(t_minishell *shell)
+{
+	if (shell)
+	{
+		ft_lstclear_token(&shell->token_list);
+		ft_lstclear_env(&shell->env_list);
+		ft_lstclear_process(&shell->process_list);
+		if (shell->input_str)
+			free (shell->input_str);
+		if (shell->pipes)
+		{
+			free_pipes(shell);
+			shell->pipes = NULL;
+		}
+		shell = NULL;
+	}
+}

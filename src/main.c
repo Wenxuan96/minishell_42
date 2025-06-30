@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/27 14:45:31 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:19:45 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ int	main(int argc, char **argv, char **envp)
 		shell.exit_status = read_input(argc, &shell);
 		if (shell.exit_status == EXEC_FAILURE)
 			display_shell_error2(&shell, "lexer failed.", EXEC_FAILURE);
+		if (shell.exit_status == 2)
+		{
+			ft_clear_shell(&shell);
+			continue;
+		}
+		/* When receiving empty str as input */
+		/* skip all functions below, rerun while loop and awaits for new input */
+		if (shell.exit_status == CMD_NOTFOUND)
+		{
+			display_shell_error2(&shell, "Command '' not found.", CMD_NOTFOUND);
+			continue;
+		}
 		p = shell.process_list;
 		// prt_cmds(shell.process_list);
 		while (p)
@@ -69,13 +81,6 @@ int	main(int argc, char **argv, char **envp)
 			p->input_fd = STDIN_FILENO;
 			p->output_fd = STDOUT_FILENO;
 			p = p->next_process;
-		}
-		if (shell.exit_status == 2) /* When receiving empty str as input */
-			continue; /* skip all functions below, rerun while loop and awaits for new input */
-		if (shell.exit_status == CMD_NOTFOUND)
-		{
-			display_shell_error2(&shell, "Command '' not found.", CMD_NOTFOUND);
-			continue;
 		}
 		create_pipes(&shell);
 		assign_fd(&shell);

@@ -122,6 +122,7 @@ typedef struct s_minishell
 	const char		**buildin_commands;
 	t_token			*token_list;
 	t_process		*process_list;
+	bool			in_quote;
 	int				**pipes;
 	int				exit_status;	
 	int				num_processes;
@@ -171,6 +172,7 @@ void			free_pipes2(int **pipes, int p_num);
 void			free_2darray(char **arr);
 void			free_everything(t_minishell *shell);
 void    		free_process(t_minishell *shell, t_process *current);
+void			ft_clear_shell(t_minishell *shell);
 
 /*utils_malloc*/
 char			**allocate_array(char **commands);
@@ -206,6 +208,7 @@ void			prt_tokenlst(t_minishell *shell);
 void    display_shell_error(t_process *process, char *msg, int exit_status);
 void    display_shell_error2(t_minishell *shell, char *msg, int exit_status);
 void    exit_with_error(t_minishell *shell, char *msg, int exit_status);
+
 
 /*  stdout = fd1
  ls | cat | grep

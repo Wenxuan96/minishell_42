@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/27 14:45:07 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:21:16 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ void	prt_tokenlst(t_minishell *shell)
 // 	exit(g_exit_status);
 // }
 
+static int wit_space_str(t_minishell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->input_str[i])
+	{
+		if (shell->input_str[i] != ' ' && shell->input_str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return(1);
+}
+
 int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
@@ -49,7 +63,7 @@ int	read_input(int argc, t_minishell *shell)
 	shell->input_str = readline("minishell$ ");
 	if (!shell->input_str)
 		ft_exit(shell, "exit");
-	if (shell->input_str[0] == '\0')
+	if (shell->input_str[0] == '\0' || wit_space_str(shell) == 1)
 		return (2);
 	if (ft_strcmp(shell->input_str, "\'\'") == 0 ||
 		ft_strcmp(shell->input_str, "\"\"") == 0)

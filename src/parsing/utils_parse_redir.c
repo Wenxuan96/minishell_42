@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:52:12 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/23 16:13:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/30 16:49:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,17 @@ void expand_n_skip(t_token	**token, t_minishell *shell)
 {
 	char	*new_val;
 
-	(*token) = (*token)->next_token;
-	if (*token != NULL && (*token)->token_val[0] == '$')
+	if (get_redir_type(*token) == HEREDOC)
+		(*token) = (*token)->next_token;
+	else
 	{
-		new_val = def_expansion(*token, shell);
-		free((*token)->token_val);
-		(*token)->token_val = new_val;
+		(*token) = (*token)->next_token;
+		if (*token != NULL && (*token)->token_val[0] == '$')
+		{
+			new_val = def_expansion(*token, shell);
+			free((*token)->token_val);
+			(*token)->token_val = new_val;
+		}
 	}
 	if (*token != NULL)
 		(*token) = (*token)->next_token;

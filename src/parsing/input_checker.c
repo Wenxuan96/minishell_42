@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/23 15:26:11 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/27 14:45:07 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	read_input(int argc, t_minishell *shell)
 	add_history(shell->input_str);
 	if (tokenize_input(shell) != EXEC_SUCCESS)
 		return (EXEC_FAILURE);
-	prt_tokenlst(shell);
+	// prt_tokenlst(shell);
 	if (init_processlst(shell) != EXEC_SUCCESS)
 		return (EXEC_FAILURE);
 	free_tokenlst(shell);

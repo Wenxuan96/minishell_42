@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/23 15:19:42 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/27 14:45:31 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 // 	create_env_lst(&shell.env_list, envp);
 // 	while (1)
 // 	{
-// 		shell.input_status = read_input(argc, &shell);
-// 		if (shell.input_status == 2) /* When receiving empty str as input */
+// 		shell.exit_status = read_input(argc, &shell);
+// 		if (shell.exit_status == 2) /* When receiving empty str as input */
 // 			continue; /* skip all functions below, rerun while loop and awaits for new input */
 // 	}
 // 	ft_exit(&shell, NULL); //   <--- segfaulting
@@ -59,20 +59,20 @@ int	main(int argc, char **argv, char **envp)
 	create_env_lst(&shell.env_list, envp);
 	while (1)
 	{
-		shell.input_status = read_input(argc, &shell);
-		if (shell.input_status == EXEC_FAILURE)
+		shell.exit_status = read_input(argc, &shell);
+		if (shell.exit_status == EXEC_FAILURE)
 			display_shell_error2(&shell, "lexer failed.", EXEC_FAILURE);
 		p = shell.process_list;
-		prt_cmds(shell.process_list);
+		// prt_cmds(shell.process_list);
 		while (p)
 		{
 			p->input_fd = STDIN_FILENO;
 			p->output_fd = STDOUT_FILENO;
 			p = p->next_process;
 		}
-		if (shell.input_status == 2) /* When receiving empty str as input */
+		if (shell.exit_status == 2) /* When receiving empty str as input */
 			continue; /* skip all functions below, rerun while loop and awaits for new input */
-		if (shell.input_status == CMD_NOTFOUND)
+		if (shell.exit_status == CMD_NOTFOUND)
 		{
 			display_shell_error2(&shell, "Command '' not found.", CMD_NOTFOUND);
 			continue;

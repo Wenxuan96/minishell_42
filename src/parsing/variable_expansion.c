@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 19:24:51 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/27 14:40:15 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	def_var_val(char *result, int *i, t_minishell *shell, char **var_val)
 	}
 	else if (result[*i] == '?')
 	{
-		*var_val = ft_itoa(g_exit_status);
+		if (g_exit_status == 0)
+			*var_val = ft_itoa(shell->exit_status);
+		else
+			*var_val = ft_itoa(g_exit_status);
 		(*i)++;
 	}
 	else if (result[*i] == '\0')

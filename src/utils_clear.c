@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/30 20:19:00 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/03 15:13:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		ft_printf("%s\n", error_msg);
 	else if (!shell && !error_msg)
 		exit(EXEC_SUCCESS);
-	else if (shell)
+	if (shell)
 	{
 		ft_lstclear_token(&shell->token_list);
 		ft_lstclear_env(&shell->env_list);

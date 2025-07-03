@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/16 16:36:44 by wxi              ###   ########.fr       */
+/*   Updated: 2025/06/30 17:57:57 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ int	create_processes(t_minishell *shell)
 				setup_signals(1);
 				if (current->is_builtin == 1)
 				{
+					// printf("didnt enter ==  0 condition");
 					if (execute_builtin(current, shell) == 0)
 					{
 						status = current->exit_status;
+						dprintf(2, "exit code: %i", status);
 						free_process(shell, current);
 						exit(status);
 					}
@@ -52,6 +54,7 @@ int	create_processes(t_minishell *shell)
 					if (execute_outside_cmd(current, shell) == 0)
 					{
 						status = current->exit_status;
+						dprintf(2, "exit code: %i", status);
 						free_process(shell, current);
 						exit(status);
 					}

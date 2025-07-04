@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/30 17:57:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:16:56 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	create_processes(t_minishell *shell)
 					if (execute_builtin(current, shell) == 0)
 					{
 						status = current->exit_status;
-						dprintf(2, "exit code: %i", status);
+						dprintf(2, "exit code: %i\n", status);
 						free_process(shell, current);
 						exit(status);
 					}
@@ -54,7 +54,7 @@ int	create_processes(t_minishell *shell)
 					if (execute_outside_cmd(current, shell) == 0)
 					{
 						status = current->exit_status;
-						dprintf(2, "exit code: %i", status);
+						dprintf(2, "exit code: %i\n", status);
 						free_process(shell, current);
 						exit(status);
 					}
@@ -72,6 +72,7 @@ int	create_processes(t_minishell *shell)
 		}
 		current = current->next_process;
 	}
+	g_exit_status = 0;
 	close_pipe_ends_parent(shell);
 	if (shell->num_processes >= 1)
 		waitpid_children(shell);

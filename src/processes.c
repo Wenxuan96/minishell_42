@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/04 14:16:56 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:59:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	create_processes(t_minishell *shell)
 			setup_signals(0);
 			// dprintf(2, "we are hrre\n");
 			execute_builtin(current, shell);
+			shell->exit_status = current->exit_status;
+			// dprintf(2, "exit status for cd: %i\n", shell->exit_status);
 			current->pid = 0;
 		}
 		else

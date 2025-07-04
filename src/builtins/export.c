@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:36:59 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/16 16:54:43 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/04 14:30:06 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
+#include "minishell.h"
 
 char	**ft_split_env(char const *s, char c)
 {
@@ -21,12 +21,10 @@ char	**ft_split_env(char const *s, char c)
 	i = 0;
 	if (!s || s[0] == c)
 		return (NULL);
-	
 	while (s[i] != '\0' && s[i] != c)
 		i++;
 	if (s[i] != c)
 		return (NULL);
-
 	split = (char **)malloc((2 + 1) * sizeof(char *));
 	split[0] = ft_substr(s, 0, i);
 	split[1] = ft_strdup(s + i + 1);
@@ -34,11 +32,11 @@ char	**ft_split_env(char const *s, char c)
 	return (split);
 }
 
-int is_valid_quote(char *var)
+int	is_valid_quote(char *var)
 {
-	int i;
-	int saw_equal;
-	int quote_count;
+	int	i;
+	int	saw_equal;
+	int	quote_count;
 
 	i = 0;
 	saw_equal = 0;
@@ -65,25 +63,26 @@ int is_valid_quote(char *var)
 
 char	*ft_trim_quotes(char *str)
 {
-	int len;
-	char *trimmed_str;
+	int		len;
+	char	*trimmed_str;
 
 	len = 0;
 	len = ft_strlen(str);
-	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'') ||(str[0] == '\"' && str[len - 1] == '\"')))
+	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'') || (str[0] == '\"'
+				&& str[len - 1] == '\"')))
 		trimmed_str = ft_substr(str, 1, len - 2);
 	else if (len >= 2 && (str[0] == '\'' || str[0] == '\"'))
 		trimmed_str = ft_substr(str, 1, len - 1);
 	else if (len >= 2 && (str[len - 1] == '\'' || str[len - 1] == '\"'))
 		trimmed_str = ft_substr(str, 0, len - 2);
 	else
-		trimmed_str =  ft_strdup(str);
+		trimmed_str = ft_strdup(str);
 	return (trimmed_str);
 }
 
 int	is_valid_env(char *var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!var || (!ft_isalpha(var[0]) && var[0] != '_'))
@@ -91,17 +90,17 @@ int	is_valid_env(char *var)
 	while (var[i] != '\0')
 	{
 		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return(0);
+			return (0);
 		i++;
 	}
 	return (1);
 }
 
-
 void	ft_print2d(char **arr)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (arr[i])
 	{
 		printf("%s\n", arr[i]);
@@ -111,16 +110,15 @@ void	ft_print2d(char **arr)
 
 int	export_builtin(t_process *process, t_minishell *shell)
 {
-	char   **split_vars;
-	int     found;
-	t_environment *current;
-	int i;
-	char    *temp;
-	size_t  var_len;
+	char			**split_vars;
+	int				found;
+	t_environment	*current;
+	int				i;
+	char			*temp;
+	size_t			var_len;
 
 	i = 1;
 	var_len = 0;
-	// (void)process;
 	current = shell->env_list;
 	if (process->command_arguments[1] == NULL)
 	{
@@ -129,25 +127,25 @@ int	export_builtin(t_process *process, t_minishell *shell)
 	}
 	while (process->command_arguments[i] != NULL)
 	{
-		// dprintf(2, "process->command_arguments[i]: %s\n", process->command_arguments[i]);
 		split_vars = ft_split_env(process->command_arguments[i], '=');
-		// ft_print2d(split_vars);
 		if (!split_vars || !split_vars[0])
 		{
-			display_shell_error(process, "export: not a valid identifier", EXEC_FAILURE);
+			display_shell_error(process, "export: not a valid identifier",
+				EXEC_FAILURE);
 			i++;
-			continue;
+			continue ;
 		}
-		// dprintf(2, "split[0]: %c\n", split_vars[0][0]);
-		// dprintf(2, "split[1]: %c\n", split_vars[1][0]);
 		var_len = ft_strlen(split_vars[0]);
-		if (split_vars[0][0] == '\'' || split_vars[0][0] == '\"' || split_vars[0][var_len - 1] == '\'' || split_vars[0][var_len - 1] == '\"')
+		if (split_vars[0][0] == '\'' || split_vars[0][0] == '\"'
+			|| split_vars[0][var_len - 1] == '\'' || split_vars[0][var_len
+			- 1] == '\"')
 		{
 			temp = split_vars[0];
 			split_vars[0] = ft_trim_quotes(split_vars[0]);
 			free(temp);
 		}
-		if (split_vars[1] && (split_vars[1][0] == '\'' || split_vars[1][0] == '\"'))
+		if (split_vars[1] && (split_vars[1][0] == '\''
+				|| split_vars[1][0] == '\"'))
 		{
 			temp = split_vars[1];
 			split_vars[1] = ft_trim_quotes(split_vars[1]);
@@ -167,18 +165,19 @@ int	export_builtin(t_process *process, t_minishell *shell)
 					else
 						current->value = NULL;
 					found = 1;
-					// break;
+					// break ;
 				}
 				current = current->next_env_var;
 			}
 			if (found == 0)
 			{
-				ft_var_lstadd_back(&shell->env_list, ft_new_var_lst(split_vars[0], split_vars[1]));
+				ft_var_lstadd_back(&shell->env_list,
+					ft_new_var_lst(split_vars[0], split_vars[1]));
 			}
 		}
 		else
-			display_shell_error(process, "export: not a valid identifier", EXEC_FAILURE);
-		// ft_print2d(split_vars);
+			display_shell_error(process, "export: not a valid identifier",
+				EXEC_FAILURE);
 		free_2darray(split_vars);
 		i++;
 	}

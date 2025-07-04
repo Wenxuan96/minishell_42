@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/06/30 17:56:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:44:38 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	execute_builtin(t_process *process, t_minishell *shell)
 			close(current->output_fd);
 		if (shell->pipes)
 			close_pipe_ends(shell, current);
-		current->builtin->function(current, shell);
+		if (current->builtin->function(current, shell) == 0)
+			return (0);
 	}
 	return (1);
 }

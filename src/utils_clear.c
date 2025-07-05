@@ -6,12 +6,12 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 17:16:24 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 18:20:49 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "./builtins/builtins.h"
+#include "minishell.h"
 
 void	ft_lstclear_token(t_token **token_list)
 {
@@ -24,7 +24,7 @@ void	ft_lstclear_token(t_token **token_list)
 	while (current)
 	{
 		next = current->next_token;
-		free (current);
+		free(current);
 		current = next;
 	}
 	*token_list = NULL;
@@ -45,7 +45,7 @@ void	ft_lstclear_env(t_environment **env_list)
 			free(current->env_var);
 		if (current->value)
 			free(current->value);
-		free (current);
+		free(current);
 		current = next;
 	}
 	*env_list = NULL;
@@ -64,38 +64,38 @@ void	ft_lstclear_redir(t_redirection **redir_list)
 		next = current->next_redir;
 		if (current->file)
 			free(current->file);
-		free (current);
+		free(current);
 		current = next;
 	}
 	*redir_list = NULL;
 }
 
-void ft_lstclear_process(t_process **process_list)
+void	ft_lstclear_process(t_process **process_list)
 {
-    t_process *current;
-    t_process *next;
-    int i;
+	t_process	*current;
+	t_process	*next;
+	int			i;
 
-    if (!process_list || !*process_list)
-        return ;
-    current = *process_list;
-    while (current) 
+	if (!process_list || !*process_list)
+		return ;
+	current = *process_list;
+	while (current)
 	{
-        next = current->next_process;
-        ft_lstclear_redir(&current->redirections);
-        if (current->command_arguments) 
+		next = current->next_process;
+		ft_lstclear_redir(&current->redirections);
+		if (current->command_arguments)
 		{
-            i = 0;
-            while (current->command_arguments[i]) 
-                free(current->command_arguments[i++]);
-            free(current->command_arguments);
-        }
-        if (current->is_builtin && current->builtin)
-            free(current->builtin);
-        free(current);
-        current = next;
-    }
-    *process_list = NULL;
+			i = 0;
+			while (current->command_arguments[i])
+				free(current->command_arguments[i++]);
+			free(current->command_arguments);
+		}
+		if (current->is_builtin && current->builtin)
+			free(current->builtin);
+		free(current);
+		current = next;
+	}
+	*process_list = NULL;
 }
 
 void	ft_exit(t_minishell *shell, char *error_msg)
@@ -110,7 +110,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		ft_lstclear_env(&shell->env_list);
 		ft_lstclear_process(&shell->process_list);
 		if (shell->input_str)
-			free (shell->input_str);
+			free(shell->input_str);
 		if (shell->pipes)
 		{
 			free_pipes(shell);

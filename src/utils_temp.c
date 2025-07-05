@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_temp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:21:55 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/04 15:10:54 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:38 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ void	print_fds(t_minishell *shell)
 	}
 }
 
-void    printf_twod(char **arr)
+void	printf_twod(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arr[i])
-    {
-        printf("%s\n", arr[i]);
-        i++;
-    }
+	i = 0;
+	while (arr[i])
+	{
+		printf("%s\n", arr[i]);
+		i++;
+	}
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tanja <tanja@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/06/06 14:07:34 by tanja            ###   ########.fr       */
+/*   Updated: 2025/07/05 18:33:13 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,27 @@ int	create_env_lst(t_environment **env_list, char **envp)
 	{
 		env_split = ft_split(envp[i], '=');
 		if (!env_split)
-			return (free_2darray(env_split),0);
+			return (free_2darray(env_split), 0);
 		if (env_split[1] == NULL)
 			new_env = ft_new_var_lst(env_split[0], "");
 		else
 			new_env = ft_new_var_lst(env_split[0], env_split[1]);
 		if (!new_env)
 		{
-				free_2darray(env_split);
-				return(ft_lstclear_env(env_list), 0);
+			free_2darray(env_split);
+			return (ft_lstclear_env(env_list), 0);
 		}
 		ft_var_lstadd_back(env_list, new_env);
 		free_2darray(env_split);
 		i++;
 	}
-    return (1);
+	return (1);
 }
 
 void	ft_lstclear_envvars(t_environment *envvar_list)
 {
 	t_environment	*temp;
-	
+
 	while (envvar_list != NULL)
 	{
 		temp = envvar_list->next_env_var;
@@ -88,7 +88,7 @@ void	ft_lstclear_envvars(t_environment *envvar_list)
 void	ft_lstclear_process_envvars(t_process **process)
 {
 	t_process	*current;
-	
+
 	current = *process;
 	while (current != NULL)
 	{

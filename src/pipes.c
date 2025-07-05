@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 13:59:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/27 11:29:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:56 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
-//ls > temp.txt | grep txt < temp.txt | wc -l >> count.log
+#include "minishell.h"
 
+// ls > temp.txt | grep txt < temp.txt | wc -l >> count.log
 
 // int create_pipes(t_minishell *shell)
 // {
@@ -27,11 +27,9 @@
 // 	char *p2_cmd[] = {"cat", NULL};
 // 	char *p3_cmd[] = {"wc", "-c", NULL};
 
-
 // 	// char *p1_cmd[] = {"ls", NULL};
 // 	// char *p2_cmd[] = {"sort", NULL};
 // 	// char *p3_cmd[] = {"head", "-n", "2", NULL};
-
 
 // 	// char *p1_cmd[] = {"echo", "this is a test", NULL};
 // 	// char *p2_cmd[] = {"grep", "test", NULL};
@@ -69,14 +67,12 @@
 // 	}
 // 	shell->pipes = allocate_pipes(shell->num_processes - 1);
 // 	return (1);
-	
+
 // }
 
-
-int create_pipes(t_minishell *shell)
+int	create_pipes(t_minishell *shell)
 {
-
-	t_process   *current;
+	t_process	*current;
 
 	current = shell->process_list;
 	if (shell->num_processes > 1)
@@ -107,7 +103,7 @@ int	assign_fd(t_minishell *shell)
 			if (i == 0)
 				current->input_fd = STDIN_FILENO;
 			else
-				current->input_fd = shell->pipes[i - 1][0]; ///segging
+				current->input_fd = shell->pipes[i - 1][0]; /// segging
 			if (i == shell->num_processes - 1)
 				current->output_fd = STDOUT_FILENO;
 			else

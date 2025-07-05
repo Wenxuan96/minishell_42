@@ -6,16 +6,18 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/11 14:35:17 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 18:33:16 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
 
-void    printf_twod_array(char **array)
+void	printf_twod_array(char **array)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (array[i])
 	{
 		printf("%s\n", array[i]);
@@ -24,17 +26,18 @@ void    printf_twod_array(char **array)
 	printf("\n\n");
 }
 
-char    **concat_path(t_minishell *shell, char **dir_paths, char  *command)
+char	**concat_path(t_minishell *shell, char **dir_paths, char *command)
 {
-	char    **new_dir_path = NULL;
-	size_t     command_len;
-	size_t     total_path_len;
-	size_t     dir_path_len;
-	size_t         num_dirs;
-	size_t         i;
-	size_t         j;
-	size_t        k;
+	char	**new_dir_path;
+	size_t	command_len;
+	size_t	total_path_len;
+	size_t	dir_path_len;
+	size_t	num_dirs;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
+	new_dir_path = NULL;
 	command_len = ft_strlen(command);
 	num_dirs = 0;
 	i = 0;
@@ -52,7 +55,8 @@ char    **concat_path(t_minishell *shell, char **dir_paths, char  *command)
 		if (!new_dir_path[i])
 		{
 			free_2darray(new_dir_path);
-			display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
+			display_shell_error2(shell, "memory allocation failed",
+				EXEC_FAILURE);
 		}
 		while (j < dir_path_len)
 		{
@@ -76,14 +80,16 @@ char    **concat_path(t_minishell *shell, char **dir_paths, char  *command)
 	return (new_dir_path);
 }
 
-char    **get_pathdirs(t_minishell *shell, t_process *process)
+char	**get_pathdirs(t_minishell *shell, t_process *process)
 {
+	t_environment	*current;
+	char			**dir_paths;
+	char			**new_dir_paths;
+	int				found;
+
 	// char            *pathname;
-	t_environment   *current;
-	char            **dir_paths = NULL;
-	char            **new_dir_paths = NULL;
-	int             found;
-	
+	dir_paths = NULL;
+	new_dir_paths = NULL;
 	current = shell->env_list;
 	found = 0;
 	while (current != NULL)
@@ -96,7 +102,8 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
 			if (!dir_paths)
 			{
 				free_2darray(dir_paths);
-				display_shell_error(process, "memory allocation failed", EXEC_FAILURE);
+				display_shell_error(process, "memory allocation failed",
+					EXEC_FAILURE);
 				return (0);
 			}
 			// printf_twod_array(dir_paths);
@@ -105,9 +112,11 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
 		current = current->next_env_var;
 	}
 	if (found == 0)
-		return (display_shell_error(process, "No such file or directory", CMD_NOTFOUND), NULL);
+		return (display_shell_error(process, "No such file or directory",
+				CMD_NOTFOUND), NULL);
 	// printf("pro-commnd: %s\n", process->command_arguments[0]);
-	new_dir_paths = concat_path(shell, dir_paths, process->command_arguments[0]);
+	new_dir_paths = concat_path(shell, dir_paths,
+			process->command_arguments[0]);
 	free_2darray(dir_paths);
 	// printf_twod_array(new_dir_paths);
 	return (new_dir_paths);
@@ -115,11 +124,14 @@ char    **get_pathdirs(t_minishell *shell, t_process *process)
 
 char	*get_path(t_minishell *shell, t_process *process)
 {
-	char		**path_dirs = NULL;
-	char		*path = NULL;;
+	char		**path_dirs;
+	char		*path;
 	int			i;
 	struct stat	path_stat;
 
+	path_dirs = NULL;
+	path = NULL;
+	;
 	if (ft_strchr(process->command_arguments[0], '/'))
 	{
 		if (access(process->command_arguments[0], X_OK) == 0)
@@ -128,7 +140,8 @@ char	*get_path(t_minishell *shell, t_process *process)
 			{
 				if (S_ISDIR(path_stat.st_mode))
 				{
-					display_shell_error(process, "Is a directory", CMD_NOTFOUND);
+					display_shell_error(process, "Is a directory",
+						CMD_NOTFOUND);
 					return (NULL);
 				}
 				return (ft_strdup(process->command_arguments[0]));
@@ -146,11 +159,12 @@ char	*get_path(t_minishell *shell, t_process *process)
 			if (errno == ENOTDIR)
 				display_shell_error(process, "Not a directory", EX_NOEXEC);
 			else if (errno == ENOENT)
-				display_shell_error(process, "No such file or directory", EX_NOEXEC);
+				display_shell_error(process, "No such file or directory",
+					EX_NOEXEC);
 			else if (errno == EACCES)
 				display_shell_error(process, "Permission is denied", EX_NOEXEC);
 			else
-			return (NULL);
+				return (NULL);
 		}
 	}
 	i = 0;
@@ -165,18 +179,17 @@ char	*get_path(t_minishell *shell, t_process *process)
 			if (!path)
 			{
 				free_2darray(path_dirs);
-				display_shell_error(process, "memory allocation failed", EXEC_FAILURE);
+				display_shell_error(process, "memory allocation failed",
+					EXEC_FAILURE);
 				return (NULL);
 			}
-				
 			break ;
 		}
 		i++;
 	}
 	free_2darray(path_dirs);
 	if (!path)
-		return (display_shell_error(process, "command not found", CMD_NOTFOUND), NULL);
+		return (display_shell_error(process, "command not found", CMD_NOTFOUND),
+			NULL);
 	return (path);
 }
-
-

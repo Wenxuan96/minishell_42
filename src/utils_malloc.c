@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/21 12:45:48 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:25 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 char	**allocate_array(char **commands)
 {
 	char	**malloced_array;
-	int	num_cmd;
-	int	i;
+	int		num_cmd;
+	int		i;
 
 	num_cmd = 0;
 	i = 0;
 	while (commands[num_cmd])
 		num_cmd++;
-	
 	malloced_array = (char **)malloc((num_cmd + 1) * sizeof(char *));
 	if (!malloced_array)
 		return (NULL);
@@ -62,9 +61,9 @@ int	**allocate_pipes(int p_num)
 
 char	*ft_strjoin_heredoc(const char *s1, const char *s2)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int i;
+	int j;
+	char *str;
 
 	i = 0;
 	j = 0;

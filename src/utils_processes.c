@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/04 14:59:24 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:32 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_environment	*copy_env_list(t_minishell *shell, t_process *process);
 
@@ -26,11 +25,11 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	new_process->command_arguments = allocate_array(commands);
 	if (!new_process->command_arguments)
 		return (NULL);
-	new_process->redirections= NULL;
+	new_process->redirections = NULL;
 	new_process->env_vars = NULL;
 	new_process->input_fd = -2;
 	new_process->output_fd = -2;
-	new_process->next_process= NULL;
+	new_process->next_process = NULL;
 	new_process->is_builtin = 0;
 	new_process->is_pipeline = -1;
 	new_process->builtin = NULL;
@@ -39,9 +38,10 @@ t_process	*new_process_lst(t_minishell *shell, char **commands)
 	return (new_process);
 }
 
-void	process_lst_add_back(t_process   *new_process, t_process   **process_lst)
+void	process_lst_add_back(t_process *new_process, t_process **process_lst)
 {
 	t_process	*current;
+
 	if (*process_lst == NULL)
 	{
 		*process_lst = new_process;
@@ -55,19 +55,19 @@ void	process_lst_add_back(t_process   *new_process, t_process   **process_lst)
 
 void	waitpid_children(t_minishell *shell)
 {
-    t_process *current_process;
-    int wait_res;
-	int	status;
-    
-    current_process = shell->process_list;
-    while (current_process != NULL)
-    {
+	t_process	*current_process;
+	int			wait_res;
+	int			status;
+
+	current_process = shell->process_list;
+	while (current_process != NULL)
+	{
 		if (current_process->pid != 0)
 		{
 			wait_res = waitpid(current_process->pid, &status, 0);
 			while (wait_res == -1 && errno == EINTR)
 				wait_res = waitpid(current_process->pid, &status, 0);
-				// display_shell_error2(shell, "waitpid() failed", EXEC_FAILURE);
+			// display_shell_error2(shell, "waitpid() failed", EXEC_FAILURE);
 			if (current_process->next_process == NULL)
 			{
 				if (WIFEXITED(status))
@@ -76,17 +76,16 @@ void	waitpid_children(t_minishell *shell)
 					g_exit_status = 128 + WTERMSIG(status);
 			}
 		}
-        current_process = current_process->next_process;
-    }
+		current_process = current_process->next_process;
+	}
 }
-
 
 // void	waitpid_children(t_minishell *shell)
 // {
 //     t_process *current_process;
 //     int wait_res;
 // 	int	status;
-    
+
 //     current_process = shell->process_list;
 //     while (current_process != NULL)
 //     {
@@ -133,4 +132,3 @@ void	waitpid_children(t_minishell *shell)
 // 	// printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
 // 	return (process->env_vars);
 // }
-

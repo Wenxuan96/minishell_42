@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:21:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/05/27 10:39:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_pipe_ends(t_minishell *shell, t_process	*current)
+void	close_pipe_ends(t_minishell *shell, t_process *current)
 {
 	int	i;
 

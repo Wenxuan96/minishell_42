@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/04 14:59:28 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:32:51 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
+#include "minishell.h"
 
 int	create_processes(t_minishell *shell)
 {
@@ -23,7 +23,8 @@ int	create_processes(t_minishell *shell)
 	current = shell->process_list;
 	while (current != NULL)
 	{
-		if (current->is_builtin == 1 && shell->num_processes == 1 && !current->redirections)
+		if (current->is_builtin == 1 && shell->num_processes == 1
+			&& !current->redirections)
 		{
 			setup_signals(0);
 			// dprintf(2, "we are hrre\n");

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:52:12 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/30 16:49:44 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:05:18 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@ t_redir_type	get_redir_type(t_token *token)
 	type = NONE;
 	if (ft_strcmp(token->token_val, ">") == 0 && token->token_val[1] == '\0')
 		type = OUTPUT;
-	else if (ft_strcmp(token->token_val, "<") == 0 && token->token_val[1] == '\0')
+	else if (ft_strcmp(token->token_val, "<") == 0
+		&& token->token_val[1] == '\0')
 		type = INPUT;
-	else if (ft_strcmp(token->token_val, ">>") == 0 && token->token_val[2] == '\0')
+	else if (ft_strcmp(token->token_val, ">>") == 0
+		&& token->token_val[2] == '\0')
 		type = OUTPUT_APPEND;
-	else if (ft_strcmp(token->token_val, "<<") == 0 && token->token_val[2] == '\0')
+	else if (ft_strcmp(token->token_val, "<<") == 0
+		&& token->token_val[2] == '\0')
 		type = HEREDOC;
 	return (type);
 }
 
-int	fill_redirlst(t_redir_type type, char *file, t_process *current_process, t_token **current_token)
+int	fill_redirlst(t_redir_type type, char *file,
+		t_process *current_process, t_token **current_token)
 {
 	if (!file)
 		return (0);
@@ -39,14 +43,16 @@ int	fill_redirlst(t_redir_type type, char *file, t_process *current_process, t_t
 			return (0);
 	}
 	else
-		redir_lst_add_back(new_redir_lst(type, file), &current_process->redirections);
+		redir_lst_add_back(new_redir_lst(type, file),
+			&current_process->redirections);
 	*current_token = (*current_token)->next_token;
 	if ((*current_token)->next_token)
 		*current_token = (*current_token)->next_token;
 	return (1);
 }
 
-int	find_n_def_redir(t_redir_type type, char *file, t_process *current_process, t_token **current_token)
+int	find_n_def_redir(t_redir_type type, char *file,
+		t_process *current_process, t_token **current_token)
 {
 	while (*current_token != NULL)
 	{
@@ -63,7 +69,7 @@ int	find_n_def_redir(t_redir_type type, char *file, t_process *current_process, 
 	return (1);
 }
 
-void expand_n_skip(t_token	**token, t_minishell *shell)
+void	expand_n_skip(t_token	**token, t_minishell *shell)
 {
 	char	*new_val;
 

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/09 17:20:00 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:07:45 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_tokenlst(t_minishell *shell)
 
 void	ms_token_add_back(t_token **token_lst, t_token *new_token)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (new_token == NULL)
 		return ;
@@ -61,7 +61,7 @@ int	redir_checker(char *command)
 int	token_checker(char *command)
 {
 	if ((ft_strlen(command) == 1 && command[0] == '|'))
-		return(PIPELINE);
+		return (PIPELINE);
 	if (redir_checker(command) != CMD_NOTFOUND)
 		return (REDIRECTION);
 	return (WORD);

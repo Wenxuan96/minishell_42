@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:28:10 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/27 14:40:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:08:52 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	expand_result(char **result, int *i, char *tmp, t_minishell *shell)
 	char	*after;
 	char	*new_result;
 	char	*var_val;
-	
+
 	init_val(&var_start, &before, &after, &new_result);
 	var_val = NULL;
 	var_start = *i;
@@ -107,8 +107,8 @@ char	*def_expansion(t_token *token, t_minishell *shell)
 
 	commands = ft_strdup(token->token_val);
 	i = 0;
-	if (find_dollar(token->token_val) == true && 
-			(token->in_quotes == false || token->double_quoted == true))
+	if (find_dollar(token->token_val) == true
+		&& (token->in_quotes == false || token->double_quoted == true))
 	{
 		while (token->token_val[i])
 		{

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 17:43:09 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/22 19:23:19 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:08:14 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	find_dollar(char *token_val)
 		if (token_val[i++] == '$')
 			dollar_found = true;
 	}
-	return(dollar_found);
+	return (dollar_found);
 }
 
 char	*ft_getenv(char *var_name, t_minishell *shell)
@@ -48,10 +48,10 @@ char	*ft_getenv(char *var_name, t_minishell *shell)
 	t_environment	*current;
 
 	current = shell->env_list;
-	while(current != NULL)
+	while (current != NULL)
 	{
 		if (ft_strcmp(current->env_var, var_name) == 0)
-			return	(ft_strdup(current->value));
+			return (ft_strdup(current->value));
 		current = current->next_env_var;
 	}
 	return (NULL);

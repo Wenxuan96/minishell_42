@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:12:21 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/23 15:21:26 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:07:18 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	count_pipes(t_minishell *shell)
 	while (current)
 	{
 		if ((ft_strcmp(current->token_val, "|") == 0)
-			&& (ft_strlen(current->token_val) == 1) && 
-			current->type == PIPELINE)
-			i++;	
+			&& (ft_strlen(current->token_val) == 1)
+			&& current->type == PIPELINE)
+			i++;
 		current = current->next_token;
 	}
 	return (i);
@@ -71,10 +71,10 @@ void	prt_cmds(t_process *process_lst)
 {
 	t_process	*current;
 	int			i;
-	
+
 	i = 0;
 	current = process_lst;
-	while(current)
+	while (current)
 	{
 		ft_printf("process commands are: ");
 		while (current->command_arguments[i])
@@ -91,22 +91,23 @@ void	print_process(t_minishell *shell)
 	t_redirection	*curr_redir;
 
 	current = shell->process_list;
-	printf("num_proc: %i\n", shell->num_processes);
+	ft_printf("num_proc: %i\n", shell->num_processes);
 	while (current != NULL)
 	{
 		curr_redir = current->redirections;
-		printf("command :%s, %s\n", current->command_arguments[0], current->command_arguments[1]);
+		ft_printf("command :%s, %s\n", current->command_arguments[0],
+			current->command_arguments[1]);
 		if (curr_redir)
 		{
 			while (curr_redir)
 			{
-				printf("redirection type: %u\n", curr_redir->type);
-				printf("redirection file: %s\n", curr_redir->file);
+				ft_printf("redirection type: %u\n", curr_redir->type);
+				ft_printf("redirection file: %s\n", curr_redir->file);
 				curr_redir = curr_redir->next_redir;
 			}
 		}
 		if (current->is_builtin == 1)
-			printf("type: %u\n", current->builtin->type);
+			ft_printf("type: %u\n", current->builtin->type);
 		current = current->next_process;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 17:00:53 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:03:07 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,16 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	while (shell->input_str[i])
 	{
 		if ((quote_char == '\0') && (shell->input_str[i] == '\''
-			|| shell->input_str[i] == '\"'))
+				|| shell->input_str[i] == '\"'))
 			quote_char = shell->input_str[i];
 		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
 			quote_char = '\0';
-		else if (quote_char == '\0' && (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
+		else if (quote_char == '\0'
+			&& (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
 		{
 			if (!handle_token_boundaries(shell, &i, &start))
 				return (0);
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -108,8 +109,6 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	}
 	return (1);
 }
-
-
 
 int	tokenize_input(t_minishell *shell)
 {
@@ -122,7 +121,8 @@ int	tokenize_input(t_minishell *shell)
 	quote_char = '\0';
 	if (!validate_quotes(shell->input_str))
 	{
-		display_shell_error2(shell, "minishell: syntax error: unclosed quote", EX_BADUSAGE);
+		display_shell_error2(shell,
+			"minishell: syntax error: unclosed quote", EX_BADUSAGE);
 		return (EX_BADUSAGE);
 	}
 	if (!iter_input_str(shell, i, start, quote_char))

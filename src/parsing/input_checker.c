@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/30 21:14:10 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 16:55:21 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,7 @@ void	prt_tokenlst(t_minishell *shell)
 	ft_printf(".\n");
 }
 
-// static void	free_shell(t_minishell *shell)
-// {
-// 	free(shell->input_str);
-// 	free(shell->token_list);
-// 	free(shell);
-// 	shell = NULL;
-// 	exit(g_exit_status);
-// }
-
-static int wit_space_str(t_minishell *shell)
+static int	wit_space_str(t_minishell *shell)
 {
 	int	i;
 
@@ -48,7 +39,7 @@ static int wit_space_str(t_minishell *shell)
 			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
 static int	skip_white_space(t_minishell *shell)
@@ -61,7 +52,8 @@ static int	skip_white_space(t_minishell *shell)
 	while (shell->input_str[start] == ' ' || shell->input_str[start] == '\t')
 		start++;
 	end = ft_strlen(shell->input_str) - 1;
-	while (end >= start && (shell->input_str[end] == ' ' || shell->input_str[end] == '\t'))
+	while (end >= start && (shell->input_str[end] == ' '
+			|| shell->input_str[end] == '\t'))
 		end--;
 	tmp = ft_substr(shell->input_str, start, end - start + 1);
 	if (!tmp)
@@ -85,7 +77,7 @@ int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
 	int	error;
-	
+
 	error = EXEC_SUCCESS;
 	init = 0;
 	if (init == 0 && argc != 1)
@@ -97,15 +89,15 @@ int	read_input(int argc, t_minishell *shell)
 		ft_exit(shell, "exit");
 	else if (shell->input_str[0] == '\0' || wit_space_str(shell) == 1)
 		error = EX_BADUSAGE;
-	else if (ft_strcmp(shell->input_str, "\'\'") == 0 ||
-		ft_strcmp(shell->input_str, "\"\"") == 0)
+	else if (ft_strcmp(shell->input_str, "\'\'") == 0
+		|| ft_strcmp(shell->input_str, "\"\"") == 0)
 		error = CMD_NOTFOUND;
 	error = special_chr_ctrl(shell);
 	add_history(shell->input_str);
-	if (tokenize_input(shell) != EXEC_SUCCESS || init_processlst(shell) != EXEC_SUCCESS)
+	if (tokenize_input(shell) != EXEC_SUCCESS
+		|| init_processlst(shell) != EXEC_SUCCESS)
 		error = EXEC_FAILURE;
-	// prt_tokenlst(shell);
 	free_tokenlst(shell);
 	free(shell->input_str);
-	return(error);
+	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/09 17:19:03 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 16:53:29 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ int	validate_quotes(const char *input)
 {
 	int		i;
 	char	quote;
-	
+
 	i = 0;
 	quote = '\0';
-	while(input[i])
+	while (input[i])
 	{
 		if ((input[i] == '"' || input[i] == '\'') && quote == '\0')
 			quote = input[i];
@@ -35,8 +35,8 @@ char	*handle_dollar_sign(char *trimmed)
 	size_t	i;
 
 	i = 0;
-	while ((i < ft_strlen(trimmed)) &&
-		trimmed[i] && trimmed[i + 1] != '\0')
+	while ((i < ft_strlen(trimmed))
+		&& trimmed[i] && trimmed[i + 1] != '\0')
 	{
 		if (trimmed[i] == '\\' && trimmed[i + 1] == '\\')
 		{
@@ -49,7 +49,7 @@ char	*handle_dollar_sign(char *trimmed)
 		}
 		i++;
 	}
-	return(trimmed);
+	return (trimmed);
 }
 
 char	*remove_outer_quotes(char *sub)
@@ -59,8 +59,8 @@ char	*remove_outer_quotes(char *sub)
 
 	len = ft_strlen(sub);
 	trimmed = NULL;
-	if ((sub[0] == '\"' && sub[len - 1] == '\"') ||
-		(sub[0] == '\'' && sub[len - 1] == '\''))
+	if ((sub[0] == '\"' && sub[len - 1] == '\"')
+		|| (sub[0] == '\'' && sub[len - 1] == '\''))
 	{
 		trimmed = ft_substr(sub, 1, len - 2);
 		if (!trimmed)
@@ -71,7 +71,6 @@ char	*remove_outer_quotes(char *sub)
 			if (!trimmed)
 				return (NULL);
 		}
-
 		return (trimmed);
 	}
 	return (sub);

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 21:36:07 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/23 16:13:45 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 16:56:27 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	**malloc_mem(t_token **token, int *i)
 	commands = (char **)malloc((count_commands(token) + 1) * sizeof(char *));
 	if (!commands)
 		return (NULL);
-	return(commands);
+	return (commands);
 }
 
 char	**get_commands(t_token	**token, t_minishell *shell)
@@ -40,7 +40,7 @@ char	**get_commands(t_token	**token, t_minishell *shell)
 		{
 			commands[i] = def_expansion(*token, shell);
 			if (!commands[i])
-                return (free_2darray(commands), NULL);
+				return (free_2darray(commands), NULL);
 			(*token) = (*token)->next_token;
 			i++;
 		}
@@ -73,15 +73,13 @@ int	parse_redirection(t_minishell *shell)
 
 void	add_process(char **arr_commands, t_minishell *shell)
 {
-	t_process *new_process;
+	t_process	*new_process;
 
 	if (!arr_commands)
 		exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
-
 	new_process = new_process_lst(shell, arr_commands);
 	if (!new_process)
 		exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
-
 	if (!shell->process_list)
 		shell->process_list = new_process;
 	else

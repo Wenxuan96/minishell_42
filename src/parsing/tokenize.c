@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/06/30 21:12:32 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 17:00:53 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 	}
 	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
 		(*i)++;
-	while (shell->input_str[*i] != '\0' && ft_strchr("|<>", shell->input_str[*i]) != NULL)
+	while (shell->input_str[*i] != '\0'
+		&& ft_strchr("|<>", shell->input_str[*i]) != NULL)
 	{
-		if (ft_strchr("<|>", shell->input_str[*i]) && (*i == 0 || shell->input_str[*i + 1] == '\0'))
-		{
-			ft_printf("syntax error near unexpected token `%c'\n", shell->input_str[*i]);
-			return (0);
-		}
+		if (ft_strchr("<|>", shell->input_str[*i])
+			&& (*i == 0 || shell->input_str[*i + 1] == '\0'))
+			return (ft_printf("syntax error near unexpected token `%c'\n",
+					shell->input_str[*i]), 0);
 		if (!def_special_token(shell, i))
 			return (0);
 	}

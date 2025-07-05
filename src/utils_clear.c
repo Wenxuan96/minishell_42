@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/04 12:56:12 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:13:30 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,21 @@ void ft_lstclear_process(t_process **process_list)
     int i;
 
     if (!process_list || !*process_list)
-        return;
-    
+        return ;
     current = *process_list;
-    while (current) {
+    while (current) 
+	{
         next = current->next_process;
         ft_lstclear_redir(&current->redirections);
-        if (current->command_arguments) {
+        if (current->command_arguments) 
+		{
             i = 0;
-            while (current->command_arguments[i]) {
-                free(current->command_arguments[i]);
-                i++;
-            }
+            while (current->command_arguments[i]) 
+                free(current->command_arguments[i++]);
             free(current->command_arguments);
         }
         if (current->is_builtin && current->builtin)
             free(current->builtin);
-        
         free(current);
         current = next;
     }
@@ -136,8 +134,6 @@ void    free_process(t_minishell *shell, t_process *current)
     ft_lstclear_process(&shell->process_list); 
     if (shell->pipes)
         free_pipes(shell);
-    // ft_lstclear_token(&shell->token_list);
-    // free(shell->input_str);
 }
 
 void	ft_exit(t_minishell *shell, char *error_msg)

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:07:55 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/06 17:33:16 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/05 18:36:17 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtins.h"
+#include "minishell.h"
 
 int	pwd_builtin(t_process *process, t_minishell *shell)
 {
+	char	*path_buffer;
+
 	// char *getcwd(char *cwdbuf, size_t size);
-	char    *path_buffer;
-	
 	(void)process;
 	(void)shell;
 	path_buffer = getcwd(NULL, 0);

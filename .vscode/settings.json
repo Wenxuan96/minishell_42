@@ -4,6 +4,7 @@
 		"functional": "c",
 		"readline.h": "c",
 		"random": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"ranges": "c"
 	}
 }

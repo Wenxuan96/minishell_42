@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 16:55:21 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/06 18:34:39 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	read_input(int argc, t_minishell *shell)
 	if (!shell->input_str)
 		ft_exit(shell, "exit");
 	else if (shell->input_str[0] == '\0' || wit_space_str(shell) == 1)
-		error = EX_BADUSAGE;
+		return (EX_BADUSAGE);
 	else if (ft_strcmp(shell->input_str, "\'\'") == 0
 		|| ft_strcmp(shell->input_str, "\"\"") == 0)
-		error = CMD_NOTFOUND;
+		return (CMD_NOTFOUND);
 	error = special_chr_ctrl(shell);
 	add_history(shell->input_str);
 	if (tokenize_input(shell) != EXEC_SUCCESS

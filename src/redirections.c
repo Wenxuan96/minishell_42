@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:48 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/06 18:48:50 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 	char			*input_line;
 	char			*heredoc_buff;
 	char			*temp;
+	t_token			*cmd_holder;
 
 	current = process;
 	heredoc_buff = NULL;
 	(void)shell;
-	curr_redir = current->redirections;
+	curr_redir = current->redirections; 
 	while (curr_redir != NULL)
 	{
 		if (curr_redir->type == OUTPUT)
@@ -85,6 +86,9 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 				free(input_line);
 				input_line = readline("> ");
 			}
+			cmd_holder = new_token_lst(heredoc_buff);
+			heredoc_buff = def_expansion(cmd_holder, shell);
+			free(cmd_holder);
 			if (current->command_arguments[0] == NULL)
 			{
 				// write(1, heredoc_buff, ft_strlen(heredoc_buff));

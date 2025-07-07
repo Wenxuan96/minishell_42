@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:51 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/07 18:02:56 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int	create_processes(t_minishell *shell)
 			&& !current->redirections)
 		{
 			setup_signals(0);
-			// dprintf(2, "we are hrre\n");
 			execute_builtin(current, shell);
 			shell->exit_status = current->exit_status;
-			// dprintf(2, "exit status for cd: %i\n", shell->exit_status);
 			current->pid = 0;
 		}
 		else
@@ -43,7 +41,6 @@ int	create_processes(t_minishell *shell)
 				setup_signals(1);
 				if (current->is_builtin == 1)
 				{
-					// printf("didnt enter ==  0 condition");
 					if (execute_builtin(current, shell) == 0)
 					{
 						status = current->exit_status;
@@ -64,8 +61,6 @@ int	create_processes(t_minishell *shell)
 				}
 				status = current->exit_status;
 				free_process(shell, current);
-				// if (g_exit_status == 0)
-				// 	exit(status);
 				exit(0);
 			}
 			else

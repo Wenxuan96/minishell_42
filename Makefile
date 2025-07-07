@@ -18,7 +18,8 @@ endif
 SRC_ROOT = $(wildcard src/*.c)
 SRC_BUILTINS = $(wildcard src/builtins/*.c)
 SRC_PARSING = $(wildcard src/parsing/*.c)
-SRC = $(SRC_ROOT) $(SRC_BUILTINS) $(SRC_PARSING)
+SRC_EXEC = $(wildcard src/executor/*.c)
+SRC = $(SRC_ROOT) $(SRC_BUILTINS) $(SRC_PARSING) $(SRC_EXEC)
 
 OBJ_DIR = obj
 LIBFT_DIR = libft
@@ -27,7 +28,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 OBJ_ROOT = $(SRC_ROOT:src/%.c=$(OBJ_DIR)/%.o)
 OBJ_BUILTINS = $(SRC_BUILTINS:src/builtins/%.c=$(OBJ_DIR)/builtins/%.o)
 OBJ_PARSING = $(SRC_PARSING:src/parsing/%.c=$(OBJ_DIR)/parsing/%.o)
-OBJ = $(OBJ_ROOT) $(OBJ_BUILTINS) $(OBJ_PARSING)
+OBJ_EXEC = $(SRC_EXEC:src/executor/%.c=$(OBJ_DIR)/executor/%.o)
+OBJ = $(OBJ_ROOT) $(OBJ_BUILTINS) $(OBJ_PARSING) $(OBJ_EXEC)
 
 CFLAGS += -Wall -Wextra -Werror -g -Iinclude -I$(LIBFT_DIR) -Isrc/builtins -Isrc/parsing
 

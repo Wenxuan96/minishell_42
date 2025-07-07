@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/06 18:48:50 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/07 15:09:06 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 				free(input_line);
 				input_line = readline("> ");
 			}
-			cmd_holder = new_token_lst(heredoc_buff);
-			heredoc_buff = def_expansion(cmd_holder, shell);
-			free(cmd_holder);
+			if (shell->heredoc_inquote != true && heredoc_buff != NULL)
+			{
+				cmd_holder = new_token_lst(heredoc_buff);
+				heredoc_buff = def_expansion(cmd_holder, shell);
+				free(cmd_holder);
+			}
 			if (current->command_arguments[0] == NULL)
 			{
 				// write(1, heredoc_buff, ft_strlen(heredoc_buff));
@@ -98,10 +101,19 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 			}
 			else
 			{
-				write(pipe_fd[1], heredoc_buff, ft_strlen(heredoc_buff));
-				write(pipe_fd[1], "\n", 1);
-				current->input_fd = pipe_fd[0];
-				close(pipe_fd[1]);
+				if (!heredoc_buff)
+				{
+					write(pipe_fd[1], "", 1);
+					current->input_fd = pipe_fd[0];
+					close(pipe_fd[1]);
+				}
+        		else
+				{
+					write(pipe_fd[1], heredoc_buff, ft_strlen(heredoc_buff));
+					write(pipe_fd[1], "\n", 1);
+					current->input_fd = pipe_fd[0];
+					close(pipe_fd[1]);
+				}
 			}
 			free(heredoc_buff);
 		}

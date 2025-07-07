@@ -123,6 +123,7 @@ typedef struct s_minishell
 	t_token			*token_list;
 	t_process		*process_list;
 	bool			in_quote;
+	bool			heredoc_inquote;
 	int				**pipes;
 	int				exit_status;	
 	int				num_processes;

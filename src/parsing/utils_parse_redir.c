@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:52:12 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 17:05:18 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/07 14:52:31 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ void	expand_n_skip(t_token	**token, t_minishell *shell)
 	char	*new_val;
 
 	if (get_redir_type(*token) == HEREDOC)
+	{
 		(*token) = (*token)->next_token;
+		if ((*token)->in_quotes == true)
+			shell->heredoc_inquote = true;
+	}
 	else
 	{
 		(*token) = (*token)->next_token;

@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/06/11 12:38:03 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/07 14:52:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_shell(t_minishell *shell)
 	shell->env_list = NULL;
 	shell->pipes= NULL;
 	shell->exit_status = 0;
+	shell->heredoc_inquote = false;
 }
 
 // t_process	*new_process_lst(char **commands)

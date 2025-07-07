@@ -1,0 +1,14 @@
+Makefile
+README.md
+error.txt
+file2.txt
+include
+libft
+minishell
+minishell.supp
+obj
+src
+test1.txt
+tests_to_fix
+textcase_donot_delete.txt
+utils_lists.c

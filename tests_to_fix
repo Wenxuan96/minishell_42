@@ -1,0 +1,90 @@
+minishell$ << EOF
+syntax error near unexpected token `<'
+minishell: memory allocation failed
+minishell: lexer failed.
+minishell$ 
+==67894== Invalid read of size 4
+==67894==    at 0x406D16: count_commands (utils_prcs_parser.c:40)
+==67894==    by 0x405F52: malloc_mem (populate_process.c:21)
+==67894==    by 0x405E2C: get_commands (populate_process.c:32)
+==67894==    by 0x40613D: init_processlst (populate_process.c:100)
+==67894==    by 0x405BC1: read_input (input_checker.c:98)
+==67894==    by 0x402599: main (main.c:62)
+==67894==  Address 0x8 is not stack'd, malloc'd or (recently) free'd
+==67894== 
+==67894== 
+==67894== Process terminating with default action of signal 11 (SIGSEGV)
+==67894==  Access not within mapped region at address 0x8
+==67894==    at 0x406D16: count_commands (utils_prcs_parser.c:40)
+==67894==    by 0x405F52: malloc_mem (populate_process.c:21)
+==67894==    by 0x405E2C: get_commands (populate_process.c:32)
+==67894==    by 0x40613D: init_processlst (populate_process.c:100)
+==67894==    by 0x405BC1: read_input (input_checker.c:98)
+==67894==    by 0x402599: main (main.c:62)
+==67894==  If you believe this happened as a result of a stack
+==67894==  overflow in your program's main thread (unlikely but
+==67894==  possible), you can try to increase the size of the
+==67894==  main thread stack using the --main-stacksize= flag.
+==67894==  The main thread stack size used in this run was 8388608.
+
+
+==67894== 
+==67894== 1 bytes in 1 blocks are still reachable in loss record 1 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4084BF: ft_strdup (in /home/tignatov/minishell/minishell)
+==67894==    by 0x408A0C: ft_substr (in /home/tignatov/minishell/minishell)
+==67894==    by 0x405DCD: skip_white_space (input_checker.c:58)
+==67894==    by 0x405C84: special_chr_ctrl (input_checker.c:68)
+==67894==    by 0x405B97: read_input (input_checker.c:95)
+==67894==    by 0x402599: main (main.c:62)
+==67894== 
+==67894== 2 bytes in 2 blocks are still reachable in loss record 2 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4084BF: ft_strdup (in /home/tignatov/minishell/minishell)
+==67894==    by 0x4022E1: ft_new_var_lst (init_env_var.c:40)
+==67894==    by 0x4023A3: create_env_lst (init_env_var.c:59)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== 17 bytes in 2 blocks are still reachable in loss record 17 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4084BF: ft_strdup (in /home/tignatov/minishell/minishell)
+==67894==    by 0x4022CE: ft_new_var_lst (init_env_var.c:39)
+==67894==    by 0x4023A3: create_env_lst (init_env_var.c:59)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== 48 bytes in 2 blocks are still reachable in loss record 30 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4022A9: ft_new_var_lst (init_env_var.c:36)
+==67894==    by 0x4023A3: create_env_lst (init_env_var.c:59)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== 989 bytes in 74 blocks are still reachable in loss record 52 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4084BF: ft_strdup (in /home/tignatov/minishell/minishell)
+==67894==    by 0x4022CE: ft_new_var_lst (init_env_var.c:39)
+==67894==    by 0x4023C0: create_env_lst (init_env_var.c:61)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== 1,489 bytes in 74 blocks are still reachable in loss record 62 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4084BF: ft_strdup (in /home/tignatov/minishell/minishell)
+==67894==    by 0x4022E1: ft_new_var_lst (init_env_var.c:40)
+==67894==    by 0x4023C0: create_env_lst (init_env_var.c:61)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== 1,776 bytes in 74 blocks are still reachable in loss record 66 of 94
+==67894==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==67894==    by 0x4022A9: ft_new_var_lst (init_env_var.c:36)
+==67894==    by 0x4023C0: create_env_lst (init_env_var.c:61)
+==67894==    by 0x40258D: main (main.c:59)
+==67894== 
+==67894== LEAK SUMMARY:
+==67894==    definitely lost: 0 bytes in 0 blocks
+==67894==    indirectly lost: 0 bytes in 0 blocks
+==67894==      possibly lost: 0 bytes in 0 blocks
+==67894==    still reachable: 4,322 bytes in 229 blocks
+==67894==         suppressed: 215,473 bytes in 251 blocks
+==67894== 
+==67894== For lists of detected and suppressed errors, rerun with: -s
+==67894== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+make: *** [Makefile:51: valgrind] Segmentation fault (core dumped)

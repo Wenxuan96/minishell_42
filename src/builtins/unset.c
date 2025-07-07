@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:10:43 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:36:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/06 17:45:55 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,13 @@ int	unset_builtin(t_process *process, t_minishell *shell)
 		if (ft_strcmp(current->env_var, process->command_arguments[1]) == 0)
 		{
 			if (prev == NULL)
-			{
 				shell->env_list = current->next_env_var;
-				free(current->env_var);
-				free(current->value);
-				free(current);
-				break ;
-			}
 			else
-			{
 				prev->next_env_var = current->next_env_var;
-				free(current->env_var);
-				free(current->value);
-				free(current);
-				break ;
-			}
+			free(current->env_var);
+			free(current->value);
+			free(current);
+			break ;
 		}
 		prev = current;
 		current = current->next_env_var;

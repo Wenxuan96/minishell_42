@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 14:54:08 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:16:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	sig_handler_heredoc(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_exit_status = 128 + SIGINT;
+	rl_done = 1;
 }
 
 int	setup_signals(int is_child)

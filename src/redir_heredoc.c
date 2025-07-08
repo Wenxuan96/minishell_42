@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:53:06 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 14:53:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:16:20 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	strjoin_heredoc(char *input_line, char **heredoc_buff)
 	*heredoc_buff = ft_strjoin_heredoc(temp, input_line);
 	free(temp);
 }
+int	force_sigint(void)
+{
+	return (0);
+}
 
 char	*read_into_heredoc(t_redirection *curr_redir, int *pipe_fd)
 {
@@ -44,8 +48,10 @@ char	*read_into_heredoc(t_redirection *curr_redir, int *pipe_fd)
 	char	*heredoc_buff;
 
 	heredoc_buff = NULL;
+	rl_event_hook = force_sigint;
 	while (1)
 	{
+		g_exit_status = 0;
 		setup_signals_heredoc();
 		input_line = readline("> ");
 		if (!input_line || g_exit_status == 130)

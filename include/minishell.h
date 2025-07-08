@@ -128,6 +128,8 @@ typedef struct s_minishell
 	int							**pipes;
 	int							exit_status;
 	int							num_processes;
+	int							orig_stdin;
+	int							orig_stdout;
 	t_environment				*env_list;
 }								t_minishell;
 
@@ -161,6 +163,9 @@ int								execute_outside_cmd(t_process *process,
 /*executor - redirections*/
 int								redirections(t_process *process_lst);
 int								handle_redirection(t_process *process,
+									t_minishell *shell);
+int								handle_heredoc(t_process *current,
+									t_redirection *curr_redir,
 									t_minishell *shell);
 
 /*executor - execve*/
@@ -207,6 +212,13 @@ void							close_pipe_ends_parent(t_minishell *shell);
 t_redirection					*new_redir_lst(t_redir_type type, char *file);
 void							redir_lst_add_back(t_redirection *new_redir,
 									t_redirection **redir_lst);
+int								handle_output(t_process *current,
+									t_redirection *curr_redir);
+
+int								handle_input(t_process *current,
+									t_redirection *curr_redir);
+int								handle_append(t_process *current,
+									t_redirection *curr_redir);
 
 /*utils_builtins*/
 void							prt_env_lst(t_environment *env_list);
@@ -241,5 +253,4 @@ readin							cat = fd7
  child -> stdout = fd7
  parent -> stdout = fd7 */
 
- 
 #endif

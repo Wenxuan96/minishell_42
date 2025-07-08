@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:18:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:25 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/08 14:53:51 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	**allocate_pipes(int p_num)
 
 char	*ft_strjoin_heredoc(const char *s1, const char *s2)
 {
-	int i;
-	int j;
-	char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
 	j = 0;

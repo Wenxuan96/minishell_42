@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:32 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/08 14:39:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ void	waitpid_children(t_minishell *shell)
 			wait_res = waitpid(current_process->pid, &status, 0);
 			while (wait_res == -1 && errno == EINTR)
 				wait_res = waitpid(current_process->pid, &status, 0);
-			// display_shell_error2(shell, "waitpid() failed", EXEC_FAILURE);
-			if (current_process->next_process == NULL)
+			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+				g_exit_status = 130;
+			else if (current_process->next_process == NULL)
 			{
 				if (WIFEXITED(status))
 					g_exit_status = WEXITSTATUS(status);
@@ -79,56 +80,3 @@ void	waitpid_children(t_minishell *shell)
 		current_process = current_process->next_process;
 	}
 }
-
-// void	waitpid_children(t_minishell *shell)
-// {
-//     t_process *current_process;
-//     int wait_res;
-// 	int	status;
-
-//     current_process = shell->process_list;
-//     while (current_process != NULL)
-//     {
-// 		if (current_process->pid != 0)
-// 		{
-// 			wait_res = waitpid(current_process->pid, &status, 0);
-// 			if (wait_res == -1)
-// 				exit_with_error(shell, "waitpid() failed", EXEC_FAILURE);
-// 			if (current_process->next_process == NULL)
-// 			{
-// 				if (WIFEXITED(status))
-// 					g_exit_status = WEXITSTATUS(status);
-// 				else if (WIFSIGNALED(status))
-// 					g_exit_status = 128 + WTERMSIG(status);
-// 			}
-// 		}
-//         current_process = current_process->next_process;
-//     }
-// }
-// t_environment	*copy_env_list(t_minishell *shell, t_process *process)
-// {
-// 	t_environment	*current;
-// 	t_environment	*new_env_lst;
-// 	t_environment	*new_env_node;
-// 	char			*variable;
-// 	char			*value;
-
-// 	new_env_lst = NULL;
-// 	current = shell->env_list;
-// 	while (current != NULL)
-// 	{
-// 		variable = ft_strdup(current->env_var);
-// 		if (current->value)
-// 			value = ft_strdup(current->value);
-// 		if (!variable || !value)
-// 			exit_with_error(shell, "memory allocation failed", EXEC_FAILURE);
-// 		else
-// 			value = NULL;
-// 		new_env_node = ft_new_var_lst(variable, value);
-// 		ft_var_lstadd_back(&new_env_lst, new_env_node);
-// 		current = current->next_env_var;
-// 	}
-// 	process->env_vars = new_env_lst;
-// 	// printf("\n\nprocess env var: %s\n", process->env_vars->env_var);
-// 	return (process->env_vars);
-// }

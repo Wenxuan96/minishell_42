@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:45 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/08 14:54:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	sig_handler_parent(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	// write(STDOUT_FILENO, "signal", 6);
 	g_exit_status = 128 + SIGINT;
 }
 

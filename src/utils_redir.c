@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:05:22 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:35 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/09 13:38:34 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_redirection	*new_redir_lst(t_redir_type type, char *file)
 	redir = malloc(sizeof(t_redirection));
 	if (!redir)
 		return (NULL);
-	// redir->fd = fd;
 	redir->type = type;
 	redir->file = file;
 	redir->next_redir = NULL;

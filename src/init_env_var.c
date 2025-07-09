@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/07/05 18:33:13 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/09 13:23:31 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_lstclear_envvars(t_environment *envvar_list)
 	}
 }
 
-void	ft_lstclear_process_envvars(t_process **process)
+void	ft_lstclear_pr_envvars(t_process **process)
 {
 	t_process	*current;
 

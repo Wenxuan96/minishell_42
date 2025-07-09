@@ -1,3 +1,0 @@
-test1.txt
-tests_to_fix
-new line

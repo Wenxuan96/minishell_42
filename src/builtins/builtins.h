@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:56:13 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/06 17:29:52 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:29:43 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-typedef int			builtin_func(t_process *process, t_minishell *shell);
+typedef int			t_builtin_func(t_process *process, t_minishell *shell);
 
 typedef enum e_builtin_type
 {
@@ -31,7 +31,7 @@ typedef enum e_builtin_type
 typedef struct s_builtin
 {
 	t_builtin_type	type;
-	builtin_func	*function;
+	t_builtin_func	*function;
 }					t_builtin;
 
 int					cd_builtin(t_process *process, t_minishell *shell);
@@ -42,9 +42,9 @@ int					exit_builtin(t_process *process, t_minishell *shell);
 int					unset_builtin(t_process *process, t_minishell *shell);
 int					echo_builtin(t_process *process, t_minishell *shell);
 
-t_builtin			*new_builtin(t_builtin_type type, builtin_func *function);
+t_builtin			*new_builtin(t_builtin_type type, t_builtin_func *function);
 int					assign_builtin(t_process *process, t_builtin_type type,
-						builtin_func *function);
+						t_builtin_func *function);
 void				ft_clean_exit(t_minishell *shell, int exit_code);
 void				free_pipes(t_minishell *shell);
 

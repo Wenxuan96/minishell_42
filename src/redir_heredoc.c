@@ -6,28 +6,11 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:53:06 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 15:16:20 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:37:49 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	setup_pipes(int *pipe_fd)
-{
-	if (pipe(pipe_fd) == -1)
-		return (0);
-	return (1);
-}
-
-int	free_heredoc(char *input_line, char *heredoc_buff, int *pipe_fd)
-{
-	free(input_line);
-	if (heredoc_buff)
-		free(heredoc_buff);
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
-	return (1);
-}
 
 void	strjoin_heredoc(char *input_line, char **heredoc_buff)
 {
@@ -36,10 +19,6 @@ void	strjoin_heredoc(char *input_line, char **heredoc_buff)
 	temp = *heredoc_buff;
 	*heredoc_buff = ft_strjoin_heredoc(temp, input_line);
 	free(temp);
-}
-int	force_sigint(void)
-{
-	return (0);
 }
 
 char	*read_into_heredoc(t_redirection *curr_redir, int *pipe_fd)
@@ -106,7 +85,6 @@ int	handle_heredoc(t_process *current, t_redirection *curr_redir,
 	char	*heredoc_buff;
 
 	heredoc_buff = NULL;
-	// setup_signals_heredoc();
 	if (!setup_pipes(pipe_fd))
 		return (display_shell_error(current, "pipe failed", EXEC_FAILURE), 0);
 	heredoc_buff = read_into_heredoc(curr_redir, pipe_fd);

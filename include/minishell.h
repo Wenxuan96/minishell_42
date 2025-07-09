@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
+/*   Updated: 2025/07/09 13:39:51 by tignatov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "libft.h"
@@ -16,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-struct s_builtin;
+struct							s_builtin;
 typedef struct s_builtin		t_builtin;
 extern volatile sig_atomic_t	g_exit_status;
 
@@ -29,12 +41,6 @@ extern volatile sig_atomic_t	g_exit_status;
 # define EX_NOINPUT 126
 # define CMD_NOTFOUND 127
 
-// typedef struct	s_environment	t_environment;
-
-/*
-Lexer: takes in an input line
-output: array of tokens
-*/
 typedef enum e_token_type
 {
 	WORD,
@@ -45,19 +51,12 @@ typedef enum e_token_type
 
 typedef enum e_redir_type
 {
-	OUTPUT,        /*  >   */
-	INPUT,         /*  <   */
-	HEREDOC,       /*  <<   */
-	OUTPUT_APPEND, /*  >>   */
+	OUTPUT,
+	INPUT,
+	HEREDOC,
+	OUTPUT_APPEND,
 	NONE,
 }								t_redir_type;
-
-// typedef	enum e_exit_status
-// {
-// 	EXEC_FAILURE = 1,
-// 	EXEC_SUCCESS = 0,
-// 	MS_TARGET_NOT_FOUND = 127,
-// }	t_exit_status;
 
 typedef struct s_environment
 {
@@ -74,19 +73,8 @@ typedef struct s_token
 	char						*token_val;
 	bool						double_quoted;
 	bool						in_quotes;
-	/* Indicates if the token was enclosed in quotes (if not in_quotes,
-	give an error)*/
 	struct s_token				*next_token;
 }								t_token;
-
-/*
-Parser: takes in an array of tokens
-output: linked list of structs
-1. group tokens by pipes into linked list
-2. expansions ($HOME etc)
-3. go through linked list and look for words -> they become arguments to execute
-	also checking the syntaxis
-*/
 
 typedef struct s_redirection
 {
@@ -104,9 +92,9 @@ typedef struct s_process
 	t_environment				*env_vars;
 	int							input_fd;
 	int							output_fd;
-	int exit_status; // keep it for now but do not need to populate
+	int							exit_status;
 	bool						is_builtin;
-	bool is_pipeline; // keep it for now but do not need to populate
+	bool						is_pipeline;
 	t_builtin					*builtin;
 	int							completed;
 	struct s_process			*next_process;
@@ -116,9 +104,8 @@ typedef struct s_minishell
 {
 	char						*input_str;
 	int							input_status;
-	char **heredoc_archive; // handle after lexer
+	char						**heredoc_archive;
 	int							heredoc_count;
-	// helps to cleanup and keep track of the amount of heredoc
 	const char					**system_commands;
 	const char					**buildin_commands;
 	t_token						*token_list;
@@ -181,7 +168,7 @@ char							**execve_get_envvars(t_minishell *shell);
 void							ft_lstclear_token(t_token **token_list);
 void							ft_lstclear_env(t_environment **env_list);
 void							ft_lstclear_redir(t_redirection **redir_list);
-void							ft_lstclear_process_envvars(t_process **process);
+void							ft_lstclear_pr_envvars(t_process **process);
 void							ft_lstclear_process(t_process **process_list);
 void							ft_exit(t_minishell *shell, char *error_msg);
 void							free_pipes(t_minishell *shell);
@@ -219,6 +206,10 @@ int								handle_input(t_process *current,
 									t_redirection *curr_redir);
 int								handle_append(t_process *current,
 									t_redirection *curr_redir);
+int								free_heredoc(char *input_line,
+									char *heredoc_buff, int *pipe_fd);
+int								force_sigint(void);
+int								setup_pipes(int *pipe_fd);
 
 /*utils_builtins*/
 void							prt_env_lst(t_environment *env_list);
@@ -243,14 +234,5 @@ void							exit_with_error(t_minishell *shell, char *msg,
 
 size_t							count_dirs(char **dir_paths);
 void							printf_twod_array(char **array);
-
-/*  stdout = fd1
- ls | cat | grep
-readin							cat = fd7
-  dup so that stdout = fd7
- exec ls -> ls output fd7
- fork
- child -> stdout = fd7
- parent -> stdout = fd7 */
 
 #endif

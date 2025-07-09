@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 15:16:53 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:12:56 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ void	sig_handler_heredoc(int sig)
 	rl_done = 1;
 }
 
+int	set_child_signal(void)
+{
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
+
+	sa_int.sa_flags = 0;
+	sa_int.sa_handler = sig_handler_parent;
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+	{
+		perror("sigaction parent");
+		return (0);
+	}
+	sa_quit.sa_flags = 0;
+	sa_quit.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+	{
+		perror("sigaction parent");
+		return (0);
+	}
+	return (1);
+}
+
 int	setup_signals(int is_child)
 {
 	struct sigaction	sa_int;
@@ -46,22 +68,7 @@ int	setup_signals(int is_child)
 	sigemptyset(&sa_int.sa_mask);
 	sigemptyset(&sa_quit.sa_mask);
 	if (is_child == 0)
-	{
-		sa_int.sa_flags = 0;
-		sa_int.sa_handler = sig_handler_parent;
-		if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		{
-			perror("sigaction parent");
-			return (0);
-		}
-		sa_quit.sa_flags = 0;
-		sa_quit.sa_handler = SIG_IGN;
-		if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-		{
-			perror("sigaction parent");
-			return (0);
-		}
-	}
+		return (set_child_signal());
 	else
 	{
 		sa_int.sa_handler = SIG_DFL;

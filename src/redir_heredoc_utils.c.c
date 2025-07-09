@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   redir_heredoc_utils.c.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 13:07:55 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 13:27:42 by tignatov         ###   ########.fr       */
+/*   Created: 2025/07/08 11:53:06 by tignatov          #+#    #+#             */
+/*   Updated: 2025/07/09 13:37:54 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "minishell.h"
 
-int	pwd_builtin(t_process *process, t_minishell *shell)
+int	free_heredoc(char *input_line, char *heredoc_buff, int *pipe_fd)
 {
-	char	*path_buffer;
+	free(input_line);
+	if (heredoc_buff)
+		free(heredoc_buff);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	return (1);
+}
 
-	(void)process;
-	(void)shell;
-	path_buffer = getcwd(NULL, 0);
-	write(STDOUT_FILENO, path_buffer, ft_strlen(path_buffer));
-	write(STDOUT_FILENO, "\n", 1);
-	free(path_buffer);
+int	force_sigint(void)
+{
+	return (0);
+}
+
+int	setup_pipes(int *pipe_fd)
+{
+	if (pipe(pipe_fd) == -1)
+		return (0);
 	return (1);
 }

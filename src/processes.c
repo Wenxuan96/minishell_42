@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 11:23:27 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:33:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec_single_builtin(t_process *current, t_minishell *shell)
 int	exec_child(t_process *current, t_minishell *shell)
 {
 	int			status;
-	
+
 	setup_signals(1);
 	if (current->is_builtin == 1)
 	{

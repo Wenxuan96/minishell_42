@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 11:45:13 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:33:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	init_shell(t_minishell *shell)
 {
-	static const char *const system_commands[] = {"ls", "cat", "grep", "wc",
+	static const char *const	system_commands[] = {"ls", "cat", "grep", "wc",
 		"head", "tail", "chmod", "mv", "cp", "rm", "mkdir", "ps", "kill",
 		"./minishell", NULL};
-	static const char *const buildin_commands[] = {"cd", "echo", "exit", "pwd",
-		"env", "unset", "alias", "export", "type", "set", "history", NULL};
+	static const char *const	buildin_commands[] = {"cd", "echo", "exit",
+		"pwd", "env", "unset", "alias", "export", "type", "set", "history",
+		NULL};
+
 	shell->system_commands = (const char **)system_commands;
 	shell->buildin_commands = (const char **)buildin_commands;
 	shell->input_str = NULL;
@@ -29,8 +31,6 @@ void	init_shell(t_minishell *shell)
 	shell->env_list = NULL;
 	shell->pipes = NULL;
 	shell->exit_status = 0;
-	// shell->orig_stdin = dup(STDIN_FILENO);
-	// shell->orig_stdout = dup(STDOUT_FILENO);
 	shell->heredoc_inquote = false;
 }
 

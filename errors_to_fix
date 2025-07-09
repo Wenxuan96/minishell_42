@@ -1,0 +1,28 @@
+
+echo > file
+
+==56243== FILE DESCRIPTORS: 3 open (3 std) at exit.
+==56243== Open file descriptor 2: /dev/pts/2
+==56243==    <inherited from parent>
+==56243== 
+==56243== Open file descriptor 1: /home/tignatov/minishell/file
+==56243==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==56243==    by 0x407572: execute_dup (executor_builtins.c:46)
+==56243==    by 0x40766A: execute_builtin (executor_builtins.c:69)
+==56243==    by 0x401D8B: exec_child (processes.c:32)
+==56243==    by 0x401E7C: fork_children (processes.c:61)
+==56243==    by 0x401F13: create_processes (processes.c:77)
+==56243==    by 0x401A68: run_shell (main.c:57)
+==56243==    by 0x401B71: main (main.c:76)
+==56243== 
+==56243== Open file descriptor 0: /dev/pts/2
+==56243==    at 0x49DE01B: dup2 (syscall-template.S:120)
+==56243==    by 0x40750D: execute_dup (executor_builtins.c:39)
+==56243==    by 0x40766A: execute_builtin (executor_builtins.c:69)
+==56243==    by 0x401D8B: exec_child (processes.c:32)
+==56243==    by 0x401E7C: fork_children (processes.c:61)
+==56243==    by 0x401F13: create_processes (processes.c:77)
+==56243==    by 0x401A68: run_shell (main.c:57)
+==56243==    by 0x401B71: main (main.c:76)
+
+

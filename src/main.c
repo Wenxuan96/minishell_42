@@ -6,22 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 12:12:50 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:11:42 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins/builtins.h"
 #include "minishell.h"
-
-void	print_env(t_environment *env_list)
-{
-	while (env_list)
-	{
-		printf("%s=", env_list->env_var);
-		printf("%s\n", env_list->value);
-		env_list = env_list->next_env_var;
-	}
-}
 
 void	print_env(t_environment *env_list)
 {

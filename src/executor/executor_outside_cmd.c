@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:58:57 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/10 11:10:32 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:14:16 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ int	execute_dup2(t_process *current, t_minishell *shell)
 {
 	if (dup2(current->input_fd, STDIN_FILENO) == -1)
 	{
-		display_shell_error(current, "dup2 failed", EXEC_FAILURE);
+		display_shell_error(current, "in dup2 failed", EXEC_FAILURE);
 		return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->input_fd != STDIN_FILENO)
 		close(current->input_fd);
 	if (dup2(current->output_fd, STDOUT_FILENO) == -1)
 	{
-		display_shell_error(current, "dup2 failed", EXEC_FAILURE);
+		printf("%i\n", current->output_fd);
+		display_shell_error(current, "out dup2 failed", EXEC_FAILURE);
 		return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->output_fd != STDOUT_FILENO)

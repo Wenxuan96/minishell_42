@@ -6,12 +6,14 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 07:15:50 by tanja             #+#    #+#             */
-/*   Updated: 2025/07/08 11:44:57 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:25:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "minishell.h"
+
+#include <sys/stat.h>
 
 int	handle_builtin_redir(t_process *process, t_minishell *shell)
 {
@@ -38,14 +40,14 @@ int	execute_dup(t_process *current, t_minishell *shell)
 {
 	if (dup2(current->input_fd, STDIN_FILENO) == -1)
 	{
-		display_shell_error(current, "dup2 failed", EXEC_FAILURE);
+		display_shell_error(current, "in dup2 failed", EXEC_FAILURE);
 		return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->input_fd != STDIN_FILENO)
 		close(current->input_fd);
 	if (dup2(current->output_fd, STDOUT_FILENO) == -1)
 	{
-		display_shell_error(current, "dup2 failed", EXEC_FAILURE);
+		display_shell_error(current, "out dup2 failed", EXEC_FAILURE);
 		return (close_pipe_ends(shell, current), 0);
 	}
 	if (current->output_fd != STDOUT_FILENO)

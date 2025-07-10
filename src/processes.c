@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 13:33:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:22:26 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,45 @@ int	exec_single_builtin(t_process *current, t_minishell *shell)
 	return (1);
 }
 
+int	handle_exit_code(t_process *current, t_minishell *shell, int *status)
+{
+	if (g_exit_status == 0)
+	{
+		*status = current->exit_status;
+		free_process(shell, current);
+		exit(*status);
+	}
+	else
+	{
+		free_process(shell, current);
+		exit(g_exit_status);
+	}
+	return (0);
+}
+
 int	exec_child(t_process *current, t_minishell *shell)
 {
-	int			status;
+	int	status;
 
 	setup_signals(1);
 	if (current->is_builtin == 1)
 	{
 		if (execute_builtin(current, shell) == 0)
-		{
-			status = current->exit_status;
-			free_process(shell, current);
-			exit(status);
-		}
+			handle_exit_code(current, shell, &status);
 	}
 	else
 	{
 		if (execute_outside_cmd(current, shell) == 0)
-		{
-			status = current->exit_status;
-			free_process(shell, current);
-			exit(status);
-		}
+			handle_exit_code(current, shell, &status);
 	}
 	status = current->exit_status;
 	free_process(shell, current);
 	exit(0);
 }
 
-int	fork_children(t_process	*current, t_minishell *shell)
+int	fork_children(t_process *current, t_minishell *shell)
 {
-	pid_t		pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)

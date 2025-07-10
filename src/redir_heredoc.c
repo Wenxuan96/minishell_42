@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:53:06 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 13:37:49 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:49:52 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*expand_heredoc(char *heredoc_buff, t_minishell *shell)
 
 	cmd_holder = new_token_lst(heredoc_buff);
 	expanded = def_expansion(cmd_holder, shell);
+	free(cmd_holder->token_val);
 	free(cmd_holder);
 	free(heredoc_buff);
 	return (expanded);

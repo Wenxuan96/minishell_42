@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse_redir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:52:12 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/07 14:52:31 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/12 12:15:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	fill_redirlst(t_redir_type type, char *file,
 int	find_n_def_redir(t_redir_type type, char *file,
 		t_process *current_process, t_token **current_token)
 {
-	while (*current_token != NULL)
+	while (*current_token != NULL && (*current_token)->type != PIPELINE)
 	{
 		if ((*current_token)->type == REDIRECTION)
 		{
@@ -66,6 +66,8 @@ int	find_n_def_redir(t_redir_type type, char *file,
 		else
 			*current_token = (*current_token)->next_token;
 	}
+	if (*current_token && (*current_token)->type == PIPELINE)
+		*current_token = (*current_token)->next_token;
 	return (1);
 }
 

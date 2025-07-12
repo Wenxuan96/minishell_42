@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/10 15:07:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:38:57 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	exec_child(t_process *current, t_minishell *shell)
 	}
 	status = current->exit_status;
 	free_process(shell, current);
+	// close(0);
+	// close(1);
 	exit(0);
 }
 
@@ -75,8 +77,18 @@ int	fork_children(t_process *current, t_minishell *shell)
 int	create_processes(t_minishell *shell)
 {
 	t_process	*current;
+	t_process	*current2;
 
 	current = shell->process_list;
+	current2 = shell->process_list;
+
+	// while (current2)
+	// {
+	// 	printf("process cmd: %s\n", current2->command_arguments[0]);
+	// 	if (current2->redirections)
+	// 		printf("proccess redir type: %i\n",current2->redirections->type);
+	// 	current2= current2->next_process;
+	// }		
 	while (current != NULL)
 	{
 		if (current->is_builtin == 1 && shell->num_processes == 1

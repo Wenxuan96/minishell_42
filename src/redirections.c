@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/10 15:36:03 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:14:41 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	handle_output(t_process *current, t_redirection *curr_redir)
 			0666);
 	if (current->output_fd == -1)
 		return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
-	// if (curr_redir->next_redir != NULL)
-	// 	close(current->output_fd);
 	return (1);
 }
 
@@ -32,8 +30,6 @@ int	handle_input(t_process *current, t_redirection *curr_redir)
 	current->input_fd = open(curr_redir->file, O_RDONLY);
 	if (current->input_fd == -1)
 		return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
-	// if (curr_redir->next_redir != NULL && curr_redir->next_redir->type == INPUT)
-	// 	close(current->input_fd);
 	return (1);
 }
 
@@ -45,10 +41,6 @@ int	handle_append(t_process *current, t_redirection *curr_redir)
 			0666);
 	if (current->output_fd == -1)
 		return (display_shell_error(current, "open failed", EXEC_FAILURE), 0);
-	// if (curr_redir->next_redir != NULL
-	// 	&& (curr_redir->next_redir->type == OUTPUT
-	// 		|| curr_redir->next_redir->type == OUTPUT_APPEND))
-	// 	close(current->output_fd);
 	return (1);
 }
 
@@ -74,3 +66,4 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 	}
 	return (1);
 }
+

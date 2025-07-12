@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:58:57 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/10 15:14:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:14:10 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 	char		**env_vars;
 
 	current = process;
-	if (handle_outside_redir(current, shell) == 0)
-		return (0);
+	if (current->redirections != NULL)
+	{
+		if (handle_redirection(current, shell) == 0)
+			return (close_pipe_ends(shell, current), 0);
+	}
 	if (current->command_arguments[0] == NULL)
 		handle_no_cmd2(current, shell);
 	else

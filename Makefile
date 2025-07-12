@@ -50,7 +50,7 @@ $(OBJ_DIR)/%.o: src/%.c
 
 # Run with valgrind
 valgrind: all
-	valgrind --show-leak-kinds=all --track-origins=yes --leak-check=full --track-fds=all --suppressions=minishell.supp ./$(NAME)
+	valgrind --show-leak-kinds=all --track-origins=yes --leak-check=full --track-fds=yes --suppressions=minishell.supp ./$(NAME)
 
 # Clean up
 clean:

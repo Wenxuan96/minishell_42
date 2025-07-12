@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/11 16:00:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:07:06 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-struct							s_builtin;
+struct s_builtin;
 typedef struct s_builtin		t_builtin;
 extern volatile sig_atomic_t	g_exit_status;
 
@@ -234,5 +234,5 @@ void							exit_with_error(t_minishell *shell, char *msg,
 
 size_t							count_dirs(char **dir_paths);
 void							printf_twod_array(char **array);
-
+char							**ft_split_env(char const *s, char c);
 #endif

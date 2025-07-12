@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 18:20:49 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/12 14:55:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ void	ft_exit(t_minishell *shell, char *error_msg)
 		}
 		shell = NULL;
 	}
+	// close(1);
+	// close(0);
 	exit(EXEC_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 11:20:32 by tanja             #+#    #+#             */
-/*   Updated: 2025/07/09 13:23:31 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:05:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	create_env_lst(t_environment **env_list, char **envp)
 	*env_list = NULL;
 	while (envp[i] != NULL)
 	{
-		env_split = ft_split(envp[i], '=');
+		env_split = ft_split_env(envp[i], '=');
 		if (!env_split)
 			return (free_2darray(env_split), 0);
 		if (env_split[1] == NULL)

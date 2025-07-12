@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:43:01 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/09 13:13:59 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 14:31:02 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	j = 0;
 	split = (char **)malloc((row(s, c) + 1) * sizeof (char *));
-	if (!split || !s)
+	if (!split)
 		return (NULL);
 	while (s[i])
 	{

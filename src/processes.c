@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:25:52 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/12 12:55:26 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:00:45 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	exec_child(t_process *current, t_minishell *shell)
 	}
 	status = current->exit_status;
 	free_process(shell, current);
-	close(0);
-	close(1);
 	exit(0);
 }
 

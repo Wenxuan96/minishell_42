@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 14:13:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:55:48 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	set_child_signal(void)
 	ft_memset(&sa_quit, 0, sizeof(sa_quit));
 	sigemptyset(&sa_int.sa_mask);
 	sigemptyset(&sa_quit.sa_mask);
-	
 	sa_int.sa_flags = 0;
 	sa_int.sa_handler = sig_handler_parent;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)

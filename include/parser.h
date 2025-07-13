@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/07 17:42:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:49:04 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ void						free_var(char *before, char *after, char *tmp,
 bool						find_dollar(char *token_val);
 char						*ft_getenv(char *var_name, t_minishell *shell);
 void						expand_n_skip(t_token **token, t_minishell *shell);
+int							is_valid_heredoc(char *str, int *i);
+int							is_valid_input(char *str);
+int							validate_1st_two_chr(char *str);
 
 #endif

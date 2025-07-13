@@ -15,10 +15,57 @@ else
 endif
 
 # Directories and sources
-SRC_ROOT = $(wildcard src/*.c)
-SRC_BUILTINS = $(wildcard src/builtins/*.c)
-SRC_PARSING = $(wildcard src/parsing/*.c)
-SRC_EXEC = $(wildcard src/executor/*.c)
+SRC_ROOT = \
+	src/main.c \
+	src/init.c \
+	src/init_env_var.c \
+	src/errors.c \
+	src/pipes.c \
+	src/processes.c \
+	src/redirections.c \
+	src/redir_heredoc.c \
+	src/redir_heredoc_utils.c.c \
+	src/singals.c \
+	src/utils_clear.c \
+	src/utils_free.c \
+	src/utils_malloc.c \
+	src/utils_pipes.c \
+	src/utils_processes.c \
+	src/utils_redir.c \
+	src/utils_temp.c
+
+SRC_BUILTINS = \
+	src/builtins/builtins.c \
+	src/builtins/cd.c \
+	src/builtins/echo.c \
+	src/builtins/env.c \
+	src/builtins/exit.c \
+	src/builtins/export.c \
+	src/builtins/export_utils.c \
+	src/builtins/pwd.c \
+	src/builtins/unset.c \
+	src/builtins/utils_builtin.c
+
+SRC_PARSING = \
+	src/parsing/handle_quote.c \
+	src/parsing/input_checker.c \
+	src/parsing/populate_process.c \
+	src/parsing/tokenize.c \
+	src/parsing/tokenize_utils.c \
+	src/parsing/utils_parse_redir.c \
+	src/parsing/utils_prcs_parser.c \
+	src/parsing/utils_token.c \
+	src/parsing/utils_var_epansion.c \
+	src/parsing/variable_expansion.c
+
+SRC_EXEC = \
+	src/executor/executor_builtins.c \
+	src/executor/executor_outside_cmd.c \
+	src/executor/execve_get_env_vars.c \
+	src/executor/execve_get_path.c \
+	src/executor/execve_get_path_utls.c \
+	src/executor/execve_get_path_utls2.c
+
 SRC = $(SRC_ROOT) $(SRC_BUILTINS) $(SRC_PARSING) $(SRC_EXEC)
 
 OBJ_DIR = obj

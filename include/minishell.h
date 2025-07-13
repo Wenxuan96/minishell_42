@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/12 15:07:06 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:52:33 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-struct s_builtin;
+struct							s_builtin;
 typedef struct s_builtin		t_builtin;
 extern volatile sig_atomic_t	g_exit_status;
 

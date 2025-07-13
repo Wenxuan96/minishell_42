@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:42 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/12 14:36:24 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 09:27:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*find_absolute_path(t_process *process)
 	}
 	if (S_ISDIR(path_stat.st_mode))
 	{
-		display_shell_error(process, "Is a directory", CMD_NOTFOUND);
+		display_shell_error(process, "Is a directory", EX_NOEXEC);
 		return (NULL);
 	}
 	return (ft_strdup(process->command_arguments[0]));

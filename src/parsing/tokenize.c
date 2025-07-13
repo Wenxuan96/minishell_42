@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 17:03:07 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/13 08:47:36 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,10 @@ static int	handle_token_boundaries(t_minishell *shell, int *i, int *start)
 	while (shell->input_str[*i] == ' ' || shell->input_str[*i] == '\t')
 		(*i)++;
 	while (shell->input_str[*i] != '\0'
-		&& ft_strchr("|<>", shell->input_str[*i]) != NULL)
+		&& ft_strchr("|<>&", shell->input_str[*i]) != NULL)
 	{
-		if (ft_strchr("<|>", shell->input_str[*i])
-			&& (*i == 0 || shell->input_str[*i + 1] == '\0'))
-			return (ft_printf("syntax error near unexpected token `%c'\n",
-					shell->input_str[*i]), 0);
+		if (!is_valid_input(&shell->input_str[*i]))
+			return (0);
 		if (!def_special_token(shell, i))
 			return (0);
 	}
@@ -88,13 +86,15 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 {
 	while (shell->input_str[i])
 	{
+		if (!validate_1st_two_chr(shell->input_str))
+			return (0);
 		if ((quote_char == '\0') && (shell->input_str[i] == '\''
 				|| shell->input_str[i] == '\"'))
 			quote_char = shell->input_str[i];
 		else if (quote_char != '\0' && shell->input_str[i] == quote_char)
 			quote_char = '\0';
 		else if (quote_char == '\0'
-			&& (ft_strchr(" \t|<>", shell->input_str[i]) != NULL))
+			&& (ft_strchr(" \t|<>&", shell->input_str[i]) != NULL))
 		{
 			if (!handle_token_boundaries(shell, &i, &start))
 				return (0);

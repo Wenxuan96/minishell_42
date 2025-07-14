@@ -57,7 +57,8 @@ SRC_PARSING = \
 	src/parsing/utils_prcs_parser.c \
 	src/parsing/utils_token.c \
 	src/parsing/utils_var_epansion.c \
-	src/parsing/variable_expansion.c
+	src/parsing/variable_expansion.c \
+	src/parsing/utils_quotes.c
 
 SRC_EXEC = \
 	src/executor/executor_builtins.c \

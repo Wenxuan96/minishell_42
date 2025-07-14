@@ -6,11 +6,33 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 08:45:53 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/14 13:34:17 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/14 16:29:01 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	redir_checker(char *command)
+{
+	if (ft_strncmp(">>", command, 2) == 0 && command[2] == '\0')
+		return (OUTPUT_APPEND);
+	else if (ft_strncmp(">", command, 1) == 0 && command[1] == '\0')
+		return (OUTPUT);
+	else if (ft_strncmp("<<", command, 2) == 0 && command[2] == '\0')
+		return (HEREDOC);
+	else if (ft_strncmp("<", command, 1) == 0 && command[1] == '\0')
+		return (INPUT);
+	return (CMD_NOTFOUND);
+}
+
+int	token_checker(char *command)
+{
+	if ((ft_strlen(command) == 1 && command[0] == '|'))
+		return (PIPELINE);
+	if (redir_checker(command) != CMD_NOTFOUND)
+		return (REDIRECTION);
+	return (WORD);
+}
 
 int	validate_1st_two_chr(char *str)
 {

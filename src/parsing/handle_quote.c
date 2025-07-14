@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/14 14:29:04 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/14 16:30:30 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,51 +52,40 @@ char	*handle_dollar_sign(char *trimmed)
 	return (trimmed);
 }
 
-char	*remove_outer_quotes(char *sub)
+void	quote_removal_loop(const char *sub, char *result)
 {
-	// size_t	len;
-	// char	*trimmed;
+	size_t	i;
+	size_t	j;
+	char	quote;
 
-	// len = ft_strlen(sub);
-	// trimmed = NULL;
-	// if ((sub[0] == '\"' && sub[len - 1] == '\"')
-	// 	|| (sub[0] == '\'' && sub[len - 1] == '\''))
-	// {
-	// 	trimmed = ft_substr(sub, 1, len - 2);
-	// 	if (!trimmed)
-	// 		return (NULL);
-	// 	if (sub[0] == '\"' && sub[len - 1] == '\"')
-	// 	{
-	// 		trimmed = handle_dollar_sign(trimmed);
-	// 		if (!trimmed)
-	// 			return (NULL);
-	// 	}
-	// 	return (trimmed);
-	// }
-	// return (sub);
-	char	*result = malloc(strlen(sub) + 1);
-	if (!result)
-		return (NULL);
-
-	size_t	i = 0;
-	size_t	j = 0;
-	char	quote = '\0';
-
+	i = 0;
+	j = 0;
+	quote = '\0';
 	while (sub[i])
 	{
-		if ((sub[i] == '\'' || sub[i] == '"'))
+		if (sub[i] == '\'' || sub[i] == '"')
 		{
-			if (quote == '\0') // open quote
+			if (quote == '\0')
 				quote = sub[i];
-			else if (quote == sub[i]) // close quote
+			else if (quote == sub[i])
 				quote = '\0';
 			else
-				result[j++] = sub[i]; // inside other quote type
+				result[j++] = sub[i];
 		}
 		else
 			result[j++] = sub[i];
 		i++;
 	}
 	result[j] = '\0';
+}
+
+char	*remove_outer_quotes(char *sub)
+{
+	char	*result;
+
+	result = malloc(strlen(sub) + 1);
+	if (!result)
+		return (NULL);
+	quote_removal_loop(sub, result);
 	return (result);
 }

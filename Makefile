@@ -27,6 +27,7 @@ SRC_ROOT = \
 	src/redir_heredoc_utils.c.c \
 	src/singals.c \
 	src/utils_clear.c \
+	src/utils_clear2.c \
 	src/utils_free.c \
 	src/utils_malloc.c \
 	src/utils_pipes.c \

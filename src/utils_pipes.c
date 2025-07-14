@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:21:14 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/05 18:32:28 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/14 15:25:58 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,31 @@ void	close_pipe_ends(t_minishell *shell, t_process *current)
 	}
 }
 
+void	cleanup_heredoc_fds(t_minishell *shell)
+{
+	t_process		*proc;
+	t_redirection	*redir;
+
+	proc = shell->process_list;
+	while (proc)
+	{
+		if (proc->redirections != NULL)
+		{
+			redir = proc->redirections;
+			while (redir != NULL)
+			{
+				if (redir->type == HEREDOC && proc->input_fd != STDIN_FILENO)
+				{
+					close(proc->input_fd);
+					break ;
+				}
+				redir = redir->next_redir;
+			}
+		}
+		proc = proc->next_process;
+	}
+}
+
 void	close_pipe_ends_parent(t_minishell *shell)
 {
 	int	i;
@@ -42,4 +67,5 @@ void	close_pipe_ends_parent(t_minishell *shell)
 		close(shell->pipes[i][1]);
 		i++;
 	}
+	cleanup_heredoc_fds(shell);
 }

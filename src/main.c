@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/12 12:52:48 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:07:08 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,29 @@ void	set_process(t_minishell	shell, t_process **p)
 	}
 }
 
+int	run_heredoc(t_minishell	*shell)
+{
+	t_process	*current;
+	t_redirection *redir;
+
+	current = shell->process_list;
+	while (current != NULL)
+	{
+		if (current->redirections)
+		{
+			redir = current->redirections;
+			while (redir != NULL)
+			{
+				if (redir->type == HEREDOC)
+					handle_heredoc(current, redir, shell);
+				redir = redir->next_redir;
+			}
+		}
+		current = current->next_process;
+	}
+	return (1);
+}
+
 void	run_shell(int argc, t_minishell	shell, t_process *p)
 {
 	while (1)
@@ -54,9 +77,11 @@ void	run_shell(int argc, t_minishell	shell, t_process *p)
 		set_process(shell, &p);
 		create_pipes(&shell);
 		assign_fd(&shell);
+		run_heredoc(&shell);
 		create_processes(&shell);
 		set_process(shell, &p);
 		ft_lstclear_process(&shell.process_list);
+		// close(7);
 		if (shell.pipes)
 			free_pipes(&shell);
 	}

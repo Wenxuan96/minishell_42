@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:32:07 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/12 12:56:07 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:38:28 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 {
 	t_redirection	*curr_redir;
 
+	(void)shell;
 	curr_redir = process->redirections;
 	while (curr_redir != NULL)
 	{
@@ -59,9 +60,8 @@ int	handle_redirection(t_process *process, t_minishell *shell)
 		else if (curr_redir->type == OUTPUT_APPEND && !handle_append(process,
 				curr_redir))
 			return (0);
-		else if (curr_redir->type == HEREDOC && !handle_heredoc(process,
-				curr_redir, shell))
-			return (0);
+		// else if (curr_redir->type == HEREDOC)
+		// 	curr_redir = curr_redir->next_redir;
 		curr_redir = curr_redir->next_redir;
 	}
 	return (1);

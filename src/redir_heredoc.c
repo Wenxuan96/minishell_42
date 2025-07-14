@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 11:53:06 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/13 09:06:55 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:07:40 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ int	handle_heredoc(t_process *current, t_redirection *curr_redir,
 		return (display_shell_error(current, "pipe failed", EXEC_FAILURE), 0);
 	heredoc_buff = read_into_heredoc(curr_redir, pipe_fd);
 	if (!heredoc_buff || g_exit_status == 130)
+	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
 		return (0);
+	}
 	if (shell->heredoc_inquote != true && heredoc_buff != NULL)
 		heredoc_buff = expand_heredoc(heredoc_buff, shell);
 	if (current->command_arguments[0] == NULL)

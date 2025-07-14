@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:09:16 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 13:28:51 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:11:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_builtin	*new_builtin(t_builtin_type type, t_builtin_func *function)
 	t_builtin	*new_builtin;
 
 	new_builtin = malloc(sizeof(t_builtin));
+	if (!new_builtin)
+		return (NULL);
 	new_builtin->type = type;
 	new_builtin->function = function;
 	return (new_builtin);

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:14:38 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/09 13:30:58 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 11:35:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ void	ft_clear_shell(t_minishell *shell)
 {
 	if (shell)
 	{
-		ft_lstclear_token(&shell->token_list);
-		ft_lstclear_env(&shell->env_list);
-		ft_lstclear_process(&shell->process_list);
+		if (shell->token_list)
+			ft_lstclear_token(&shell->token_list);
+		if (shell->env_list)
+			ft_lstclear_env(&shell->env_list);
+		if (shell->process_list)
+			ft_lstclear_process(&shell->process_list);
 		if (shell->input_str)
 			free(shell->input_str);
 		if (shell->pipes)

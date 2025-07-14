@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:28:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/06 17:28:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:12:13 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ char	**ft_split_env(char const *s, char c)
 	if (s[i] != c)
 	{
 		split = (char **)malloc((2 + 1) * sizeof(char *));
+		if (!split)
+			return (NULL);
 		split[0] = ft_substr(s, 0, i);
 		split[1] = ft_strdup("");
 		split[2] = NULL;
 		return (split);
 	}
 	split = (char **)malloc((2 + 1) * sizeof(char *));
+	if (!split)
+		return (NULL);
 	split[0] = ft_substr(s, 0, i);
 	split[1] = ft_strdup(s + i + 1);
 	split[2] = NULL;

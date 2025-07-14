@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/13 08:47:36 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/13 11:31:39 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	while (shell->input_str[i])
 	{
 		if (!validate_1st_two_chr(shell->input_str))
-			return (0);
+			return (EX_BADUSAGE);
 		if ((quote_char == '\0') && (shell->input_str[i] == '\''
 				|| shell->input_str[i] == '\"'))
 			quote_char = shell->input_str[i];
@@ -97,7 +97,7 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 			&& (ft_strchr(" \t|<>&", shell->input_str[i]) != NULL))
 		{
 			if (!handle_token_boundaries(shell, &i, &start))
-				return (0);
+				return (EX_BADUSAGE);
 			continue ;
 		}
 		i++;
@@ -105,9 +105,9 @@ int	iter_input_str(t_minishell *shell, int i, int start, char quote_char)
 	if (i != start)
 	{
 		if (!def_token(shell, i - start, start))
-			return (0);
+			return (EXEC_FAILURE);
 	}
-	return (1);
+	return (0);
 }
 
 int	tokenize_input(t_minishell *shell)
@@ -115,6 +115,7 @@ int	tokenize_input(t_minishell *shell)
 	int		i;
 	int		start;
 	char	quote_char;
+	int		err;
 
 	i = 0;
 	start = 0;
@@ -125,10 +126,11 @@ int	tokenize_input(t_minishell *shell)
 			"minishell: syntax error: unclosed quote", EX_BADUSAGE);
 		return (EX_BADUSAGE);
 	}
-	if (!iter_input_str(shell, i, start, quote_char))
+	err = iter_input_str(shell, i, start, quote_char);
+	if (err != 0)
 	{
-		display_shell_error2(shell, "memory allocation failed", EXEC_FAILURE);
-		return (EXEC_FAILURE);
+		display_shell_error2(shell, "memory allocation failed", err);
+		return (err);
 	}
 	return (EXEC_SUCCESS);
 }

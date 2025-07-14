@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:58:57 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/13 09:05:47 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:22:27 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	execute_outside_cmd(t_process *process, t_minishell *shell)
 			return (close_pipe_ends(shell, current), 0);
 		env_vars = execve_get_envvars(shell);
 		execve(path, current->command_arguments, env_vars);
+		return (display_shell_error(current, "execvefail", 127), free(path),
+			free_2darray(env_vars), 0);
 	}
 	return (1);
 }

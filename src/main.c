@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/14 15:07:08 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:59:15 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_env(t_environment *env_list)
 	}
 }
 
-void	set_process(t_minishell	shell, t_process **p)
+void	set_process(t_minishell shell, t_process **p)
 {
 	*p = shell.process_list;
 	while (*p)
@@ -34,10 +34,10 @@ void	set_process(t_minishell	shell, t_process **p)
 	}
 }
 
-int	run_heredoc(t_minishell	*shell)
+int	run_heredoc(t_minishell *shell)
 {
-	t_process	*current;
-	t_redirection *redir;
+	t_process		*current;
+	t_redirection	*redir;
 
 	current = shell->process_list;
 	while (current != NULL)
@@ -57,7 +57,7 @@ int	run_heredoc(t_minishell	*shell)
 	return (1);
 }
 
-void	run_shell(int argc, t_minishell	shell, t_process *p)
+void	run_shell(int argc, t_minishell shell, t_process *p)
 {
 	while (1)
 	{
@@ -81,7 +81,6 @@ void	run_shell(int argc, t_minishell	shell, t_process *p)
 		create_processes(&shell);
 		set_process(shell, &p);
 		ft_lstclear_process(&shell.process_list);
-		// close(7);
 		if (shell.pipes)
 			free_pipes(&shell);
 	}

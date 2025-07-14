@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/14 14:00:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:00:14 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,3 @@ void	ft_lstclear_process(t_process **process_list)
 	}
 	*process_list = NULL;
 }
-

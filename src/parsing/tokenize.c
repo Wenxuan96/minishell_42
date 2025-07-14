@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:26:48 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/13 11:31:39 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:01:07 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int	def_token(t_minishell *shell, int t_len, int t_start)
 	new_token->len = t_len;
 	new_token->start = t_start;
 	new_token->type = token_checker(new_token->token_val);
-	if (!def_in_quotes(sub[0], sub[ft_strlen(sub) - 1], new_token, sub))
+	// if (!def_in_quotes(sub[0], sub[ft_strlen(sub) - 1], new_token, sub))
+	// 	return (free(sub), 0);
+	if (!def_in_quotes(new_token, sub))
 		return (free(sub), 0);
 	new_token->next_token = NULL;
 	if (sub)

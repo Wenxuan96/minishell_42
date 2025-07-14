@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:36:26 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/13 09:49:04 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:01:42 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ int							count_pipes(t_minishell *shell);
 void						prt_cmds(t_process *process_lst);
 char						*get_file(t_token *token);
 void						print_process(t_minishell *shell);
-int							def_in_quotes(char c1, char c2, t_token *new_token,
-								char *sub);
+// int							def_in_quotes(char c1, char c2, t_token *new_token,
+// 								char *sub);
+int							def_in_quotes(t_token	*new_token, char *sub);
 char						*def_expansion(t_token *token, t_minishell *shell);
 int							find_n_def_redir(t_redir_type type, char *file,
 								t_process *current_process,

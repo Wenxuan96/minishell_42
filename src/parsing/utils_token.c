@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 19:01:33 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 17:07:45 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/14 14:42:52 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,105 @@ int	token_checker(char *command)
 	return (WORD);
 }
 
-int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
+// int	def_in_quotes(char c1, char c2, t_token	*new_token, char *sub)
+// {
+// 	if ((c1 == '\"' && c2 == '\"') || (c1 == '\'' && c2 == '\''))
+// 	{
+// 		new_token->in_quotes = true;
+// 		if ((c1 == '\"' && c2 == '\"'))
+// 			new_token->double_quoted = true;
+// 		free(new_token->token_val);
+// 		new_token->token_val = NULL;
+// 		new_token->token_val = remove_outer_quotes(sub);
+// 		if (!new_token->token_val)
+// 			return (0);
+// 	}
+// 	else
+// 	{
+// 		new_token->double_quoted = false;
+// 		new_token->in_quotes = false;
+// 	}
+// 	return (1);
+// }
+
+t_quote_context get_quote_context(const char *s)
 {
-	if ((c1 == '\"' && c2 == '\"') || (c1 == '\'' && c2 == '\''))
+	t_quote_context ctx = {false, false, false};
+	char	quote = '\0';
+	int		i = 0;
+
+	while (s[i])
 	{
-		new_token->in_quotes = true;
-		if ((c1 == '\"' && c2 == '\"'))
-			new_token->double_quoted = true;
-		free(new_token->token_val);
-		new_token->token_val = NULL;
-		new_token->token_val = remove_outer_quotes(sub);
-		if (!new_token->token_val)
-			return (0);
+		if ((s[i] == '\'' || s[i] == '"'))
+		{
+			ctx.has_quotes = true;
+			if (quote == '\0')
+			{
+				quote = s[i];
+				if (quote == '"')
+					ctx.double_quoted = true;
+				else if (quote == '\'')
+					ctx.single_quoted = true;
+			}
+			else if (quote == s[i])
+			{
+				quote = '\0'; // closed quote
+			}
+			else
+			{
+				// quote of other type inside
+				if (s[i] == '"')
+					ctx.double_quoted = true;
+				else if (s[i] == '\'')
+					ctx.single_quoted = true;
+			}
+		}
+		i++;
 	}
-	else
+	return ctx;
+}
+
+char *collapse_quotes(const char *src)
+{
+	char	*result = malloc(strlen(src) + 1);
+	size_t	i = 0, j = 0;
+	char	quote = '\0';
+
+	if (!result)
+		return (NULL);
+
+	while (src[i])
 	{
-		new_token->double_quoted = false;
-		new_token->in_quotes = false;
+		if (src[i] == '\'' || src[i] == '"')
+		{
+			if (quote == '\0')               // opening quote
+				quote = src[i];
+			else if (src[i] == quote)        // closing quote
+				quote = '\0';
+			else
+				result[j++] = src[i];        // inner quote (from other type)
+		}
+		else
+			result[j++] = src[i];
+		i++;
 	}
+	result[j] = '\0';
+	return (result);
+}
+
+int	def_in_quotes(t_token	*new_token, char *sub)
+{
+	t_quote_context ctx = get_quote_context(sub);
+
+	new_token->in_quotes = ctx.has_quotes;
+	new_token->double_quoted = ctx.double_quoted;
+
+	free(new_token->token_val);
+	new_token->token_val = NULL;
+
+	new_token->token_val = collapse_quotes(sub);
+	if (!new_token->token_val)
+		return (0);
+
 	return (1);
 }

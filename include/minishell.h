@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/13 09:52:33 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:41:26 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ typedef struct s_environment
 	char						*value;
 	struct s_environment		*next_env_var;
 }								t_environment;
+
+typedef struct s_quote_context
+{
+	bool	has_quotes;
+	bool	double_quoted;
+	bool	single_quoted;
+}	t_quote_context;
 
 typedef struct s_token
 {

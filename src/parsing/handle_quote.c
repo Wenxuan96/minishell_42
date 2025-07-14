@@ -6,7 +6,7 @@
 /*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/05 16:53:29 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/14 14:29:04 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,49 @@ char	*handle_dollar_sign(char *trimmed)
 
 char	*remove_outer_quotes(char *sub)
 {
-	size_t	len;
-	char	*trimmed;
+	// size_t	len;
+	// char	*trimmed;
 
-	len = ft_strlen(sub);
-	trimmed = NULL;
-	if ((sub[0] == '\"' && sub[len - 1] == '\"')
-		|| (sub[0] == '\'' && sub[len - 1] == '\''))
+	// len = ft_strlen(sub);
+	// trimmed = NULL;
+	// if ((sub[0] == '\"' && sub[len - 1] == '\"')
+	// 	|| (sub[0] == '\'' && sub[len - 1] == '\''))
+	// {
+	// 	trimmed = ft_substr(sub, 1, len - 2);
+	// 	if (!trimmed)
+	// 		return (NULL);
+	// 	if (sub[0] == '\"' && sub[len - 1] == '\"')
+	// 	{
+	// 		trimmed = handle_dollar_sign(trimmed);
+	// 		if (!trimmed)
+	// 			return (NULL);
+	// 	}
+	// 	return (trimmed);
+	// }
+	// return (sub);
+	char	*result = malloc(strlen(sub) + 1);
+	if (!result)
+		return (NULL);
+
+	size_t	i = 0;
+	size_t	j = 0;
+	char	quote = '\0';
+
+	while (sub[i])
 	{
-		trimmed = ft_substr(sub, 1, len - 2);
-		if (!trimmed)
-			return (NULL);
-		if (sub[0] == '\"' && sub[len - 1] == '\"')
+		if ((sub[i] == '\'' || sub[i] == '"'))
 		{
-			trimmed = handle_dollar_sign(trimmed);
-			if (!trimmed)
-				return (NULL);
+			if (quote == '\0') // open quote
+				quote = sub[i];
+			else if (quote == sub[i]) // close quote
+				quote = '\0';
+			else
+				result[j++] = sub[i]; // inside other quote type
 		}
-		return (trimmed);
+		else
+			result[j++] = sub[i];
+		i++;
 	}
-	return (sub);
+	result[j] = '\0';
+	return (result);
 }

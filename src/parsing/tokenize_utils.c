@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 08:45:53 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/13 09:52:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:34:17 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	validate_1st_two_chr(char *str)
 {
+	if (ft_strchr("|&.", str[0]) != NULL)
+		return (ft_printf("synt err near token `newline'\n"), 0);
 	if (ft_strlen(str) == 1 || ft_strlen(str) == 2)
 	{
 		if (ft_strchr("<|>&.", str[0]) != NULL)

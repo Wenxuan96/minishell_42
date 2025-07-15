@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 16:09:10 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:04:22 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void							waitpid_children(t_minishell *shell);
 void							close_pipe_ends(t_minishell *shell,
 									t_process *current);
 void							close_pipe_ends_parent(t_minishell *shell);
+void							close_pipe_fds_only(void);
 
 /*utils_redir*/
 t_redirection					*new_redir_lst(t_redir_type type, char *file);

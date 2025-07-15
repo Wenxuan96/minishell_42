@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/08 14:39:30 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:37:41 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,14 @@ void	waitpid_children(t_minishell *shell)
 		current_process = current_process->next_process;
 	}
 }
+
+void	print_env(t_environment *env_list)
+{
+	while (env_list)
+	{
+		printf("%s=", env_list->env_var);
+		printf("%s\n", env_list->value);
+		env_list = env_list->next_env_var;
+	}
+}
+

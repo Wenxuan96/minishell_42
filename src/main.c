@@ -6,22 +6,12 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 16:36:05 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:07:11 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins/builtins.h"
 #include "minishell.h"
-
-void	print_env(t_environment *env_list)
-{
-	while (env_list)
-	{
-		printf("%s=", env_list->env_var);
-		printf("%s\n", env_list->value);
-		env_list = env_list->next_env_var;
-	}
-}
 
 void	set_process(t_minishell shell, t_process **p)
 {
@@ -48,7 +38,8 @@ int	run_heredoc(t_minishell *shell)
 			while (redir != NULL)
 			{
 				if (redir->type == HEREDOC)
-					handle_heredoc(current, redir, shell);
+					if (!handle_heredoc(current, redir, shell))
+						return (0);
 				redir = redir->next_redir;
 			}
 		}
@@ -68,7 +59,8 @@ void	close_pipe_fds_only(void)
 		return ;
 	while ((entry = readdir(dir)) != NULL)
 	{
-		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0)
+		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name,
+				"..") == 0)
 			continue ;
 		fd = ft_atoi(entry->d_name);
 		if (fd > 2 && fd < 1024)
@@ -97,7 +89,8 @@ void	run_shell(int argc, t_minishell shell, t_process *p)
 		set_process(shell, &p);
 		create_pipes(&shell);
 		assign_fd(&shell);
-		run_heredoc(&shell);
+		if (!run_heredoc(&shell))
+			return (ft_lstclear_process(&shell.process_list), free_pipes(&shell));
 		create_processes(&shell);
 		set_process(shell, &p);
 		close_pipe_fds_only();

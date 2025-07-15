@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/14 16:00:14 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:03:37 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_lstclear_process(t_process **process_list)
 		if (current->is_builtin && current->builtin)
 			free(current->builtin);
 		close_process_pipes(current);
+		close_pipe_fds_only();
 		free(current);
 		current = next;
 	}

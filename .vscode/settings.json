@@ -5,6 +5,7 @@
 		"readline.h": "c",
 		"random": "c",
 		"wait.h": "c",
-		"ranges": "c"
+		"ranges": "c",
+		"stdbool.h": "c"
 	}
 }

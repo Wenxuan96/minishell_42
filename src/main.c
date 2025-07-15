@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/14 15:59:15 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:36:05 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,26 @@ int	run_heredoc(t_minishell *shell)
 	return (1);
 }
 
+void	close_pipe_fds_only(void)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	int				fd;
+
+	dir = opendir("/proc/self/fd");
+	if (!dir)
+		return ;
+	while ((entry = readdir(dir)) != NULL)
+	{
+		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0)
+			continue ;
+		fd = ft_atoi(entry->d_name);
+		if (fd > 2 && fd < 1024)
+			close(fd);
+	}
+	closedir(dir);
+}
+
 void	run_shell(int argc, t_minishell shell, t_process *p)
 {
 	while (1)
@@ -80,9 +100,8 @@ void	run_shell(int argc, t_minishell shell, t_process *p)
 		run_heredoc(&shell);
 		create_processes(&shell);
 		set_process(shell, &p);
+		close_pipe_fds_only();
 		ft_lstclear_process(&shell.process_list);
-		if (shell.pipes)
-			free_pipes(&shell);
 	}
 }
 

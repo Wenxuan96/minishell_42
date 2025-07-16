@@ -1,8 +1,0 @@
----
-minishell$ ls | wc -l 
-minishell$ ls | wc -l
-
----
-
-sleep 5 | cat /home/tignatov/minishell/input.txt > /dev/stdout
----

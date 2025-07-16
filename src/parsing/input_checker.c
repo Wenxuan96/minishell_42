@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/15 09:47:46 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/16 18:18:53 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,21 @@ static int	special_chr_ctrl(t_minishell *shell)
 	return (EXEC_SUCCESS);
 }
 
+int	its_all_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] != ' ' || str[i] != '\t' || str[i] != '\n'
+		|| str[i] != '\v' || str[i] != '\f' || str[i] != '\r'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
@@ -85,6 +100,7 @@ int	read_input(int argc, t_minishell *shell)
 	else
 		init = 1;
 	shell->input_str = readline("minishell$ ");
+	printf("shell->input_str %s\n", shell->input_str);
 	if (!shell->input_str)
 		ft_exit(shell, "exit");
 	else if (shell->input_str[0] == '\0' || wit_space_str(shell) == 1)
@@ -98,6 +114,6 @@ int	read_input(int argc, t_minishell *shell)
 		|| init_processlst(shell) != EXEC_SUCCESS)
 		error = EXEC_FAILURE;
 	free_tokenlst(shell);
-	free(shell->input_str);
+	free(shell->input_str);	
 	return (error);
 }

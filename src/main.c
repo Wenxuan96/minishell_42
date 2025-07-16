@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 18:07:11 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:43:18 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	run_shell(int argc, t_minishell shell, t_process *p)
 			display_shell_error2(&shell, "lexer failed.", EXEC_FAILURE);
 		if (shell.exit_status == 2)
 		{
-			ft_clear_shell(&shell);
+			// ft_clear_shell(&shell);
 			continue ;
 		}
 		if (shell.exit_status == CMD_NOTFOUND)
@@ -92,9 +92,12 @@ void	run_shell(int argc, t_minishell shell, t_process *p)
 		if (!run_heredoc(&shell))
 			return (ft_lstclear_process(&shell.process_list), free_pipes(&shell));
 		create_processes(&shell);
+		prt_cmds(shell.process_list);
 		set_process(shell, &p);
 		close_pipe_fds_only();
 		ft_lstclear_process(&shell.process_list);
+		if (shell.pipes)
+			free_pipes(&shell);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/16 18:18:53 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:41:03 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	read_input(int argc, t_minishell *shell)
 	else
 		init = 1;
 	shell->input_str = readline("minishell$ ");
-	printf("shell->input_str %s\n", shell->input_str);
 	if (!shell->input_str)
 		ft_exit(shell, "exit");
 	else if (shell->input_str[0] == '\0' || wit_space_str(shell) == 1)

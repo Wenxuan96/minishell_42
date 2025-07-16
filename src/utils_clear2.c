@@ -6,7 +6,7 @@
 /*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:31:22 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/15 18:03:37 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:38:23 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ void	close_process_pipes(t_process *current)
 		close(current->input_fd);
 	if (current->output_fd != STDOUT_FILENO && current->output_fd != -1)
 		close(current->output_fd);
+}
+
+void	free_extra(t_process	*current)
+{
+	close_process_pipes(current);
+	close_pipe_fds_only();
+	free(current);
 }
 
 void	ft_lstclear_process(t_process **process_list)
@@ -43,9 +50,7 @@ void	ft_lstclear_process(t_process **process_list)
 		}
 		if (current->is_builtin && current->builtin)
 			free(current->builtin);
-		close_process_pipes(current);
-		close_pipe_fds_only();
-		free(current);
+		free_extra(current);
 		current = next;
 	}
 	*process_list = NULL;

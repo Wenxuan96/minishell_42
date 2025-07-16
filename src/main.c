@@ -3,26 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:41:05 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/16 19:40:48 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:54:58 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins/builtins.h"
 #include "minishell.h"
-
-void	set_process(t_minishell shell, t_process **p)
-{
-	*p = shell.process_list;
-	while (*p)
-	{
-		(*p)->input_fd = STDIN_FILENO;
-		(*p)->output_fd = STDOUT_FILENO;
-		*p = (*p)->next_process;
-	}
-}
 
 int	run_heredoc(t_minishell *shell)
 {
@@ -57,16 +46,31 @@ void	close_pipe_fds_only(void)
 	dir = opendir("/proc/self/fd");
 	if (!dir)
 		return ;
-	while ((entry = readdir(dir)) != NULL)
+	entry = readdir(dir);
+	while (entry != NULL)
 	{
 		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name,
 				"..") == 0)
+		{
+			entry = readdir(dir);
 			continue ;
+		}
 		fd = ft_atoi(entry->d_name);
 		if (fd > 2 && fd < 1024)
 			close(fd);
+		entry = readdir(dir);
 	}
 	closedir(dir);
+}
+
+void	start_n_end_prcs(t_minishell *shell, t_process *p)
+{
+	create_processes(shell);
+	set_process(*shell, &p);
+	close_pipe_fds_only();
+	ft_lstclear_process(&shell->process_list);
+	if (shell->pipes)
+		free_pipes(shell);
 }
 
 void	run_shell(int argc, t_minishell shell, t_process *p)
@@ -87,13 +91,12 @@ void	run_shell(int argc, t_minishell shell, t_process *p)
 		create_pipes(&shell);
 		assign_fd(&shell);
 		if (!run_heredoc(&shell))
-			return (ft_lstclear_process(&shell.process_list), free_pipes(&shell));
-		create_processes(&shell);
-		set_process(shell, &p);
-		close_pipe_fds_only();
-		ft_lstclear_process(&shell.process_list);
-		if (shell.pipes)
+		{
+			ft_lstclear_process(&shell.process_list);
 			free_pipes(&shell);
+			continue ;
+		}
+		start_n_end_prcs(&shell, p);
 	}
 }
 

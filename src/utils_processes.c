@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 12:19:04 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 16:37:41 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:58:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	print_env(t_environment *env_list)
 		env_list = env_list->next_env_var;
 	}
 }
-

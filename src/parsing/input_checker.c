@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:31:52 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/16 19:41:03 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:57:28 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,6 @@ static int	special_chr_ctrl(t_minishell *shell)
 	return (EXEC_SUCCESS);
 }
 
-int	its_all_space(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] != ' ' || str[i] != '\t' || str[i] != '\n'
-		|| str[i] != '\v' || str[i] != '\f' || str[i] != '\r'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	read_input(int argc, t_minishell *shell)
 {
 	int	init;
@@ -113,6 +98,6 @@ int	read_input(int argc, t_minishell *shell)
 		|| init_processlst(shell) != EXEC_SUCCESS)
 		error = EXEC_FAILURE;
 	free_tokenlst(shell);
-	free(shell->input_str);	
+	free(shell->input_str);
 	return (error);
 }

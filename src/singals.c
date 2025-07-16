@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:11:27 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 17:47:52 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:49:11 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ void	sig_handler_parent(int sig)
 void	sig_handler_heredoc(int sig)
 {
 	(void)sig;
-	// write(STDOUT_FILENO, "\n", 1);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
 	g_exit_status = 128 + SIGINT;
 	rl_done = 1;
 }

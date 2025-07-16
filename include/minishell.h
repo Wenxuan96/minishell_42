@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:14:48 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/15 18:04:22 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:32:38 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void							init_shell(t_minishell *shell);
 t_process						*new_process_lst(t_minishell *shell,
 									char **commands);
 t_token							*new_token_lst(char *token);
+void							set_process(t_minishell shell, t_process **p);
 
 /*executor - processes/pipes*/
 int								create_pipes(t_minishell *shell);

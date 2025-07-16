@@ -1,7 +1,7 @@
 total 0
-dr-x------ 2 tignatov piscine  0 Jul 15 16:19 .
-dr-xr-xr-x 9 tignatov piscine  0 Jul 15 16:19 ..
-lr-x------ 1 tignatov piscine 64 Jul 15 16:19 0 -> pipe:[84079]
-l-wx------ 1 tignatov piscine 64 Jul 15 16:19 1 -> /home/tignatov/minishell/in.txt
-lrwx------ 1 tignatov piscine 64 Jul 15 16:19 2 -> /dev/pts/0
-lr-x------ 1 tignatov piscine 64 Jul 15 16:19 3 -> /proc/12013/fd
+dr-x------ 2 wxi piscine  0 Jul 16 19:54 .
+dr-xr-xr-x 9 wxi piscine  0 Jul 16 19:54 ..
+lr-x------ 1 wxi piscine 64 Jul 16 19:54 0 -> pipe:[333640]
+l-wx------ 1 wxi piscine 64 Jul 16 19:54 1 -> /home/wxi/CodamProjects/Rank3/minishell/gitminishell/in.txt
+lrwx------ 1 wxi piscine 64 Jul 16 19:54 2 -> /dev/pts/0
+lr-x------ 1 wxi piscine 64 Jul 16 19:54 3 -> /proc/67093/fd

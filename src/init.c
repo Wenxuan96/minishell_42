@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:00:12 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/09 13:33:16 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:56:44 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,15 @@ t_token	*new_token_lst(char *token)
 	}
 	new_token->next_token = NULL;
 	return (new_token);
+}
+
+void	set_process(t_minishell shell, t_process **p)
+{
+	*p = shell.process_list;
+	while (*p)
+	{
+		(*p)->input_fd = STDIN_FILENO;
+		(*p)->output_fd = STDOUT_FILENO;
+		*p = (*p)->next_process;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 19:51:41 by wxi               #+#    #+#             */
-/*   Updated: 2025/07/14 16:30:30 by wxi              ###   ########.fr       */
+/*   Updated: 2025/07/18 17:15:30 by tignatov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*handle_dollar_sign(char *trimmed)
 				trimmed[i] = trimmed[i + 1];
 				i++;
 			}
-			ft_printf("trimmed value is: %s\n", trimmed);
 		}
 		i++;
 	}

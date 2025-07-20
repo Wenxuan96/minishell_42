@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tignatov <tignatov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxi <wxi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 08:45:53 by tignatov          #+#    #+#             */
-/*   Updated: 2025/07/18 17:54:44 by tignatov         ###   ########.fr       */
+/*   Updated: 2025/07/20 10:12:05 by wxi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	token_checker(char *command)
 int	validate_1st_two_chr(char *str)
 {
 	if (ft_strchr("|&", str[0]) != NULL)
-		return (ft_printf("1. synt err near token `newline'\n"), 0);
+		return (ft_printf("synt err near token `newline'\n"), 0);
 	if (ft_strlen(str) == 1 || ft_strlen(str) == 2)
 	{
 		if (ft_strchr("<|>&.", str[0]) != NULL)
 		{
 			if (str[1] == '\0' || (str[1] != '\0' && ft_strchr("<|>&.",
 						str[1]) != NULL))
-				return (ft_printf("2. synt err near token `newline'\n"), 0);
+				return (ft_printf("synt err near token `newline'\n"), 0);
 		}
 	}
 	else if (ft_strlen(str) >= 3)
@@ -52,7 +52,7 @@ int	validate_1st_two_chr(char *str)
 		if (str[0] == '\"' && (str[2] == '\"' || str[3] == '\"'))
 		{
 			if (str[1] == '.')
-				return (ft_printf("3. synt err near token `newline'\n"), 0);
+				return (ft_printf("synt err near token `newline'\n"), 0);
 		}
 	}
 	return (1);
@@ -103,7 +103,7 @@ int	is_valid_input(char *str)
 				continue ;
 			}
 			if (ft_strchr("|&", str[i]) != NULL && str[i + 1] == '\0')
-				return (ft_printf("4. synt err near token `newline'\n"), 0);
+				return (ft_printf("synt err near token `newline'\n"), 0);
 			else if (str[i] == '<' || str[i] == '>')
 			{
 				if (!is_valid_heredoc(str, &i))
